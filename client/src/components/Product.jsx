@@ -3,16 +3,17 @@ import React from 'react';
 const Product = () => {
     return (
         <div className='Products-item'>
-            <img src={product.image} alt={product.title} />
+            <img src={props.image} alt={props.title} />
             <div className='Product-item-info'>
-                <h2>{product.title}
+                <h2>{props.title}
                 <span>
                     $
                     {' '}
-                    {product.precio}
+                    {props.price}
+                    <p>Stock: {props.stock}</p>
                 </span>
                 </h2>
-                <p>{product.description}</p>
+                <p>{props.description}</p>
             </div>
             <button type='button'>Comprar</button>
         </div>
