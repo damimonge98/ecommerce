@@ -1,12 +1,17 @@
 import React from 'react';
 import './App.css';
-import AddCategories from "./components/AddCategories/AddCategories";
+
+import AddCategories from "./components/AddCategories.js";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div>
-    <AddCategories/>
-    </div>
+
+
+  	<BrowserRouter>
+  	<Route exact path = "/" component = {AddCategories}/>
+    </BrowserRouter>
   );
 }
 
