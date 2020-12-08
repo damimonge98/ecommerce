@@ -1,13 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import AddCategories from "./components/AddCategories/AddCategories.jsx";
 import ProductCard from './components/ProductCard/Product_Card'
 import Product from './components/Product/Product'
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <ProductCard/>
+
+
+  	<BrowserRouter>
+  	<Route exact path = "/" component = {AddCategories}/>
+    </BrowserRouter>
+
   );
 }
 
