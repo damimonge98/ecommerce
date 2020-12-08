@@ -1,0 +1,7 @@
+.container{
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(to bottom,#000272,#341677, #a32f80,#ff6363);
+    flex-wrap: wrap;
+    padding: 25px;
+}
