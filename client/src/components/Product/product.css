@@ -1,0 +1,49 @@
+.card-img-top{
+    height: 150px;
+}
+
+
+.card{
+    margin:15px;
+    border: transparent ;
+    display: flex;
+    justify-content: center;
+    
+    background-color:transparent;
+    width: 150px;
+    
+}
+.card:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.card-h2{
+
+    display:flex;
+    justify-content: flex-start;
+    
+    flex-direction: column;
+    font-family: "poppins, sans-serif";
+    font-size: small;
+    font-weight: 1000;
+    color:white
+    
+}
+
+.div-button{
+    display: flex;
+    justify-content: center;
+}
+.button-card{
+    border-radius: 10px;
+    border:transparent;
+    background-color: transparent;
+    width: 100px;
+    background-color: yellow;
+    opacity: 0.7;
+}
+
+.button-card:hover{
+    background-color: yellow;
+    opacity: 1;
+}
