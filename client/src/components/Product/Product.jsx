@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Product = () => {
+const Product = (props) => {
     return (
         <div className='Products-item'>
             <img src={props.image} alt={props.title} />
