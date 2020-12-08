@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-
-import AddCategories from "./components/AddCategories.js";
+import AddCategories from "./components/AddCategories/AddCategories.jsx";
+import ProductCard from './components/ProductCard/Product_Card'
+import Product from './components/Product/Product'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
   	<BrowserRouter>
   	<Route exact path = "/" component = {AddCategories}/>
     </BrowserRouter>
+
   );
 }
 
