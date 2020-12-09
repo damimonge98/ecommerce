@@ -9,4 +9,21 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.post("/", (req, res) => {
+    const {name, description, price,stock,img} = req.body
+       Product.create({
+        name,
+		description,
+		price,
+		stock,
+		img
+        })
+            .then((newProduct)=>{
+                res.status(201)
+                res.send(newProduct)
+            }).catch(()=>{
+				res.status(400)
+			})
+})
+
 module.exports = server;
