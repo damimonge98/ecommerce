@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Product.css"
+import "./product.css"
 
 /* Función para filtrar los productos por id, luego conversamos si la dejo acá o si la cambiamos a otro módulo */ 
 const DataProduct = [] // este array es para que el filterId no tire error
