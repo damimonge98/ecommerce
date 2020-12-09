@@ -85,9 +85,10 @@ const DataProduct =[
 ]
 // aca se van a renderizar todas las card de product
 const Cataloge = () => {
+    const array = DataProduct.filter(e=> e.category == 'categoria')
      return(
         <div className="container">
-            {DataProduct.map((i)=>{
+            {array.map((i)=>{
                 return(
             <div key={i.id}>
             <Product img={i.img} title={i.title} price={i.price} description={i.description} />
