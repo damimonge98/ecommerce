@@ -1,5 +1,5 @@
 import React from 'react';
-import Product from '../Product/Product2.jsx'
+import Product from '../Product/Product.jsx'
 import "./catalogue.css"
 const DataProduct =[
     {
