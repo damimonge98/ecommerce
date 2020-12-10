@@ -16,13 +16,21 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:false
     },
+      Categories:{
+     type: DataTypes.ARRAY(DataTypes.DECIMAL),
+     allowNull:true
+    },
     stock: {
      type:  DataTypes.INTEGER,
      allowNull: false
     },
     img:{
-      type: DataTypes.URL,
-      allowNull:false
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        isUrl: true
+      }
+    
     }
   });
 };
