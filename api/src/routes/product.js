@@ -26,4 +26,27 @@ server.post("/", (req, res) => {
 			})
 })
 
+
+//actualizar un producto
+server.put('/:id', (req, res, next) => {
+	const {id} = req.params;
+	const {name,description,price,stock,img}=req.body;
+	Product.update(
+		{
+			name,
+			description,
+			price,
+			stock,
+			img,
+		},
+		{returning: true, where: {id} }
+		
+	).then(updateProduct=>{
+		res.status(201).json(updateProduct)
+	}).catch((e)=>{
+		res.status(400).json({MsjError:'Por favor llene los campos obligatorios'})
+	})
+		
+});
+
 module.exports = server;
