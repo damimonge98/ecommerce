@@ -10,12 +10,13 @@ server.get('/', (req, res, next) => {
 });
 
 server.post("/", (req, res) => {
-    const {name, description, price,stock,img} = req.body
+    const {name, description, price, Categories,stock,img} = req.body
        Product.create({
         name,
 		description,
 		price,
 		stock,
+		Categories,
 		img
         })
             .then((newProduct)=>{
