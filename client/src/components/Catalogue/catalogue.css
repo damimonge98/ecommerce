@@ -1,7 +1,38 @@
+
 .container{
     display: flex;
     justify-content: space-around;
-    background: linear-gradient(to bottom,#000272,#341677, #a32f80,#ff6363);
     flex-wrap: wrap;
     padding: 25px;
+    position: absolute;
+    right: 40px;
+    left: 170px;
 }
+.nav-lateral{
+   display: flex;
+    align-items: flex-start;
+    margin-right: 1px;
+    width: 150px;
+    height:100%;
+    position: absolute;
+    left: 0%;
+    background-color: black; 
+} 
+
+ .select{
+    background-color: transparent;
+    color: #BAF501 ;
+    border:none;
+    width: 130px;
+    height: auto;
+    border:solid 1px #BAF501 ;
+    border-radius: 10px;
+    margin:7px; 
+    cursor: pointer;
+}
+.select:hover{
+    background-color:rgb(100, 100, 100)
+}
+.option{
+    background-color: black;
+} 
