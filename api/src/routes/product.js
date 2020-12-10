@@ -50,4 +50,68 @@ server.put('/:id', (req, res, next) => {
 		
 });
 
+// Ruta para cargar categoria a un producto
+
+server.post("/:idProducto/category/:idCategoria", (req, res, next) => {
+	let { idProducto, idCategoria } = req.params;
+	Product.findOne({
+	  where: {
+		id: idProducto,
+	  },
+	})
+	.then((product) => {
+	  if (!product) {
+		return res
+		  .status(400)
+		  .json({ message: "No se encontraron productos con ese id." });
+	  }
+	  product.addCategories(idCategoria);
+	  res.status(201).json({ message: "Categoria agregada" });
+	})
+	.catch((err) => err);
+   
+  }
+);
+
+// Ruta para remover categoria a un producto
+
+server.delete("/:idProducto/category/:idCategoria", (req, res, next) => {
+	let { idProducto, idCategoria } = req.params;
+	Product.findOne({
+	  where: {
+		id: idProducto,
+	  },
+	})
+	  .then((product) => {
+		if (!product) {
+		  return res
+			.status(400)
+			.json({ message: "No se encontraron productos con ese id." });
+		}
+		product.removeCategories(idCategoria);
+		res.status(201).json({ message: "Categoria borrada" });
+	  })
+	  .catch((err) => err);
+  
+});
+
+// //ruta para remover categoría a un producto- alternativa 2
+
+// server.delete("/remove/:idProd/:idCat", (req, res) => {
+//     const categoryId = req.params.idCat;
+//     Product.findByPk(req.params.idProd)
+
+//         .then(function (product) {
+//             let prod = product;
+//             prod.removeCategories(categoryId)
+//         })
+//         .then(function (deletedCategory) {
+//             res.status(200).json({ message: "La categoria ha sido eliminada correctamente", data: deletedCategory })
+//         })
+//         .catch(function (err) {
+//             res.status(400).json({ message: "No se agregó la categoría al producto", error: err })
+//         })
+// });
+
+
 module.exports = server;
