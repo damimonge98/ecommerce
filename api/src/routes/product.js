@@ -95,6 +95,37 @@ server.delete("/:idProducto/category/:idCategoria", (req, res, next) => {
   
 });
 
+// Ruta para "eliminar" productos
+
+server.delete("/:id", (req, res) => {
+	
+	Product.findByPk(req.params.id).then((product) => {
+	  if (product === null) {
+		res.json({ message: "El id especificado no existe o contiene errores." });
+	  } else {
+		product.active = false;
+		product.save();
+		return res.json({ message: "PRODUCT DELETE" });
+	  }
+	});
+  
+});
+
+//opción 2
+
+//   router.delete('/delete/:id', (req, res) => {
+//     const id = req.params.id;
+//     Product.findByPk(id)
+//         .then((result) => {
+//             return Product.destroy({
+//                 where: { id: id }
+//             }).then((product) => {
+//                 res.status(200).json({ mensaje: "El producto ha sido eliminado correctamente", data: result })
+//             })
+//         })
+
+// });
+
 // //ruta para remover categoría a un producto- alternativa 2
 
 // server.delete("/remove/:idProd/:idCat", (req, res) => {
