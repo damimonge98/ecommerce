@@ -16,9 +16,10 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-      Categories:{
-     type: DataTypes.ARRAY(DataTypes.DECIMAL),
-     allowNull:true
+    genre:{
+     type: DataTypes.ARRAY(DataTypes.INTEGER),
+     allowNull:true,
+     defaultValue: []
     },
     stock: {
      type:  DataTypes.INTEGER,

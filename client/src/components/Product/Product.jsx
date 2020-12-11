@@ -73,3 +73,5 @@ Array de prueba, lo pueden utilizar para probar sus funciones
 */
 
 export default Product;
+
+
