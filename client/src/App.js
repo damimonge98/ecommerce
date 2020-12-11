@@ -13,7 +13,7 @@ function App() {
   return (
   	<BrowserRouter>
       <Route path = "/" component = {Nav}/>
-      <Route exact path = "/" component = {ProductCard}/>
+      <Route exact path = "/" component = {AddCategories}/>
       <Route exact path='/products/:id' render={({ match }) =>
       <Product id={filterId(match.params.id)} />}/>
       <Route exact path = "/catalogue" component = {Catalogue}/>
