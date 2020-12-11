@@ -1,0 +1,87 @@
+.pagination-list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    justify-content: flex-start;
+    order: 1;
+}
+
+.pagination-list {
+  flex-wrap: wrap;
+}
+
+.pagination, .pagination-list {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.pagination-list {
+  flex-wrap: wrap;
+}
+
+ul {
+  list-style: none;
+}
+
+ol, ul {
+  padding-left: 2rem;
+}
+
+
+.button, .file-cta, .file-name, .input, .pagination-ellipsis, .pagination-link, .pagination-next, .pagination-previous, .select select, .textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.5em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(.5em - 1px);
+  padding-left: calc(.75em - 1px);
+  padding-right: calc(.75em - 1px);
+  padding-top: calc(.5em - 1px);
+  position: relative;
+  vertical-align: top;
+}
+
+.breadcrumb, .button, .delete, .file, .is-unselectable, .modal-close, .pagination-ellipsis, .pagination-link, .pagination-next, .pagination-previous, .tabs {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+
+a {
+  color: #3273dc;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.pagination-link, .pagination-next, .pagination-previous {
+  border-color: #dbdbdb;
+  color: white;
+  min-width: 2.5em;
+}
+
+
+.pagination-ellipsis, .pagination-link, .pagination-next, .pagination-previous {
+  font-size: 1em;
+  justify-content: center;
+  margin: .25rem;
+  padding-left: .5em;
+  padding-right: .5em;
+  text-align: center;
+}
+
+.pagination-link.is-current {
+    background-color: #3273dc;
+    border-color: #3273dc;
+    color: #fff;
+}
