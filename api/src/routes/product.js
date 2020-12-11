@@ -115,14 +115,20 @@ server.post("/:idProducto/category/:idCategoria", (req, res, next) => {
 
 server.delete("/:id", (req, res) => {
 
-	Product.findByPk(req.params.id).then((product) => {
-		if (product === null) {
-			res.json({ message: "El id especificado no existe o contiene errores." });
-		} else {
-			product.active = false;
-			product.save();
-			return res.json({ message: "PRODUCT DELETE" });
+	const {id}= req.params
+	Product.findOne({
+		where:{
+			id:id
 		}
+	})
+	.then((product) => {
+	  if (!product) {
+		res.json({ message: "El id especificado no existe o contiene errores." });
+	  } else {
+		product.destroy()
+		return res.json({ message: "PRODUCT DELETE" });
+	  }
+
 	});
 
 });
