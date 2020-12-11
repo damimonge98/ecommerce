@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product } = require('../db.js');
+const { Product , Categories} = require('../db.js');
 const Sequelize = require('sequelize');
 
 server.get('/', (req, res, next) => {
@@ -153,6 +153,24 @@ server.get('/:id', (req, res) => {
 			res.send(products)
 		})
 });
+
+//Ruta para obtener todos los productos de X categoría
+server.get("/category/:nombreCat", (req,res) => {
+	const name = req.params.nombreCat;
+	Product.findAll ({
+		include: {
+			model: Categories,
+			where : {name}
+		}
+	})
+	.then ((products => {
+		if (!products[0]) { //Comprueba si el array esta vació
+			return res.status(400).json({message : "No se encontraron productos"})
+		}
+		res.status(201).json(products)
+	}))
+})
+
 
 
 module.exports = server;
