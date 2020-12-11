@@ -126,17 +126,34 @@ const Cataloge = () => {
   }, [currentCategory]);
 
   return (
-    <div className="container">
-      <select
+    <div className="box">
+      <div className="nav-lateral">
+        <div >
+      <select className="select"
         onChange={(e) => {
           SetCurrentCategory(e.target.value);
-          console.log(e);
-        }}
-      >
+        }}>
         {categories.map((c) => (
-          <option key={c}>{c}</option>
+          <option className="option" key={c}>{c}</option>
         ))}
       </select>
+      
+      
+        <select className="select">
+          <option className="option">
+            duki
+          </option>
+          <option className="option">
+          Marshmello
+          </option>
+          <option className="option">
+          marama
+          </option>
+        </select>
+        
+      </div>
+      </div>
+      <div className="container">
       {products.map((i) => {
         return (
           <div key={i.id}>
@@ -150,7 +167,9 @@ const Cataloge = () => {
         );
       })}
     </div>
+    </div>
   );
+  
 };
 
 export default Cataloge;

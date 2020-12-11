@@ -18,10 +18,8 @@
     transform: scale(1.2);
 }
 .card-h2{
-
     display:flex;
     justify-content: flex-start;
-    
     flex-direction: column;
     font-family: "poppins, sans-serif";
     font-size: small;
@@ -39,11 +37,12 @@
     border:transparent;
     background-color: transparent;
     width: 100px;
-    background-color: yellow;
-    opacity: 0.7;
+    background-color:transparent;
+    color: white;
+    font-weight: 900;
 }
 
 .button-card:hover{
-    background-color: yellow;
+    background-color: black;
     opacity: 1;
 }
