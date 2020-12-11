@@ -79,17 +79,16 @@ server.post("/:idProducto/category/:idCategoria", (req, res, next) => {
 
 
 // Ruta para remover categoria a un producto 
-//En testing todavía 
 
-/*  server.delete("/:idProducto/category/:idCategoria", (req, res, next) => {
+server.delete("/:idProducto/category/:idCategoria", (req, res, next) => {
 	let { idProducto, idCategoria } = req.params;
 	Product.findByPk(idProducto)
 		.then((product) => {
-			if (!product) {
+			 if (!product) {
 				return res
 					.status(400)
 					.json({ message: "No se encontraron categorías con ese id" });
-			}
+			} 
 			product.removeCategories([idCategoria])
 				.then((products) => {
 					if (!products) {
@@ -97,19 +96,14 @@ server.post("/:idProducto/category/:idCategoria", (req, res, next) => {
 							.status(400)
 							.json({ message: "No se encontraron productos con ese id" });
 					}
-					if (idCategoria) {
-						product.removeIndex({
-							where: {
-								genre: idCategoria
-							},
-							attributes: "genre"
-						})
-					}
-				},
-					res.status(200).json({ message: "Categoria borrada" }));
+					product.update({
+						genre: Sequelize.fn('array_remove', Sequelize.col('genre'), idCategoria)
+					}) // remuevo del array genre el valor que le paso como idCategoría, siempre y cuando coincidan, el update me actualiza el array a ese valor y el array_remove, lo saca
+					res.status(200).json({ message: "Categoria borrada" });
+				})
 		})
-		.catch((err) => err);
-})  */
+})
+
 
 // Ruta para "eliminar" productos
 
@@ -126,7 +120,7 @@ server.delete("/:id", (req, res) => {
 		res.json({ message: "El id especificado no existe o contiene errores." });
 	  } else {
 		product.destroy()
-		return res.json({ message: "PRODUCT DELETE" });
+		return res.json({ message: "Product Delete" });
 	  }
 
 	});
