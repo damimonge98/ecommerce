@@ -117,10 +117,10 @@ const Cataloge = () => {
 
   useEffect(() => {
     console.log("effect");
-    if (currentCategory == "All") {
+    if (currentCategory === "All") {
       setProducts(DataProduct);
     } else {
-      const array = DataProduct.filter((e) => e.category == currentCategory); //corregir filtrado por value o selección
+      const array = DataProduct.filter((e) => e.category === currentCategory); //corregir filtrado por value o selección
       setProducts(array);
     }
   }, [currentCategory]);

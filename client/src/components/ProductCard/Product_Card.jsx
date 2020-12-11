@@ -4,7 +4,7 @@ import "./Product_Card.css";
 const productCard = (props) => {
   return (
     <div className="bodyb">
-      <div className="container">
+      <div className="container2">
         <div className="row my-2">
           <div className="col-lg-6 col-md-6 shadow content p-5">
             <div className="row my-3">
