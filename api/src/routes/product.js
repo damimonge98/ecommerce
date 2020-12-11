@@ -98,13 +98,17 @@ server.delete("/:idProducto/category/:idCategoria", (req, res, next) => {
 // Ruta para "eliminar" productos
 
 server.delete("/:id", (req, res) => {
-	
-	Product.findByPk(req.params.id).then((product) => {
-	  if (product === null) {
+	const {id}= req.params
+	Product.findOne({
+		where:{
+			id:id
+		}
+	})
+	.then((product) => {
+	  if (!product) {
 		res.json({ message: "El id especificado no existe o contiene errores." });
 	  } else {
-		product.active = false;
-		product.save();
+		product.destroy()
 		return res.json({ message: "PRODUCT DELETE" });
 	  }
 	});
