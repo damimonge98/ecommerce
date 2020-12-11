@@ -13,10 +13,10 @@ function App() {
   return (
   	<BrowserRouter>
       <Route path = "/" component = {Nav}/>
-      <Route exact path = "/" component = {AddCategories}/>
+      <Route exact path = "/admin/products" component = {AddCategories}/>
       <Route exact path='/products/:id' render={({ match }) =>
       <Product id={filterId(match.params.id)} />}/>
-      <Route exact path = "/catalogue" component = {Catalogue}/>
+      <Route exact path = "/" component = {Catalogue}/>
       <Route exact path = "/admin/products" component = {ProductsAdmin}/>
       <Route exact path = "/admin/products/new" component = {ProductsForm}/> 
     </BrowserRouter>
