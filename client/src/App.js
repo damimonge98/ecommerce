@@ -8,17 +8,20 @@ import ProductsAdmin from "./components/Admin/Product/ProductsAdmin.jsx"
 import ProductsForm from "./components/Admin/Product/ProductosForm.jsx"
 import Catalogue from "./components/Catalogue/Catalogue.jsx"
 import Nav from './components/Nav/Nav.jsx';
+import Sidebar from './components/Sidenavbar/Sidebar'
 
 function App() {
   return (
   	<BrowserRouter>
-      <Route path = "/" component = {Nav}/>
+    {/*   <Route path = "/" component = {Nav}/> */}
       <Route exact path = "/admin/products" component = {AddCategories}/>
       <Route exact path='/products/:id' render={({ match }) =>
       <Product id={filterId(match.params.id)} />}/>
       <Route exact path = "/" component = {Catalogue}/>
       <Route exact path = "/admin/products" component = {ProductsAdmin}/>
       <Route exact path = "/admin/products/new" component = {ProductsForm}/> 
+      <Route exact path = "/detail" component = {ProductCard}/> 
+      <Route path = "/" component = {Sidebar}/>
     </BrowserRouter>
   );
 }

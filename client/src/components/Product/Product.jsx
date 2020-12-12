@@ -1,37 +1,40 @@
-import React from 'react';
-import "./product.css"
+import React from "react";
+import "./product.css";
+import { Link } from "react-router-dom";
 
-/* Función para filtrar los productos por id, luego conversamos si la dejo acá o si la cambiamos a otro módulo */ 
-const DataProduct = [] // este array es para que el filterId no tire error
+/* Función para filtrar los productos por id, luego conversamos si la dejo acá o si la cambiamos a otro módulo */
+const DataProduct = []; // este array es para que el filterId no tire error
 export function filterId(id) {
-    let product = DataProduct.filter(p => p.id === parseInt(id));
-    if (product.length > 0) {
-        return product[0];
-    } else {
-        return 'No existe este id';
-    }
+  let product = DataProduct.filter((p) => p.id === parseInt(id));
+  if (product.length > 0) {
+    return product[0];
+  } else {
+    return "No existe este id";
+  }
 }
 
-export const Product = ({id, img, title, description, price, stock}) => {
-    return (
-        <div className='card'>
-            <img src={img}className="card-img-top" alt={title}  />
-            <div className="div-h2">
-                
-                <h2 className="card-h2">
-                {title}
-                <br/>
-                {description}
-                <br/>
-                ${price}
-                </h2>
-                </div>
-                <div className="div-button">
-            <button className="button-card" type='button'>Comprar</button>
-            </div>
-        </div>
-    );
-}
+export const Product = ({ id, img, title, description, price, stock }) => {
+  return (
+    <div className="card">
+      <img src={img} className="card-img-top" alt={title} />
+      <div className="div-h2">
+        <h2 className="card-h2">
+          {title}
+          <br />
+          {description}
+          <br />${price}
+        </h2>
+      </div>
+      <div className="div-button">
+        <Link to={`/detail`}>
+          <button className="button-card" type="button">
+            Comprar
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 /* 
 Array de prueba, lo pueden utilizar para probar sus funciones
@@ -73,5 +76,3 @@ Array de prueba, lo pueden utilizar para probar sus funciones
 */
 
 export default Product;
-
-
