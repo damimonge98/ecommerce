@@ -1,0 +1,97 @@
+.sidebar-container {
+  position: fixed;
+  width: 220px;
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.content-container {
+  padding-top: 20px;
+}
+
+.sidebar-navigation {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  position: relative;
+}
+
+.sidebar-navigation li {
+  background-color: transparent;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 20px;
+}
+
+.sidebar-navigation li a {
+  padding: 10px 15px 10px 30px;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar-navigation li .fa {
+  margin-right: 10px;
+}
+
+.sidebar-navigation li::before {
+  background-color: #ec625f;
+  position: absolute;
+  content: "";
+  height: 100%;
+  left: -4px;
+  top: 0;
+  -webkit-transition: width 0.2s ease-in;
+  transition: width 0.2s ease-in;
+  width: 3px;
+  z-index: -1;
+  text-decoration: none;
+}
+
+.sidebar-navigation li:hover::before {
+  width: 100%;
+}
+
+.sidebar-navigation .header {
+  font-size: 12px;
+  background-color: #151515;
+  padding: 10px 15px 10px 30px;
+}
+
+.sidebar-navigation .header::before {
+  background-color: transparent;
+}
+
+.content-container {
+  padding-left: 220px;
+}
+
+.nav-dropdown {
+  color: rgba(139, 56, 56, 0.24);
+  font-weight: bold;
+  margin-left: 17px;
+}
+
+.nav-dropdown-list{
+  opacity: .9;
+  background-color: #151515;
+}
+
+.dropdown-basic{
+  color: white
+}
+
+.dropdown-basic:hover{
+  color: white;
+}
+
+/* esto es para quitarle una linea azul que le salía al boton toggle cuando le daba click */
+.dropdown-basic:focus{
+outline: none; 
+box-shadow: none;
+}

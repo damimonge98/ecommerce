@@ -4,7 +4,7 @@ import "./Product_Card.css";
 const productCard = (props) => {
   return (
     <div className="bodyb">
-      <div className="container2">
+      <div className="container">
         <div className="row my-2">
           <div className="col-lg-6 col-md-6 shadow content p-5">
             <div className="row my-3">
@@ -18,7 +18,7 @@ const productCard = (props) => {
             <div className="row my-lg-5 my-md-4">
               <h1>{props.title}</h1>
               <div className="price">
-                $<span>{props.price}</span>
+                $<span>100</span>
               </div>
               <hr className="line" />
               <p className="description">{props.description}</p>
@@ -53,8 +53,14 @@ const productCard = (props) => {
           <div className="col-lg-6 col-md-6 p-0 py-md-5 my-xs-0 my-lg-4 my-md-5">
             <div className="py-2 my-lg-0 my-md-5">
               <img
-                src={props.image}
+                src="https://www.elquintobeatle.com/wp-content/uploads/2017/01/the-weeknd-starboy-1.jpg"
                 className="img-fluid"
+                id="imgm"
+              ></img>
+              <img
+                src="https://lh3.googleusercontent.com/proxy/zlbZHcp7e5CM3W1HPK8pllUquk0hO81IhoeRFPQ_kC9OsAd9Y97NL8u7HwDFZs5FP0Sb-ady0SgUGnVEh0UzorllgWmdKH_lCj_UiRaS-S90468SfUtg_JjlPZll3XOwW3p5"
+                className="img-fluid2"
+                id="imgm"
               ></img>
             </div>
           </div>
