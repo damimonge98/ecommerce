@@ -13,15 +13,15 @@ import Sidebar from './components/Sidenavbar/Sidebar'
 function App() {
   return (
   	<BrowserRouter>
+    <Route path = "/" component = {Sidebar}/>
     {/*   <Route path = "/" component = {Nav}/> */}
-      <Route exact path = "/admin/products" component = {AddCategories}/>
+      {/* <Route exact path = "/admin/products" component = {AddCategories}/> */}
       <Route exact path='/products/:id' render={({ match }) =>
       <Product id={filterId(match.params.id)} />}/>
       <Route exact path = "/" component = {Catalogue}/>
       <Route exact path = "/admin/products" component = {ProductsAdmin}/>
       <Route exact path = "/admin/products/new" component = {ProductsForm}/> 
       <Route exact path = "/detail" component = {ProductCard}/> 
-      <Route path = "/" component = {Sidebar}/>
     </BrowserRouter>
   );
 }
