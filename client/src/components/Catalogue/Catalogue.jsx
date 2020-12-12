@@ -147,7 +147,7 @@ const Cataloge = () => {
 
   return (
     <div className="box">
-      <div className="nav-lateral">
+     {/*  <div className="nav-lateral">
         <div >
       <select className="select"
         onChange={(e) => {
@@ -172,7 +172,7 @@ const Cataloge = () => {
         </select>
         
       </div>
-      </div>
+      </div> */}
       <div className="container">
       {products.map((i) => {
         return (
