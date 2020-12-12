@@ -102,6 +102,26 @@ const DataProduct = [
     stock: "Infinito",
     category: "Rock",
   },
+  {
+    id: 11,
+    img: "https://www.cmtv.com.ar/tapas-cd/rombainochelocasingle.jpg",
+    title: "NOCHE LOCA",
+    price: "1",
+    description: "Marama-de fiesta.",
+    stock: "Infinito",
+    category: "Rock",
+  },
+  {
+    id: 12,
+    img:
+      "https://www.filo.news/__export/1565217918279/sites/claro/img/2019/08/07/dukinuevovideo.jpg_423682103.jpg",
+    title: "GOTEO",
+    price: "1",
+    description: "Duki-super sangre joven",
+    stock: "Infinito",
+    category: "Rock",
+  },
+  
 ];
 // aca se van a renderizar todas las card de product
 const Cataloge = () => {
