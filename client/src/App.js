@@ -9,11 +9,15 @@ import ProductsForm from "./components/Admin/Product/ProductosForm.jsx"
 import Catalogue from "./components/Catalogue/Catalogue.jsx"
 import Nav from './components/Nav/Nav.jsx';
 import Sidebar from './components/Sidenavbar/Sidebar'
+import MusicBar from './components/MusicBar/MusicBar'
+import {Provider} from 'react-redux'
+import {store} from './redux/categories'
 
 function App() {
   return (
+    <Provider store={store}>
   	<BrowserRouter>
-    <Route path = "/" component = {Sidebar}/>
+    <Sidebar/>
     {/*   <Route path = "/" component = {Nav}/> */}
       {/* <Route exact path = "/admin/products" component = {AddCategories}/> */}
       <Route exact path='/products/:id' render={({ match }) =>
@@ -21,8 +25,10 @@ function App() {
       <Route exact path = "/" component = {Catalogue}/>
       <Route exact path = "/admin/products" component = {ProductsAdmin}/>
       <Route exact path = "/admin/products/new" component = {ProductsForm}/> 
-      <Route exact path = "/detail" component = {ProductCard}/> 
+      <Route exact path = "/detail" component = {ProductCard}/>
+      <Route exact path = "/musicbar" component = {MusicBar}/>
     </BrowserRouter>
+    </Provider>
   );
 }
 
