@@ -9,12 +9,16 @@ import ProductsForm from "./components/Admin/Product/ProductosForm.jsx";
 import CategoryAdmin from "./components/Admin/Category/CategoryAdmin.jsx";
 import Catalogue from "./components/Catalogue/Catalogue.jsx";
 import Nav from './components/Nav/Nav.jsx';
-import Sidebar from './components/Sidenavbar/Sidebar';
+import Sidebar from './components/Sidenavbar/Sidebar'
+import MusicBar from './components/MusicBar/MusicBar'
+import {Provider} from 'react-redux'
+import {store} from './redux/categories'
 
 function App() {
   return (
+    <Provider store={store}>
   	<BrowserRouter>
-    <Route path = "/" component = {Sidebar}/>
+    <Sidebar/>
     {/*   <Route path = "/" component = {Nav}/> */}
       <Route exact path='/products/:id' render={({ match }) =>
       <Product id={filterId(match.params.id)} />}/>
@@ -24,7 +28,9 @@ function App() {
       <Route exact path = "/admin/categories/" component = {CategoryAdmin}/> 
       <Route exact path = "/admin/categories/new" component = {AddCategories}/>
       <Route exact path = "/detail" component = {ProductCard}/> 
+      <Route exact path = "/musicbar" component = {MusicBar}/>
     </BrowserRouter>
+    </Provider>
   );
 }
 

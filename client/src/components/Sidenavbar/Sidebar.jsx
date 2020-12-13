@@ -2,8 +2,13 @@ import React from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import {useDispatch} from 'react-redux'
+import {select} from '../../redux/categories'
+
 
 export default function SideBar(props) {
+
+  const dispatch = useDispatch()
  
   return (
     <div>
@@ -24,8 +29,8 @@ export default function SideBar(props) {
                 <i class="fa fa-headphones-alt" aria-hidden="true" /> Categories
               </Dropdown.Toggle>
               <Dropdown.Menu className = 'nav-dropdown-list'>
-                <Dropdown.Item href="#">Pop</Dropdown.Item>
-                <Dropdown.Item href="#">Rock</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('pop'))}>Pop</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('rock'))}>Rock</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </li>
