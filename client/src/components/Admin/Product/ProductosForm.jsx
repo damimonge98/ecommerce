@@ -11,11 +11,11 @@ const ProductosForm = () => {
         background: "#29c1eb"
         },
         searchBox: {
-            backgroundColor:"white",
+            backgroundColor:"#313131",
             
         },
             multiselectContainer: {
-            color: "black"
+            color: "white"
         }
     };
     const categoriesData =[
@@ -61,7 +61,7 @@ const ProductosForm = () => {
    // style={{width:"100%",border:"red 5px solid"}}
     return (
         <div >
-            <div className="d-flex justify-content-center mt-5">
+            <div className="d-flex justify-content-center ">
                 <div xs={12} style={{marginTop:"20px"}} >
                     <h2>Formulario productos crud</h2>
                     <div class="mt-5" >
