@@ -22,7 +22,7 @@ const handleChange = (event) => {
  
 	return (
 		
-		<form onSubmit = {handleSubmit}>
+		<form onSubmit = {handleSubmit} style={{marginLeft:"400px", padding:"40px"}}>
 		<div>
 		<label> AÑADIR CATEGORIA </label>
 		<br/>
