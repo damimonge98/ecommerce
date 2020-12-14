@@ -8,7 +8,10 @@
 
 .card-body{
     background-color: white;
+    /* background-color: transparent; */
     color: black;
+    /* margin-bottom: 100px;  *//*cambio*/
+   /*  margin-left: -20px; */
 }
 .musicbar-container{
     padding-left: 220px;
@@ -57,5 +60,5 @@
   }
   .card-wow-fadeInDown:hover{
     transform: scale(1.1);
-        
+    transition: .5s ease;
   }

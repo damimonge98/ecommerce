@@ -15,7 +15,7 @@ export default function SideBar(props) {
       <div class="sidebar-container">
         <ul class="sidebar-navigation">
           <li class="header">...</li>
-          <li>
+          <li onClick={() => dispatch(select())}>
             <Link to={`/`}>
               <i class="fa fa-home" aria-hidden="true"></i> Home
             </Link>
@@ -31,6 +31,10 @@ export default function SideBar(props) {
               <Dropdown.Menu className = 'nav-dropdown-list'>
                 <Dropdown.Item onClick={() => dispatch(select('pop'))}>Pop</Dropdown.Item>
                 <Dropdown.Item onClick={() => dispatch(select('rock'))}>Rock</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('salsa'))}>Salsa</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('cumbia'))}>Cumbia</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('rap'))}>Rap</Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(select('trap'))}>Trap</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </li>

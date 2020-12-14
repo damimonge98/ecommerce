@@ -6,11 +6,12 @@ body {
 }
 .bodyb {
   background-color: #313131;
-  margin-left: 60px
+  margin-left: 60px;
 }
 
 .content {
   background-color: #525252;
+  text-align: center;
 }
 
 .content:hover {
@@ -25,7 +26,6 @@ body {
 .description {
   margin-top: 40px;
 }
-
 
 .list-style {
   list-style: none;
@@ -49,27 +49,62 @@ body {
   margin-bottom: 10px;
 }
 
-.img-fluid2{
-  display: none;
-}
-
-.img-fluid2:hover{
-  display: block;
-}
-
 .img-fluid {
-  width: auto;
-  display: inline-block
+  width: 700px;
+  height: 500px;
+  display: inline-block;
+  background-image: url("https://assets.stickpng.com/images/580b57fcd9996e24bc43c4f7.png");
+  transition: .5s ease;
+  z-index: 3;
 }
 
 .img-fluid:hover {
-  box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.253) !important;
   transition: .5s ease;
-  opacity: 0.3;
-  display:block
+  cursor: pointer;
 }
 
 .btn-custom {
   background-color: #ec625f;
 }
 
+.overlay {
+  margin-top: -400px;
+  margin-left: 40px;
+  opacity: 1;
+  background: transparent;
+  color: #f1f1f1;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  width: 500px;
+  height: 400px;
+}
+
+.overlay:hover{
+  opacity: 0.3;
+  z-index: 3;
+}
+
+#imgcontainer:hover .overlay {
+  opacity: 1;
+  z-index: 3;
+}
+
+/*  .renderBar{
+  width: 300px;
+  height: 300px;
+  background-color: #ffff;
+  z-index: 1;
+  padding-left: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-left: 120px;
+  transition: .5s ease;
+  border-radius: 20px;
+}  */

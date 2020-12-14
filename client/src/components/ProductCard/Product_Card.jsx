@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Product_Card.css";
+import { useHistory } from "react-router-dom";
+import MusicBar from "../../components/MusicBar/MusicBar";
 
-const productCard = (props) => {
+const ProductCard = ({ products }) => {
+  /*   const [music, setMusic] = useState(false);
+  
+  const onButtonClick = () => {
+    setMusic(true);
+  }; */
+  const history = useHistory();
+  
+  const toMusicBar = () => {
+    history.push("/musicbar");
+  };
+
   return (
     <div className="bodyb">
       <div className="container">
@@ -16,15 +29,15 @@ const productCard = (props) => {
               </div>
             </div>
             <div className="row my-lg-5 my-md-4">
-              <h1>{props.title}</h1>
+              <h1>{products.name}</h1>
               <div className="price">
-                $<span>100</span>
+                $<span>{products.price}</span>
               </div>
               <hr className="line" />
-              <p className="description">{props.description}</p>
+              <p className="description">{products.description}</p>
             </div>
             <div className="row my-3">
-              <ul className="list-style">
+              {/*  <ul className="list-style">
                 <li>
                   <i className="fas fa-long-arrow-alt-right"></i>&nbsp; High
                   Quality Audio
@@ -37,7 +50,10 @@ const productCard = (props) => {
                   <i className="fas fa-long-arrow-alt-right"></i>&nbsp; All your
                   favorite artists are here!
                 </li>
-              </ul>
+              </ul> */}
+              {/*    <div className = 'renderBar'>
+              {music ? <MusicBar /> : null}  
+                </div> */}
             </div>
             <div className="row my-4 ">
               <div className="cart-btn d-flex justify-content-center">
@@ -51,17 +67,15 @@ const productCard = (props) => {
             </div>
           </div>
           <div className="col-lg-6 col-md-6 p-0 py-md-5 my-xs-0 my-lg-4 my-md-5">
-            <div className="py-2 my-lg-0 my-md-5">
-              <img
-                src="https://www.elquintobeatle.com/wp-content/uploads/2017/01/the-weeknd-starboy-1.jpg"
-                className="img-fluid"
-                id="imgm"
-              ></img>
-              <img
-                src="https://lh3.googleusercontent.com/proxy/zlbZHcp7e5CM3W1HPK8pllUquk0hO81IhoeRFPQ_kC9OsAd9Y97NL8u7HwDFZs5FP0Sb-ady0SgUGnVEh0UzorllgWmdKH_lCj_UiRaS-S90468SfUtg_JjlPZll3XOwW3p5"
-                className="img-fluid2"
-                id="imgm"
-              ></img>
+            <div className="py-2 my-lg-0 my-md-5" id="imgcontainer">
+              <img src={products.image} className="img-fluid" id="imgm"></img>
+              <div class="overlay">
+                <img
+                  src="https://connectingclues.es/wp-content/uploads/2019/09/white-play-icon-png-7.png"
+                  alt=""
+                  onClick={() => toMusicBar()}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -70,4 +84,4 @@ const productCard = (props) => {
   );
 };
 
-export default productCard;
+export default ProductCard;
