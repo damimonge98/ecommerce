@@ -1,0 +1,30 @@
+.title{
+    padding-top: 20px;
+    margin-left: -20px;
+}
+.buttons{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+    display: block;
+}
+
+.btn-right{
+    margin-top: 40px;
+}
+#right-button{
+    height: 50px;
+}
+#right-button:hover{
+    background-color: #525252;
+    color: #ffffff;
+}
+
+#left-button{
+    height: 50px;
+}
+
+#left-button:hover{
+    background-color: #525252;
+    color: #ffffff;
+}
