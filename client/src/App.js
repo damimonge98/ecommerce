@@ -13,7 +13,8 @@ import onSearch from './components/Nav/Nav'
 import Sidebar from './components/Sidenavbar/Sidebar'
 import MusicBar from './components/MusicBar/MusicBar'
 import { Provider } from 'react-redux'
-import { store } from './redux/categories'
+import  store  from './redux/store'
+//import  {store}  from './redux/categories'
 import Admin from './components/Admin/Admin2/Admin'
 
 function App() {
