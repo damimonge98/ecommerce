@@ -1,4 +1,6 @@
-
+.body{
+    font-family: "Poppins", sans-serif;;
+}
 .container{
     position: absolute;
     display: flex;
@@ -7,7 +9,7 @@
     flex-wrap: wrap;
     background-color: transparent;
     margin-top: 50px;
-    margin-left: 150px;
+    margin-left: 180px;
 }
 .logo{
     position:absolute;
@@ -16,7 +18,6 @@
 }
 .nav-lateral{
    display: flex;
-    
     justify-content: center;
     align-self:stretch;
     margin-right: 1px;
