@@ -1,8 +1,9 @@
 const server = require('express').Router();
 const { Product , Categories} = require('../db.js');
 const Sequelize = require('sequelize');
+var cors = require('cors')
 
-server.get('/', (req, res, next) => {
+server.get('/', cors(), (req, res, next) => {
 	Product.findAll()
 		.then(products => {
 			res.send(products);

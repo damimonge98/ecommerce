@@ -2,18 +2,29 @@ import React, { useState, useEffect } from "react";
 import "./Product_Card.css";
 import { useHistory } from "react-router-dom";
 import MusicBar from "../../components/MusicBar/MusicBar";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductId } from "../../redux/actions/productActions";
 
-const ProductCard = ({ products }) => {
+const ProductCard = ({ product }) => {
   /*   const [music, setMusic] = useState(false);
   
   const onButtonClick = () => {
     setMusic(true);
   }; */
   const history = useHistory();
-  
+
   const toMusicBar = () => {
     history.push("/musicbar");
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const cargarProductos = () => dispatch(getProductId());
+    cargarProductos();
+    /*     console.log('accion:', getProduct()) */
+  }, []);
+
+  const products = useSelector((state) => state.products.productos);
+  console.log('id:', products)
 
   return (
     <div className="bodyb">

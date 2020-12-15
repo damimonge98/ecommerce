@@ -1,7 +1,7 @@
 import {createSlice, configureStore} from '@reduxjs/toolkit'
  
 const categoriesSlice = createSlice({
-    name: 'category',
+    name: 'genre',
     initialState: {
         current:null
     },

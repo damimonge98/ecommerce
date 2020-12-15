@@ -22,6 +22,17 @@ server.post("/", (req, res) => {
             })
 })
 
+//Ruta para obtener detalles de un ID específico
+server.get('/:id', (req, res) => {
+	Categories.findOne({
+		where: {
+			id: req.params.id
+		}
+	})
+		.then(categories => {
+			res.send(categories)
+		})
+});
 
 server.put("/:id", (req,res) => {
 	const id = req.params.id;
