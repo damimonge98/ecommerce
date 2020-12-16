@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Product } = require('../db.js');
+const cors = require('cors')
+server.use(cors());
 
 server.get('/?', (req, res) => {
     const name = req.query.name;
