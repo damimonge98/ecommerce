@@ -4,27 +4,24 @@ import { useHistory } from "react-router-dom";
 import MusicBar from "../../components/MusicBar/MusicBar";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductId } from "../../redux/actions/productActions";
+import { useParams } from 'react-router-dom';
 
-const ProductCard = ({ product }) => {
-  /*   const [music, setMusic] = useState(false);
-  
-  const onButtonClick = () => {
-    setMusic(true);
-  }; */
+const ProductCard = () => {
+  const products = useSelector((state) => state.products.productos); 
+  const dispatch = useDispatch();
   const history = useHistory();
-
+  const { id } = useParams(); // con esto tomo el id de products que pido por ruta
+  
+  useEffect(() => {
+    const cargarProductos = () => dispatch(getProductId(id));
+    cargarProductos();
+  }, []);
+  
+  console.log('id:', products)
+  
   const toMusicBar = () => {
     history.push("/musicbar");
   };
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const cargarProductos = () => dispatch(getProductId());
-    cargarProductos();
-    /*     console.log('accion:', getProduct()) */
-  }, []);
-
-  const products = useSelector((state) => state.products.productos);
-  console.log('id:', products)
 
   return (
     <div className="bodyb">
@@ -46,6 +43,7 @@ const ProductCard = ({ product }) => {
               </div>
               <hr className="line" />
               <p className="description">{products.description}</p>
+              <p className="genre">{products.genre}</p>
             </div>
             <div className="row my-3">
               {/*  <ul className="list-style">
@@ -62,7 +60,8 @@ const ProductCard = ({ product }) => {
                   favorite artists are here!
                 </li>
               </ul> */}
-              {/*    <div className = 'renderBar'>
+              {/* div para imprimir el musicbar    
+              <div className = 'renderBar'>
               {music ? <MusicBar /> : null}  
                 </div> */}
             </div>
@@ -79,8 +78,8 @@ const ProductCard = ({ product }) => {
           </div>
           <div className="col-lg-6 col-md-6 p-0 py-md-5 my-xs-0 my-lg-4 my-md-5">
             <div className="py-2 my-lg-0 my-md-5" id="imgcontainer">
-              <img src={products.image} className="img-fluid" id="imgm"></img>
-              <div class="overlay">
+              <img src={products.img} className="img-fluid" id="imgm"></img>
+              <div className="overlay">
                 <img
                   src="https://connectingclues.es/wp-content/uploads/2019/09/white-play-icon-png-7.png"
                   alt=""
@@ -96,3 +95,11 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
+
+
+  /* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
+  const [music, setMusic] = useState(false);
+  
+  const onButtonClick = () => {
+    setMusic(true);
+  }; */

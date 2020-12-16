@@ -144,7 +144,7 @@ server.delete("/:id", (req, res) => {
 // });
 
 //Ruta para obtener detalles de un ID específico
-server.get('/:id', (req, res) => {
+server.get('/:id', cors(), (req, res) => {
 	Product.findOne({
 		where: {
 			id: req.params.id

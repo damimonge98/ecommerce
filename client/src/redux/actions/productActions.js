@@ -22,7 +22,7 @@ export function getProducts() {
       dispatch(descargaProductos())
       try {
       const respuesta = await axios.get('http://localhost:3001/products');
-      dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacíp
+      dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacío
       } catch(err) {
         console.log(err)
         dispatch(descargaProductosError())
@@ -34,8 +34,8 @@ export function getProducts() {
     return async function(dispatch) {
       dispatch(descargaProductos())
       try {
-      const respuesta = await axios.get('http://localhost:3001/products/' + id);
-      dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacíp
+      const respuesta = await axios.get(`http://localhost:3001/products/${id}`);
+      dispatch(descargaProductosExitosa(respuesta.data)) 
       } catch(err) {
         console.log(err)
         dispatch(descargaProductosError())
