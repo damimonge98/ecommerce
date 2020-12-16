@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React from 'react';
 import './pagination.css'
 
 const Pagination = ({ productPerPage, totalproduct, paginate, nextPage, prevPage,currentPage }) => {
