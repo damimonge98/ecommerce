@@ -11,49 +11,63 @@ import {
     OBTENER_PRODUCTO_EDITAR,
     COMENZAR_EDICION_PRODUCTO,
     PRODUCTO_EDITADO_EXITO,
-    PRODUCTO_EDITADO_ERROR,
-    OBTENER_PRODUCTO
+    PRODUCTO_EDITADO_ERROR
 } from '../types/products';
-import axios from 'axios';
+import clienteAxios from '../../config/axios.js';
 
+
+ // Función que descarga los productos de la base de datos
+export function obtenerProductosAction() {
+    return async (dispatch) => {
+        dispatch( descargarProductos() );
+
+        try {
+            const respuesta = await clienteAxios.get('/products');
+            dispatch( descargaProductosExitosa(respuesta.data) )
+        } catch (error) {
+            console.log(error);
+            dispatch( descargaProductosError() )
+        }
+    }
+}
 
 export function getProducts() {
-    return async function(dispatch) {
-      dispatch(descargaProductos())
-      try {
-      const respuesta = await axios.get('http://localhost:3001/products');
-      dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacío
-      } catch(err) {
-        console.log(err)
-        dispatch(descargaProductosError())
-      }
+  return async function(dispatch) {
+    dispatch(descargarProductos())
+    try {
+    const respuesta = await clienteAxios.get('/products');
+    dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacío
+    } catch(err) {
+      console.log(err)
+      dispatch(descargaProductosError())
     }
   }
+}
 
-  export function getProductId(id) {
-    return async function(dispatch) {
-      dispatch(descargaProductos())
-      try {
-      const respuesta = await axios.get(`http://localhost:3001/products/${id}`);
-      dispatch(descargaProductosExitosa(respuesta.data)) 
-      } catch(err) {
-        console.log(err)
-        dispatch(descargaProductosError())
-      }
+export function getProductId(id) {
+  return async function(dispatch) {
+    dispatch(descargarProductos())
+    try {
+    const respuesta = await clienteAxios.get(`/products/${id}`);
+    dispatch(descargaProductosExitosa(respuesta.data)) 
+    } catch(err) {
+      console.log(err)
+      dispatch(descargaProductosError())
     }
   }
+}
 
-  const descargaProductos = () => ({
-    type: COMENZAR_DESCARGA_PRODUCTOS, // esta action contiene un booleano seteado en falso, cuando se hace la llamada, el booleano pasa a true
+
+const descargarProductos = () => ({
+    type: COMENZAR_DESCARGA_PRODUCTOS,
     payload: true
-  })
+});
 
-  const descargaProductosExitosa = productos => ({
+const descargaProductosExitosa = productos => ({
     type: DESCARGA_PRODUCTOS_EXITO,
     payload: productos
-  })
-
-  const descargaProductosError = () => ({
-    type: DESCARGA_PRODUCTOS_ERROR,
+})
+const descargaProductosError = () => ({
+    type: DESCARGA_PRODUCTOS_ERROR, 
     payload: true
-  })
+});

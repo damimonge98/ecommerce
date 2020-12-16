@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Pagination from "../Pagination/Pagination";
 import Product from "../Product/Product.jsx";
-import data from "../../data/products.json";
 import "./catalogue.css";
-import usePagination from "../../hooks/usePagination";
-import { getProducts } from "../../redux/actions/productActions";
+import {getProducts} from '../../redux/actions/productActions'
 const Categories = [
   "All",
   "Pop",
@@ -25,7 +24,21 @@ const Cataloge = () => {
   const [categories, setCategories] = useState([]);
   const history = useHistory();
   const { current } = useSelector((state) => state);
-  const products = useSelector((state) => state.products.productos); //traigo los datos del array "productos" que está adentro de un array "products"
+  //traigo los datos del array "productos" del estado inicial, que está adentro de un array "products"
+  const products = useSelector((state) => state.products.productos); 
+  //constantes para la paginacion
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productPerPage, setProductPerPage] = useState(12);
+  const indexOfLastProduct = currentPage * productPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+  // le paso Array.isArray para que reconozca que products es un array, (va a devolver un booleano) sin esto, no lo reconoce por el delay entre la conexión del servidor y el catálogo
+  const currentProducts = Array.isArray(products) && products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  const paginate = (pageNum) => setCurrentPage(pageNum);
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
 
   useEffect(() => {
     const categorias = Categories; //carga la primera vez que pongo la ruta
@@ -41,6 +54,50 @@ const Cataloge = () => {
   }, []);
 
 
+  return (
+    <div>
+      <div className="box">
+        <div className="container">
+          
+          {!currentProducts ? (<p>Espera</p>): currentProducts
+           /*  .filter(
+              (song) => song.category.toLowerCase() === current || !current
+            ) */
+            .map((i) => {
+              return (
+                <div key={i.id}> 
+                  <Product
+                    image={i.img}
+                    name={i.name}
+                    price={i.price}
+                    description={i.description}
+                    id={i.id}
+                  />
+                </div>
+              );
+            })}
+            <div className="pag">
+             <div className="pagnation">
+              <Pagination
+                productPerPage={productPerPage}
+                totalproduct={products.length}
+                paginate={paginate}
+                nextPage={nextPage}
+                prevPage={prevPage}
+                currentPage={currentPage}
+              />
+          </div>
+          </div>
+           
+        </div>
+
+       
+      </div>
+      
+    </div>
+  );
+};
+export default Cataloge;
 
 /*   filtrado por categorías, está en pause por ahora
     useEffect(() => {
@@ -51,28 +108,4 @@ const Cataloge = () => {
       const array = data.filter((e) => e.category === currentCategory); //corregir filtrado por value o selección
       setProducts(array);
     }
-  }, [currentCategory]); */
-
-  return (
-    <div className="box">
-      <div className="container">
-        {Array.isArray(products) && products
-          /* .filter((song) => song.category.toLowerCase() === current || !current) */
-          .map((i) => {
-            return (
-              <div>
-                <Product
-                  image={i.img}
-                  name={i.name}
-                  price={i.price}
-                  description={i.description}
-                  id={i.id}
-                />
-              </div>
-            );
-          })}
-      </div>
-    </div>
-  );
-};
-export default Cataloge;
+  }, [currentCategory]);*/

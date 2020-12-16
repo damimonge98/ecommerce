@@ -1,14 +1,45 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import styles  from './productsAdmin.module.css';  
-import '../../../hooks/pagination.css';
 import { Link } from "react-router-dom";
-import usePagination from '../../../hooks/usePagination';
-import data from '../../../data/products.json';
+import Pagination from '../../Pagination/Pagination'
+//import data from '../../../data/products.json';
+//redux
+import {useSelector,useDispatch} from 'react-redux'
+//actions
+import {obtenerProductosAction} from '../../../redux/actions/productActions';  
 
 
-const ProductsAdmin = ({itemsPerPage,startFrom}) => {
-    const { slicedData, pagination, prevPage, nextPage, changePage } = usePagination({ itemsPerPage, data, startFrom });
+const ProductsAdmin = () => {
 
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        //consultar la base de datos 
+        const cargarProductos = ()=> dispatch(obtenerProductosAction());
+        cargarProductos()
+        
+    },[])
+
+    //obtener el state
+    const data = useSelector(state =>state.products.productos);
+
+    //constantes para la paginacion
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productPerPage] = useState(10);
+    const indexOfLastProduct = currentPage * productPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+    const currentProducts = data.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+    const paginate = (pageNum) => setCurrentPage(pageNum);
+    const nextPage = () => setCurrentPage(currentPage + 1);
+    const prevPage = () => setCurrentPage(currentPage - 1);
+
+        console.log('data')
+        console.log(data)
+        console.log('currentProducts')
+        console.log(currentProducts)
 
     return (
         <div className={styles.productos}>
@@ -36,12 +67,12 @@ const ProductsAdmin = ({itemsPerPage,startFrom}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {slicedData.length === 0 ?'No hay productos':slicedData.map(item => (
+                            {currentProducts.length === 0 ?'No hay productos':currentProducts.map(item => (
                                 <tr key={item.id}>
                                     <td className={styles.columnImg}>
                                         <div  className={styles.imgContainer} >
                                             <div className={styles.imgItem}>
-                                                <img src={item.image} alt="imagen producto" className={styles.imgProduct}/>
+                                                <img src={item.img}  className={styles.imgProduct}/>
                                             </div>
                                         </div> 
                                     </td>
@@ -66,27 +97,15 @@ const ProductsAdmin = ({itemsPerPage,startFrom}) => {
                            
                         </tbody>
                     </table>
-                    <nav className="pagination">
-                        <a href="/#" className="pagination-previous" onClick={prevPage}>Previous</a>
-                        <a href="/#" className="pagination-next" onClick={nextPage}>Next</a>
-                        <ul className="pagination-list">
-                        {pagination.map(page => {
-                            if(!page.ellipsis) {
-                                return <li key={page.id}>
-                                <a 
-                                    href="/#"
-                                    className={page.current ? 'pagination-link is-current' : 'pagination-link'}
-                                    onClick={(e) => changePage(page.id, e)}
-                                >
-                                    {page.id}
-                                </a>
-                                </li>
-                            }else {
-                                return <li key={page.id}><span className="pagination-ellipsis">&hellip;</span></li>
-                            }
-                        })}
-                        </ul>
-                    </nav>
+               
+                    <Pagination
+                productPerPage={productPerPage}
+                totalproduct={data.length}
+                paginate={paginate}
+                nextPage={nextPage}
+                prevPage={prevPage}
+                currentPage={currentPage}
+              />
                 </div>
             </div>
         </div>

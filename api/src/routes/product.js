@@ -1,9 +1,10 @@
 const server = require('express').Router();
 const { Product , Categories} = require('../db.js');
 const Sequelize = require('sequelize');
-var cors = require('cors')
+const cors = require('cors')
+server.use(cors());
 
-server.get('/', cors(), (req, res, next) => {
+server.get('/', (req, res, next) => {
 	Product.findAll()
 		.then(products => {
 			res.send(products);
@@ -144,7 +145,7 @@ server.delete("/:id", (req, res) => {
 // });
 
 //Ruta para obtener detalles de un ID específico
-server.get('/:id', cors(), (req, res) => {
+server.get('/:id', (req, res) => {
 	Product.findOne({
 		where: {
 			id: req.params.id

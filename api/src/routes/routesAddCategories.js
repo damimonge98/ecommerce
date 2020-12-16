@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Categories } = require('../db.js');
+const cors = require('cors')
+server.use(cors());
 
 //agrego el get a categorías para probar la funcionalidad del put y el delete
 server.get('/', (req, res, next) => {
