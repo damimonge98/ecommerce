@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination/Pagination";
 import Product from "../Product/Product.jsx";
-import data from "../../data/products.json";
 import "./catalogue.css";
+import {getProducts} from '../../redux/actions/productActions'
 const Categories = [
   "All",
   "Pop",
@@ -19,18 +19,20 @@ const Categories = [
 // aca se van a renderizar todas las card de product
 
 const Cataloge = () => {
-  const [products, setProducts] = useState([]);
+  const [productos, setProductos] = useState([]);
   const [currentCategory, SetCurrentCategory] = useState("All");
   const [categories, setCategories] = useState([]);
   const history = useHistory();
   const { current } = useSelector((state) => state);
-
+  //traigo los datos del array "productos" del estado inicial, que está adentro de un array "products"
+  const products = useSelector((state) => state.products.productos); 
   //constantes para la paginacion
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(12);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
-  const currentProducts = products.slice(
+  // le paso Array.isArray para que reconozca que products es un array, (va a devolver un booleano) sin esto, no lo reconoce por el delay entre la conexión del servidor y el catálogo
+  const currentProducts = Array.isArray(products) && products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
@@ -44,34 +46,28 @@ const Cataloge = () => {
     //setProducts(DataProduct);
   }, []);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    console.log("effect");
-    if (currentCategory === "All") {
-      setProducts(data);
-    } else {
-      const array = data.filter((e) => e.category === currentCategory); //corregir filtrado por value o selección
-      setProducts(array);
-    }
-  }, [currentCategory]);
+    const cargarProductos = () => dispatch(getProducts());
+    cargarProductos();
+    /*     console.log('accion:', getProduct()) */
+  }, []);
 
-  /*   const toMusicBar = () => {
-    history.push("/musicbar");
-  }; */
 
   return (
     <div>
       <div className="box">
         <div className="container">
           
-          {currentProducts
-            .filter(
+          {!currentProducts ? (<p>Espera</p>): currentProducts
+           /*  .filter(
               (song) => song.category.toLowerCase() === current || !current
-            )
+            ) */
             .map((i) => {
               return (
                 <div key={i.id}> 
                   <Product
-                    image={i.image}
+                    image={i.img}
                     name={i.name}
                     price={i.price}
                     description={i.description}
@@ -102,3 +98,14 @@ const Cataloge = () => {
   );
 };
 export default Cataloge;
+
+/*   filtrado por categorías, está en pause por ahora
+    useEffect(() => {
+    console.log("effect");
+    if (currentCategory === "All") {
+      setProducts(data);
+    } else {
+      const array = data.filter((e) => e.category === currentCategory); //corregir filtrado por value o selección
+      setProducts(array);
+    }
+  }, [currentCategory]);*/

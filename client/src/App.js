@@ -23,8 +23,7 @@ function App() {
       <BrowserRouter>
         <Sidebar />
         <Route exact path="/" component={SearchBar} />
-        <Route exact path='/products/:id' render={({ match }) =>
-          <ProductCard products={filterId(match.params.id)} />} />
+        <Route exact path="/products/:id" component={ProductCard} />
         <Route exact path="/" component={Catalogue} />
         <Route exact path="/admin/products" component={ProductsAdmin} />
         <Route exact path="/admin/products/new" component={ProductsForm} />

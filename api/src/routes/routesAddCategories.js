@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Categories } = require('../db.js');
+const cors = require('cors')
+server.use(cors());
 
 //agrego el get a categorías para probar la funcionalidad del put y el delete
 server.get('/', (req, res, next) => {
@@ -22,6 +24,17 @@ server.post("/", (req, res) => {
             })
 })
 
+//Ruta para obtener detalles de un ID específico
+server.get('/:id', (req, res) => {
+	Categories.findOne({
+		where: {
+			id: req.params.id
+		}
+	})
+		.then(categories => {
+			res.send(categories)
+		})
+});
 
 server.put("/:id", (req,res) => {
 	const id = req.params.id;

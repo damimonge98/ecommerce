@@ -10,18 +10,18 @@ export default function SideBar(props) {
 
   return (
     <div>
-      <div class="sidebar-container">
-        <ul class="sidebar-navigation">
-          <li class="header">...</li>
+      <div className="sidebar-container">
+        <ul className="sidebar-navigation">
+          <li className="header">...</li>
           <li onClick={() => dispatch(select())}>
             <Link to={`/`}>
-              <i class="fa fa-home" aria-hidden="true"></i> Home
+              <i className="fa fa-home" aria-hidden="true"></i> Home
             </Link>
           </li>
           <li>
             <Dropdown className="nav-dropdown">
               <Dropdown.Toggle variant="" className="dropdown-basic">
-                <i class="fa fa-headphones-alt" aria-hidden="true" /> Categories
+                <i className="fa fa-headphones-alt" aria-hidden="true" /> Categories
               </Dropdown.Toggle>
               <Dropdown.Menu className="nav-dropdown-list">
                 <Dropdown.Item onClick={() => dispatch(select("pop"))}>
@@ -30,7 +30,7 @@ export default function SideBar(props) {
                 <Dropdown.Item onClick={() => dispatch(select("rock"))}>
                   Rock
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("salsa"))}>
+                <Dropdown.Item onClick={() => dispatch(select("Salsa"))}>
                   Salsa
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => dispatch(select("cumbia"))}>
@@ -47,28 +47,28 @@ export default function SideBar(props) {
           </li>
           <li>
             <Link to={`/`}>
-              <i class="fa fa-user" aria-hidden="true"></i> Log In
+              <i className="fa fa-user" aria-hidden="true"></i> Log In
             </Link>
           </li>
           <li>
             <Link to={`/`}>
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
               Cart
             </Link>
           </li>
           <li>
             <Link to={`/`}>
-              <i class="fa fa-ticket-alt" aria-hidden="true"></i> Concerts
+              <i className="fa fa-ticket-alt" aria-hidden="true"></i> Concerts
             </Link>
           </li>
           <li>
             <Link to={`/admin`}>
-              <i class="fa fa-user-cog" aria-hidden="true"></i> Admin
+              <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
             </Link>
           </li>
           <li>
             <Link to={`/`}>
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Information
+              <i className="fa fa-info-circle" aria-hidden="true"></i> Information
             </Link>
           </li>
         </ul>
