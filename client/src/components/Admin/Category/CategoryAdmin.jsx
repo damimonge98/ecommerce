@@ -1,13 +1,26 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import styles  from './categoryAdmin.module.css';  
-import '../../../hooks/pagination.css';
 import { Link } from "react-router-dom";
-import usePagination from '../../../hooks/usePagination';
+import Pagination from '../../Pagination/Pagination'
 import data from '../../../data/categories.json';
 
 
-const CategoryAdmin = ({itemsPerPage,startFrom}) => {
-    const { slicedData, pagination, prevPage, nextPage, changePage } = usePagination({ itemsPerPage, data, startFrom });
+const CategoryAdmin = () => {
+
+    
+        //constantes para la paginacion
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productPerPage] = useState(10);
+    const indexOfLastProduct = currentPage * productPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+    const currentCategories = data.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+    const paginate = (pageNum) => setCurrentPage(pageNum);
+    const nextPage = () => setCurrentPage(currentPage + 1);
+    const prevPage = () => setCurrentPage(currentPage - 1);
+
 
     return (
         <div className={styles.productos}>
@@ -31,7 +44,7 @@ const CategoryAdmin = ({itemsPerPage,startFrom}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {slicedData.length === 0 ?'No hay categorias':slicedData.map(item => (
+                            {currentCategories.length === 0 ?'No hay categorias':currentCategories.map(item => (
                                 <tr key={item.id}>
                                     <td className={styles.columnas}>{item.name}</td>
                                     <td className={styles.columnas}>{item.description}</td>
@@ -51,27 +64,15 @@ const CategoryAdmin = ({itemsPerPage,startFrom}) => {
                            
                         </tbody>
                     </table>
-                    <nav className="pagination">
-                        <a href="/#" className="pagination-previous" onClick={prevPage}>Previous</a>
-                        <a href="/#" className="pagination-next" onClick={nextPage}>Next</a>
-                        <ul className="pagination-list">
-                        {pagination.map(page => {
-                            if(!page.ellipsis) {
-                                return <li key={page.id}>
-                                <a 
-                                    href="/#"
-                                    className={page.current ? 'pagination-link is-current' : 'pagination-link'}
-                                    onClick={(e) => changePage(page.id, e)}
-                                >
-                                    {page.id}
-                                </a>
-                                </li>
-                            }else {
-                                return <li key={page.id}><span className="pagination-ellipsis">&hellip;</span></li>
-                            }
-                        })}
-                        </ul>
-                    </nav>
+                    <Pagination
+                        productPerPage={productPerPage}
+                        totalproduct={data.length}
+                        paginate={paginate}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                        currentPage={currentPage}
+                    />
+                   
                 </div>
             </div>
         </div>

@@ -12,7 +12,35 @@ import {
     COMENZAR_EDICION_PRODUCTO,
     PRODUCTO_EDITADO_EXITO,
     PRODUCTO_EDITADO_ERROR
-} from '../types';
-import clienteAxios from '../config/axios';
+} from '../types/products';
+import clienteAxios from '../../config/axios.js';
 
 
+ // Función que descarga los productos de la base de datos
+export function obtenerProductosAction() {
+    return async (dispatch) => {
+        dispatch( descargarProductos() );
+
+        try {
+            const respuesta = await clienteAxios.get('/products');
+            dispatch( descargaProductosExitosa(respuesta.data) )
+        } catch (error) {
+            console.log(error);
+            dispatch( descargaProductosError() )
+        }
+    }
+}
+
+const descargarProductos = () => ({
+    type: COMENZAR_DESCARGA_PRODUCTOS,
+    payload: true
+});
+
+const descargaProductosExitosa = productos => ({
+    type: DESCARGA_PRODUCTOS_EXITO,
+    payload: productos
+})
+const descargaProductosError = () => ({
+    type: DESCARGA_PRODUCTOS_ERROR, 
+    payload: true
+});
