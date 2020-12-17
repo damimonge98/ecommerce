@@ -19,6 +19,7 @@ import {
 //cada reducer tiene su propio state
 const initialState = {
     productos: [],
+    productosOrigen: [],
     error: null,
     loading: false,
     productoeliminar: null,
@@ -55,6 +56,13 @@ export default function (state = initialState, action) {
                 loading: false,
                 error: null,
                 productos: action.payload
+            }
+            case DESCARGA_PRODUCTOS_EXITO:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                productosOrigen: action.payload
             }
 
         case OBTENER_PRODUCTO_ELIMINAR:

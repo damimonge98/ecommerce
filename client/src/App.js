@@ -21,8 +21,8 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Sidebar />
         <Route exact path="/" component={SearchBar} />
+        <Sidebar />
         <Route exact path="/products/:id" component={ProductCard} />
         <Route exact path="/" component={Catalogue} />
         <Route exact path="/admin/products" component={ProductsAdmin} />

@@ -1,19 +1,20 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { select } from "../../redux/categories";
+import { getProducts} from "../../redux/actions/productActions";
+
 
 export default function SideBar(props) {
   const dispatch = useDispatch();
-
   return (
     <div>
       <div className="sidebar-container">
         <ul className="sidebar-navigation">
           <li className="header">...</li>
-          <li onClick={() => dispatch(select())}>
+          <li onClick={() => dispatch(getProducts())}>
             <Link to={`/`}>
               <i className="fa fa-home" aria-hidden="true"></i> Home
             </Link>
