@@ -26,16 +26,22 @@ const Cataloge = () => {
   const { current } = useSelector((state) => state);
   //traigo los datos del array "productos" del estado inicial, que está adentro de un array "products"
   const products = useSelector((state) => state.products.productos); 
+  console.log(products.data)
   //constantes para la paginacion
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(12);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
   // le paso Array.isArray para que reconozca que products es un array, (va a devolver un booleano) sin esto, no lo reconoce por el delay entre la conexión del servidor y el catálogo
-  const currentProducts = Array.isArray(products) && products.slice(
+  console.log(products.data)
+  if(!products.data){ 
+  var currentProducts = Array.isArray(products) && products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
-  );
+  );}
+  else{
+    currentProducts= products.data
+  }
   const paginate = (pageNum) => setCurrentPage(pageNum);
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
@@ -52,7 +58,7 @@ const Cataloge = () => {
     cargarProductos();
     /*     console.log('accion:', getProduct()) */
   }, []);
-
+/* console.log(currentProducts) */
 
   return (
     <div>

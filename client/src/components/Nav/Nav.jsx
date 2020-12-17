@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import "./Nav.css"
 import SearchArtist from "../../redux/actions/searchActions.js"
 import { connect } from "react-redux";
-function SearchBar(props) {
 
+
+function SearchBar(props) {
   const [data, setData] = useState({
     name: ""
   });
    const handleChange=(event)=> {
     setData({ name: event.target.value });
+
   }
    const handleSubmit=(event)=> {
     var name2= data.name.split(" ");
