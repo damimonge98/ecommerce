@@ -33,7 +33,6 @@ export function obtenerProductosAction() {
 
 export function getProducts() {
   return async function(dispatch) {
-    dispatch(descargarProductos())
     try {
     const respuesta = await clienteAxios.get('/products');
     dispatch(descargaProductosExitosa(respuesta.data)) // si el get fue exitoso, se hace un dispatch al store de los productos que entran en el array del initialState 'productos', es un array vacío
