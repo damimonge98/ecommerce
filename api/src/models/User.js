@@ -7,9 +7,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
-            validate: {
+/*             validate: {
                 is: /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{,18}$/g,
-            }
+            } */
         },
         givenName: {
             type: DataTypes.STRING,
@@ -29,13 +29,13 @@ module.exports = (sequelize) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
+/*             validate: {
                 is: /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/g,
-            }
+            } */
         },
         photoURL: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
             validate: {
                 isUrl: true
             }
