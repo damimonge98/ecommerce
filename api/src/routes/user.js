@@ -42,7 +42,7 @@ server.delete("/:id", (req, res) => {
 		res.json({ message: "El id especificado no existe o contiene errores." });
 	  } else {
 		user.destroy()
-		return res.json({ message: "User Delete" });
+		return res.json({ message: "User Deleted" });
 	  }
 
 	});
