@@ -29,4 +29,24 @@ server.get('/', (req, res,) => {
 		})
 });
 
+server.delete("/:id", (req, res) => {
+
+	const {id}= req.params
+	User.findOne({
+		where:{
+			id:id
+		}
+	})
+	.then((user) => {
+	  if (!user) {
+		res.json({ message: "El id especificado no existe o contiene errores." });
+	  } else {
+		user.destroy()
+		return res.json({ message: "User Deleted" });
+	  }
+
+	});
+
+});
+
 module.exports = server;
