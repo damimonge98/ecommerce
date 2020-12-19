@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Product_Card.css";
 import { useHistory } from "react-router-dom";
-import MusicBar from "../../components/MusicBar/MusicBar";
+/* import MusicBar from "../../components/MusicBar/MusicBar"; lo voy a usar después*/
 import { useSelector, useDispatch } from "react-redux";
 import { getProductId } from "../../redux/actions/productActions";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import spinner from '../Spinner'
 
 const ProductCard = () => {
-  const products = useSelector((state) => state.products.productos); 
+  const products = useSelector((state) => state.products.productos);
+  const categories = useSelector((state) => state.categories.categorias);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams(); // con esto tomo el id de products que pido por ruta
-  
+
   useEffect(() => {
+    if (!products) return spinner()
     const cargarProductos = () => dispatch(getProductId(id));
     cargarProductos();
   }, []);
-  
-  console.log('id:', products)
-  
+
   const toMusicBar = () => {
     history.push("/musicbar");
   };
@@ -43,7 +44,10 @@ const ProductCard = () => {
               </div>
               <hr className="line" />
               <p className="description">{products.description}</p>
-              <p className="genre">{products.genre}</p>
+              {/* {Array.isArray(products) &&
+                products.map((category => category.name === categories.name).map((cat) => {
+                  return <p className="genre">{cat.name}</p>;
+                }))} */}
             </div>
             <div className="row my-3">
               {/*  <ul className="list-style">
@@ -96,8 +100,7 @@ const ProductCard = () => {
 
 export default ProductCard;
 
-
-  /* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
+/* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
   const [music, setMusic] = useState(false);
   
   const onButtonClick = () => {

@@ -1,48 +1,57 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useDispatch, useSelector } from "react-redux";
-import { select } from "../../redux/categories";
-import { getProducts} from "../../redux/actions/productActions";
+import { useSelector, useDispatch } from "react-redux";
+import { getCategories, getCategoriesName } from "../../redux/actions/categoryActions";
+import { getProducts } from "../../redux/actions/productActions";
+import { Context } from "../../App";
 
-
-export default function SideBar(props) {
+export default function SideBar() {
+  //este es el set de la acción que se va a modificar en catálogo
+  const { setCurrentCategory } = useContext(Context);
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories.categorias);
+
   return (
     <div>
       <div className="sidebar-container">
         <ul className="sidebar-navigation">
           <li className="header">...</li>
-          <li onClick={() => dispatch(getProducts())}>
-            <Link to={`/`}>
+          {/* este boton lleva a home y setea la categoría a All, si la categoría es "All", todos los productos se muestran */}
+          <li onClick={() => setCurrentCategory("All")}>
+            {/* este dispatch de getProducts es porque cuando busco un nombre en la Searchbar y doy en Home se tiene que renderizar todo de nuevo */}
+            <Link to={`/`} onClick={() => dispatch(getProducts())}>
               <i className="fa fa-home" aria-hidden="true"></i> Home
             </Link>
           </li>
           <li>
             <Dropdown className="nav-dropdown">
               <Dropdown.Toggle variant="" className="dropdown-basic">
-                <i className="fa fa-headphones-alt" aria-hidden="true" /> Categories
+                <i className="fa fa-headphones-alt" aria-hidden="true" />{" "}
+                Categories
               </Dropdown.Toggle>
               <Dropdown.Menu className="nav-dropdown-list">
-                <Dropdown.Item onClick={() => dispatch(select("pop"))}>
-                  Pop
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("rock"))}>
-                  Rock
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("Salsa"))}>
-                  Salsa
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("cumbia"))}>
-                  Cumbia
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("rap"))}>
-                  Rap
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(select("trap"))}>
-                  Trap
-                </Dropdown.Item>
+                {Array.isArray(categories) &&
+                  categories.map((i) => {
+                    return (
+                      //estos dos onClick a getCategories es para que siempre me imprima los nombres de las categorías al renderizar el componente, después vemos si hay una forma más performante
+                      <Dropdown.Item onClick={() => dispatch(getCategories(i.name))}>
+
+                        {/* aquí seteo el currentCategory con el nombre al que se le haga click en la lista */}
+                        <div key={i.id} onClick={() => dispatch(getCategories(setCurrentCategory(i.name)))}>
+                          <ul>
+                            <li className="list-categories">
+                              {/*con este dispatch a categoriesName hago un get al nombre de la categoría que esté en la lista, hace el get a /products/category/:nameCat*/}
+                              <p onClick={() => dispatch(getCategoriesName(i.name))}>
+                                {i.name}
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </Dropdown.Item>
+                    );
+                  })}
               </Dropdown.Menu>
             </Dropdown>
           </li>
@@ -53,8 +62,8 @@ export default function SideBar(props) {
           </li>
           <li>
             <Link to={`/`}>
-              <i className="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
-              Cart
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i>{" "}
+              Shopping Cart
             </Link>
           </li>
           <li>
@@ -69,7 +78,8 @@ export default function SideBar(props) {
           </li>
           <li>
             <Link to={`/`}>
-              <i className="fa fa-info-circle" aria-hidden="true"></i> Information
+              <i className="fa fa-info-circle" aria-hidden="true"></i>{" "}
+              Information
             </Link>
           </li>
         </ul>

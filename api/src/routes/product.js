@@ -5,7 +5,10 @@ const cors = require('cors')
 server.use(cors());
 
 server.get('/', (req, res, next) => {
-	Product.findAll()
+	Product.findAll({
+		include: {
+			model: Categories
+		}})
 		.then(products => {
 			res.send(products);
 		})
@@ -13,18 +16,18 @@ server.get('/', (req, res, next) => {
 });
 
 server.post("/", (req, res) => {
-	const { name, description, price, genre, stock, img } = req.body
+	const { name, description, price, stock, img } = req.body
 	Product.create({
 		name,
 		description,
 		price,
 		stock,
-		genre,
 		img
 	})
 		.then((newProduct) => {
 			res.status(201)
 			res.send(newProduct)
+			product.addCategories(genre)
 		}).catch(() => {
 			res.status(400)
 		})
@@ -149,6 +152,9 @@ server.get('/:id', (req, res) => {
 	Product.findOne({
 		where: {
 			id: req.params.id
+		},
+		include: {
+			model: Categories
 		}
 	})
 		.then(products => {
