@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import "./Product_Card.css";
 import { useHistory } from "react-router-dom";
 import MusicBar from "../../components/MusicBar/MusicBar";
-import { useSelector, useDispatch } from "react-redux";
-import { getProductId } from "../../redux/actions/productActions";
-import { useParams } from 'react-router-dom';
-
-const ProductCard = () => {
-  const products = useSelector((state) => state.products.productos); 
+import { addProduct } from "../../redux/reducers/carritoReducer";
+import { addToast } from "../../redux/reducers/toastReducer";
+const ProductCard = ({ products }) => {
   const dispatch = useDispatch();
+  /*   const [music, setMusic] = useState(false);
+  
+  const onButtonClick = () => {
+    setMusic(true);
+  }; */
   const history = useHistory();
-  const { id } = useParams(); // con esto tomo el id de products que pido por ruta
-  
-  useEffect(() => {
-    const cargarProductos = () => dispatch(getProductId(id));
-    cargarProductos();
-  }, []);
-  
-  console.log('id:', products)
-  
+
   const toMusicBar = () => {
     history.push("/musicbar");
   };
@@ -43,7 +38,6 @@ const ProductCard = () => {
               </div>
               <hr className="line" />
               <p className="description">{products.description}</p>
-              <p className="genre">{products.genre}</p>
             </div>
             <div className="row my-3">
               {/*  <ul className="list-style">
@@ -60,15 +54,26 @@ const ProductCard = () => {
                   favorite artists are here!
                 </li>
               </ul> */}
-              {/* div para imprimir el musicbar    
-              <div className = 'renderBar'>
+              {/*    <div className = 'renderBar'>
               {music ? <MusicBar /> : null}  
                 </div> */}
             </div>
             <div className="row my-4 ">
               <div className="cart-btn d-flex justify-content-center">
                 <div className="row-margin">
-                  <button type="button" className="btn btn-custom text-white">
+                  <button
+                    type="button"
+                    className="btn btn-custom text-white"
+                    onClick={() => {
+                      dispatch(addProduct(products));
+                      dispatch(
+                        addToast({
+                          type: "success",
+                          content: "Producto agregado!!!",
+                        })
+                      );
+                    }}
+                  >
                     <i className="fas fa-shopping-basket"></i>
                     Add to Cart
                   </button>
@@ -78,8 +83,8 @@ const ProductCard = () => {
           </div>
           <div className="col-lg-6 col-md-6 p-0 py-md-5 my-xs-0 my-lg-4 my-md-5">
             <div className="py-2 my-lg-0 my-md-5" id="imgcontainer">
-              <img src={products.img} className="img-fluid" id="imgm"></img>
-              <div className="overlay">
+              <img src={products.image} className="img-fluid" id="imgm"></img>
+              <div class="overlay">
                 <img
                   src="https://connectingclues.es/wp-content/uploads/2019/09/white-play-icon-png-7.png"
                   alt=""

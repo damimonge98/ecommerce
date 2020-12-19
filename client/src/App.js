@@ -16,6 +16,8 @@ import { Provider } from 'react-redux'
 import  store  from './redux/store'
 //import  {store}  from './redux/categories'
 import Admin from './components/Admin/Admin2/Admin'
+import { Toaster } from './components/toaster/toaster';
+import SideBarRight from './components/SideBarRight/SideBarRight'
 
 function App() {
   return (
@@ -23,7 +25,11 @@ function App() {
       <BrowserRouter>
         <Route exact path="/" component={SearchBar} />
         <Sidebar />
-        <Route exact path="/products/:id" component={ProductCard} />
+        <SideBarRight />
+        <Toaster />
+        <Route exact path='/products/:id' render={({ match }) =>
+          <ProductCard products={filterId(match.params.id)} />} />
+        {/* <Route exact path="/products/:id" component={ProductCard} /> */}
         <Route exact path="/" component={Catalogue} />
         <Route exact path="/admin/products" component={ProductsAdmin} />
         <Route exact path="/admin/products/new" component={ProductsForm} />
