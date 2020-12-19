@@ -31,14 +31,28 @@ export function getCategories() {
   }
 }
 
+export function getCategoriesName(nombreCat) {
+  return async function (dispatch) {
+    dispatch(descargarCategorias())
+    try {
+      const respuesta = await clienteAxios.get(`/products/category/${nombreCat}`)
+      dispatch(descargaCategoriaExito(respuesta.data)) 
+      console.log(respuesta.data)
+    } catch (err) {
+      console.log(err)
+      dispatch(descargaCategoriaError())
+    }
+  }
+}
+
 const descargarCategorias = () => ({
   type: DESCARGA_CATEGORIA,
   payload: true
 });
 
-const descargaCategoriaExito = productos => ({
+const descargaCategoriaExito = categoria => ({
   type: DESCARGA_CATEGORIA_EXITO,
-  payload: productos
+  payload: categoria
 })
 const descargaCategoriaError = () => ({
   type: DESCARGA_CATEGORIA_ERROR,

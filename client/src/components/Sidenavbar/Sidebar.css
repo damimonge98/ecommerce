@@ -78,21 +78,26 @@
   margin-left: 17px;
 }
 
-.nav-dropdown-list{
-  opacity: .9;
+.nav-dropdown-list {
+  opacity: 0.9;
   background-color: #151515;
 }
 
-.dropdown-basic{
-  color: white
+.dropdown-basic {
+  color: white;
 }
 
-.dropdown-basic:hover{
+.dropdown-basic:hover {
   color: white;
 }
 
 /* esto es para quitarle una linea azul que le salía al boton toggle cuando le daba click */
-.dropdown-basic:focus{
-outline: none; 
-box-shadow: none;
+.dropdown-basic:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.list-categories::before {
+  background-color: #151515 !important; /* para que no se pise con el rojo */
+  color: white;
 }

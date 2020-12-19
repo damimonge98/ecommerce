@@ -4,13 +4,20 @@ const Sequelize = require('sequelize');
 const cors = require('cors')
 server.use(cors());
 
+// Obtener todos los productos con su categoría 
+
 server.get('/', (req, res, next) => {
-	Product.findAll()
+	Product.findAll({
+		include: {
+			model: Categories
+		}})
 		.then(products => {
 			res.send(products);
 		})
 		.catch(next);
 });
+
+// Agregar producto
 
 server.post("/", (req, res) => {
 	const { name, description, price, genre, stock, img } = req.body
@@ -19,18 +26,19 @@ server.post("/", (req, res) => {
 		description,
 		price,
 		stock,
-		genre,
 		img
 	})
 		.then((newProduct) => {
 			res.status(201)
 			res.send(newProduct)
+			product.addCategories(genre)
 		}).catch(() => {
 			res.status(400)
 		})
 })
 
-//actualizar un producto
+// Actualizar un producto
+
 server.put('/:id', (req, res, next) => {
 	const { id } = req.params;
 	const { name, description, price, stock, img } = req.body;
@@ -129,26 +137,15 @@ server.delete("/:id", (req, res) => {
 
 });
 
-//opción 2
+// Ruta para obtener detalles de un ID específico
 
-//   router.delete('/delete/:id', (req, res) => {
-//     const id = req.params.id;
-//     Product.findByPk(id)
-//         .then((result) => {
-//             return Product.destroy({
-//                 where: { id: id }
-//             }).then((product) => {
-//                 res.status(200).json({ mensaje: "El producto ha sido eliminado correctamente", data: result })
-//             })
-//         })
-
-// });
-
-//Ruta para obtener detalles de un ID específico
 server.get('/:id', (req, res) => {
 	Product.findOne({
 		where: {
 			id: req.params.id
+		},
+		include: {
+			model: Categories
 		}
 	})
 		.then(products => {
@@ -156,7 +153,8 @@ server.get('/:id', (req, res) => {
 		})
 });
 
-//Ruta para obtener todos los productos de X categoría
+// Ruta para obtener todos los productos de X categoría
+
 server.get("/category/:nombreCat", (req,res) => {
 	const name = req.params.nombreCat;
 	Product.findAll ({
