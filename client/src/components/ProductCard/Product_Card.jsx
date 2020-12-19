@@ -1,22 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+<<<<<<< HEAD
+import { useDispatch, useSelector } from "react-redux";
 import "./Product_Card.css";
-import { useHistory } from "react-router-dom";
-import MusicBar from "../../components/MusicBar/MusicBar";
+import { useHistory, useParams } from "react-router-dom";
+/* import MusicBar from "../../components/MusicBar/MusicBar"; */
 import { addProduct } from "../../redux/reducers/carritoReducer";
 import { addToast } from "../../redux/reducers/toastReducer";
-const ProductCard = ({ products }) => {
+import { getProductId } from "../../redux/actions/productActions";
+import spinner from '../Spinner'
+
+const ProductCard = () => {
+=======
+import "./Product_Card.css";
+import { useHistory } from "react-router-dom";
+/* import MusicBar from "../../components/MusicBar/MusicBar"; lo voy a usar después*/
+import { useSelector, useDispatch } from "react-redux";
+import { getProductId } from "../../redux/actions/productActions";
+import { useParams } from "react-router-dom";
+import spinner from '../Spinner'
+
+const ProductCard = () => {
+  const products = useSelector((state) => state.products.productos);
+  const categories = useSelector((state) => state.categories.categorias);
+>>>>>>> ab657051569a4351a03a4a470c89dba738974021
   const dispatch = useDispatch();
-  /*   const [music, setMusic] = useState(false);
-  
-  const onButtonClick = () => {
-    setMusic(true);
-  }; */
   const history = useHistory();
+  const toMusicBar = () => history.push("/musicbar");
+  const products = useSelector((state) => state.products.productos);
+  const { id } = useParams(); // con esto tomo el id de products que pido por ruta
+
+  useEffect(() => {
+<<<<<<< HEAD
+    if (!products) return spinner();
+    const cargarProductos = () => dispatch(getProductId(id));
+    cargarProductos();
+  }, []);
+=======
+    if (!products) return spinner()
+    const cargarProductos = () => dispatch(getProductId(id));
+    cargarProductos();
+  }, []);
 
   const toMusicBar = () => {
     history.push("/musicbar");
   };
+>>>>>>> ab657051569a4351a03a4a470c89dba738974021
 
   return (
     <div className="bodyb">
@@ -38,6 +66,13 @@ const ProductCard = ({ products }) => {
               </div>
               <hr className="line" />
               <p className="description">{products.description}</p>
+<<<<<<< HEAD
+=======
+              {/* {Array.isArray(products) &&
+                products.map((category => category.name === categories.name).map((cat) => {
+                  return <p className="genre">{cat.name}</p>;
+                }))} */}
+>>>>>>> ab657051569a4351a03a4a470c89dba738974021
             </div>
             <div className="row my-3">
               {/*  <ul className="list-style">
@@ -83,7 +118,7 @@ const ProductCard = ({ products }) => {
           </div>
           <div className="col-lg-6 col-md-6 p-0 py-md-5 my-xs-0 my-lg-4 my-md-5">
             <div className="py-2 my-lg-0 my-md-5" id="imgcontainer">
-              <img src={products.image} className="img-fluid" id="imgm"></img>
+              <img src={products.img} className="img-fluid" id="imgm"></img>
               <div class="overlay">
                 <img
                   src="https://connectingclues.es/wp-content/uploads/2019/09/white-play-icon-png-7.png"
@@ -101,10 +136,14 @@ const ProductCard = ({ products }) => {
 
 export default ProductCard;
 
-
-  /* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
+/* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
+<<<<<<< HEAD
+  const [music, setMusic] = useState(false)
+  const onButtonClick = () => setMusic(true) */
+=======
   const [music, setMusic] = useState(false);
   
   const onButtonClick = () => {
     setMusic(true);
   }; */
+>>>>>>> ab657051569a4351a03a4a470c89dba738974021

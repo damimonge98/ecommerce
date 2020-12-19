@@ -16,11 +16,6 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    genre:{
-     type: DataTypes.ARRAY(DataTypes.INTEGER),
-     allowNull:true,
-     defaultValue: []
-    },
     stock: {
      type:  DataTypes.INTEGER,
      allowNull: false
