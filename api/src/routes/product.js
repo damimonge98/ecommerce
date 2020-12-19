@@ -20,7 +20,7 @@ server.get('/', (req, res, next) => {
 // Agregar producto
 
 server.post("/", (req, res) => {
-	const { name, description, price, genre, stock, img } = req.body
+	const { name, description, price, stock, img } = req.body
 	Product.create({
 		name,
 		description,
