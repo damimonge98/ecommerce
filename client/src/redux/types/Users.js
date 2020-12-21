@@ -1,0 +1,1 @@
+export const CREAR_USUARIO = 'CREAR_USUARIO';
