@@ -35,14 +35,13 @@ module.exports = (sequelize) => {
         },
         photoURL: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
+/*             validate: {
                 isUrl: true
-            }
+            } */
         },
         isAdmin: {
             type: DataTypes.STRING,
-            defaultValue: false
+            defaultValue: false,
         }
     });
 };

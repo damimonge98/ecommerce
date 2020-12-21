@@ -1,25 +1,38 @@
 const server = require('express').Router();
 const  {User} = require('../db.js');
 const cors = require('cors')
+const multer = require('multer')
+const {promisify} = require("util");
+const fs = require("fs");
 server.use(cors());
 
-server.post("/", (req, res) => {
-	const {username, givenName, familyName, email, password, photoURL, isAdmin } = req.body
+const upload= multer()
+server.post("/",upload.single('file'),async(req, res) => {
+	const {username, givenName, familyName, email, password, isAdmin } = req.body
+	console.log(req.body)
+	//Procesar archivo de imagen recibido
+	const {file} = req;	
+	if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
+	const fileName = 'userimg' + '_' + Date.now() + file.detectedFileExtension;
+	var img = `http://localhost:3001/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+	//guardar archivo de imagen en el servidor 
+	const pipeline = promisify(require("stream").pipeline);
+	await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img-user/${fileName}`)).catch(e=>{console.log(e)});
 	User.create({
         username,
         givenName,
         familyName,
         email,
         password,
-        photoURL,
+        photoURL:img,
         isAdmin 
     })
 		.then((newUser) => {
 			
 			res.send(newUser)
-		}).catch(() => {
+		}).catch((e) => {
             res.status(400)
-            res.send("error")
+            res.send(e)
 		})
 })
 server.get('/', (req, res,) => {

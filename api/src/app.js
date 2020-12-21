@@ -2,8 +2,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const path = require('path');
 const routes = require('./routes/index.js');
 require('./db.js');
+
+
 
 const server = express();
 
@@ -19,7 +22,8 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
+//static files .  Esto es para que se accecible la ruta de las imagenes desde el navegador. Las imagenes subidas se guardaran deontro de la carpeta upload/img
+server.use(express.static(path.join(__dirname,'upload')))
 server.use('/', routes);
 
 // Error catching endware.

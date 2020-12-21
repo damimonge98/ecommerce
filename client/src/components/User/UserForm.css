@@ -1,0 +1,9 @@
+.container-main{
+    display: flex;
+    position:relative;
+    justify-content: center;
+    width: 375px;
+    height: 500px;
+    margin-left: 400px;
+    background-color: rgb(34, 98, 119);
+}
