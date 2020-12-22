@@ -62,4 +62,27 @@ server.delete("/:id", (req, res) => {
 
 });
 
+
+server.put('/:id', (req, res) => {
+	const {id} = req.params;
+	const { username, email, givenName, familyName, password, photoURL, isAdmin } = req.body;
+	User.update(
+		{
+			username,
+			email,
+			givenName,
+			familyName,
+			password,
+			photoURL,
+			isAdmin
+		},
+		{ returning: true, where: { id }}
+	).then(updatedUser => {
+		res.status(201).json(updatedUser)
+	}).catch(e => {
+		res.status(400).json( { MjsError: "Llene los campos obligatorios"} )
+	})
+});
+
+
 module.exports = server;

@@ -6,10 +6,24 @@ module.exports = (sequelize) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
-/*             validate: {
-                is: /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{,18}$/g,
-            } */
+            unique: {
+                args:true              
+            },
+            // Permite solo los caracteres nombrados
+             validate: {
+                is: /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/,
+            } 
+        },
+        email: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            unique: {
+                args:true,
+                msg: 'Email address already in use!'
+            },
+            validate:{
+                isEmail: true
+            }
         },
         givenName: {
             type: DataTypes.STRING,
@@ -19,29 +33,24 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
-        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-/*             validate: {
-                is: /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/g,
-            } */
+            // Permite solo los caracteres nombrados
+             validate: {
+                is: /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/g,
+            } 
         },
         photoURL: {
             type: DataTypes.STRING,
-/*             validate: {
+            allowNull: true,
+            validate: {
                 isUrl: true
-            } */
+            }
         },
         isAdmin: {
             type: DataTypes.STRING,
-            defaultValue: false,
+            defaultValue: false
         }
     });
 };
