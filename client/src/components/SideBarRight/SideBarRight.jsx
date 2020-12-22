@@ -51,16 +51,16 @@ export default function SideBarRight() {
               }}
             >
               <a href="#0"> Empty </a>
-              <i class="fas fa-trash-alt"></i>
+              <i className="fas fa-trash-alt"></i>
             </p>
           </h2>
         </div>
-        <ul class="cd-cart-items">
+        <ul className="cd-cart-items">
           {productos.map((producto) => (
             <li>
               <a href="#0" class="cd-item-remove cd-img-replace">
                 <i
-                  class="fa fa-times"
+                  className="fa fa-times"
                   onClick={() => {
                     dispatch(removeAllProduct({ id: producto.id }));
                   }}
@@ -80,7 +80,7 @@ export default function SideBarRight() {
           ))}
         </ul>
         <div className="cd-bottom-div">
-          <div class="cd-cart-total">
+          <div className="cd-cart-total">
             <p>
               {`Total: ${productos.reduce(
                 (acc, item) => acc + item.price * item.cantidad,

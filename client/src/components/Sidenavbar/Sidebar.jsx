@@ -87,7 +87,7 @@ export default function SideBar() {
           <li onClick={handleClick} className="shopping-icon">
             <Link to={`#`}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-              <span class="badge badge-warning" id="lblCartCount">
+              <span className="badge badge-warning" id="lblCartCount">
                 {/* si no hay productos, no se va a mostrar el icono de la cuenta de productos */}
                 {productos.length > 0 ? shoppingCount: null}
               </span>
