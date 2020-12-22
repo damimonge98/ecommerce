@@ -27,11 +27,18 @@ const carritoSlice = createSlice({
         },
         clearAll(state, action) {
             state.products.splice(0, state.products.length)
+        },
+        removeAllProduct(state, action) {
+            const index = state.products.findIndex(x => x.id == action.payload.id);
+             if (index >= 0) {
+                const product = state.products[index];
+                state.products.splice(index, 1); 
+            }
         }
     },
 },
 )
 
-export const { addProduct, removeProduct, clearAll } = carritoSlice.actions;
+export const { addProduct, removeProduct, clearAll, removeAllProduct } = carritoSlice.actions;
 
 export const carritoReducer = carritoSlice.reducer;

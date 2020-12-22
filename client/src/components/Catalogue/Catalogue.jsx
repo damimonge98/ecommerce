@@ -4,7 +4,6 @@ import Pagination from "../Pagination/Pagination";
 import Product from "../Product/Product.jsx";
 import "./catalogue.css";
 import { getProducts } from "../../redux/actions/productActions";
-import { getCategories } from "../../redux/actions/categoryActions";
 import { Context } from "../../App";
 import spinner from "../Spinner";
 // aca se van a renderizar todas las card de product
@@ -66,11 +65,6 @@ const Cataloge = () => {
   useEffect(() => {
     const cargarProductos = () => dispatch(getProducts());
     setProductos(cargarProductos());
-  }, []);
-
-  useEffect(() => {
-    const cargarCategorias = () => dispatch(getCategories());
-    cargarCategorias();
   }, []);
 
   return (

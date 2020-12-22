@@ -1,52 +1,99 @@
-import React, {useState,useEffect} from "react";
+import React, { useEffect, useContext } from "react";
 import "./SideBarRight.css";
-import "../Sidenavbar/Sidebar.css";
-import { Link } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { select } from "../../redux/categories";
-import { clearAll, removeProduct, addProduct } from "../../redux/reducers/carritoReducer";
-import Button from "react-bootstrap/esm/Button";
-import ProductItem from '../ProductItem/ProductItem'
+import {
+  clearAll,
+  removeProduct,
+  addProduct,
+  removeAllProduct,
+} from "../../redux/reducers/carritoReducer";
+import ProductItem from "../ProductItem/ProductItem";
+import { Context } from "../../App";
 
-export default function SideBarRight(props) {
-  const [isRightBarOpen, setRightBarOpen]= useState(false)
+export default function SideBarRight() {
+  const { setRightBarOpen, isRightBarOpen } = useContext(Context);
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.carrito.products);
+  const products = useSelector((state) => state.products.productos);
+  const shoppingCount = productos.reduce(
+    (prev, curr) => (prev ?? 0) + curr.cantidad,
+    0
+  );
 
-  useEffect( ()=>{
-    if(productos.length > 0){
-      setRightBarOpen(true)
+  useEffect(() => {
+    if (productos.length > 0) {
+      setRightBarOpen(true);
     }
-  }, [productos])
+  }, [productos]);
   return (
-    <div>
-      <div className="sidebarright-container" style={{right:isRightBarOpen? '0px':'-220px'}}>
-        <div className="sidebarright-options">
-          <button onClick={() => setRightBarOpen(false)}>x</button>
-          <button onClick={() => setRightBarOpen(true)}>y</button>
+    <div
+      className="sidebarright-container"
+      style={{ right: isRightBarOpen ? "0px" : "-400px" }}
+      id="cd-shadow-layer"
+    >
+      <div id="cd-cart">
+        <div className="cd-btn">
+          <button
+            type="button"
+            onClick={() => setRightBarOpen(false)}
+            className="btn-close btn-close-white"
+            aria-label="Close"
+            id="close-btn"
+          ></button>
         </div>
-        <div className="sidebarright-products">
-        {productos.map((producto) => 
-          <ProductItem  key={producto.id} product={producto} onIncreaseCant={() => {
-            dispatch(addProduct({ id: producto.id }));
-          }} onDecreaseCant={() => {
-            dispatch(removeProduct({ id: producto.id }));
-          }}/>)}
-        <div>
-          {`Tienes ${productos.length} en el carrito. ${productos.reduce(
-            (prev, curr) => (prev ?? 0) + curr.cantidad,
-            0
-          )}`}
-          {`El precio total es: ${productos.reduce((acc,item)=>acc+item.price*item.cantidad,0)}`}
+        <div className="cd-titles">
+          <h2 className="cd-title">
+            Cart ({shoppingCount})
+            <p
+              className="cd-empty"
+              onClick={() => {
+                dispatch(clearAll());
+              }}
+            >
+              <a href="#0"> Empty </a>
+              <i class="fas fa-trash-alt"></i>
+            </p>
+          </h2>
         </div>
-        <Button
-          onClick={() => {
-            dispatch(clearAll());
-          }}
-        >
-          Borrar todo
-        </Button>
+        <ul class="cd-cart-items">
+          {productos.map((producto) => (
+            <li>
+              <a href="#0" class="cd-item-remove cd-img-replace">
+                <i
+                  class="fa fa-times"
+                  onClick={() => {
+                    dispatch(removeAllProduct({ id: producto.id }));
+                  }}
+                ></i>
+              </a>
+              <ProductItem
+                key={producto.id}
+                product={producto}
+                onIncreaseCant={() => {
+                  dispatch(addProduct({ id: producto.id }));
+                }}
+                onDecreaseCant={() => {
+                  dispatch(removeProduct({ id: producto.id }));
+                }}
+              />
+            </li>
+          ))}
+        </ul>
+        <div className="cd-bottom-div">
+          <div class="cd-cart-total">
+            <p>
+              {`Total: ${productos.reduce(
+                (acc, item) => acc + item.price * item.cantidad,
+                0
+              )}$`}
+            </p>
+          </div>
+          <button className="cd-checkout-btn">
+            <a href="#0">Go to checkout</a>
+          </button>
+          <button className="cd-go-to-cart">
+            <a href="#0">Go to cart page</a>
+          </button>
         </div>
       </div>
     </div>

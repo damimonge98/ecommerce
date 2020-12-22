@@ -1,23 +1,134 @@
 .sidebarright-container {
-    position: fixed;
-    width: 260px;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    color: #fff;
-    z-index: 1;
-    padding-left: 40px;
-    transition: all 0.3s ease-in-out;
+  position: fixed;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #fff;
+  z-index: 1;
+  transition: all 0.3s linear;
+  text-align: center;
+}
+
+#cd-cart {
+  top: 0;
+  height: 100%;
+  width: 360px;
+  padding-top: 70px;
+  z-index: 1;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  background:#272121;
+ 
+}
+.cd-title{
+  display: flex;
+  justify-content: flex-start;
+}
+#close-btn{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cd-titles{
+  top:0
+}
+
+.cd-empty {
+  margin-left: 120px;
+}
+
+.cd-empty a {
+  color: #FFF;
+  text-decoration: none;
+}
+/* selecciona todos los elementos de este div y le agrega un padding de 01em */
+#cd-cart > * {
+  padding: 0 1em;
+}
+#cd-cart h2 {
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 1em 0;
+}
+
+#cd-cart .cd-cart-items {
+  padding: 0;
+}
+.cd-cart-items li {
+  position: relative;
+  padding: 1em;
+  border-top:  1px solid #322f3d;
+  border-bottom: 1px solid #322f3d;
+}
+
+/* list-child selecciona cualquier <li> que sea el último elemento entre sus hermanos */
+.cd-cart-items li:last-child {
+  border-top: 1px solid #322f3d;
+}
+.cd-price {
+  margin-top: .4em;
+}
+#cd-cart .cd-item-remove {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: url() no-repeat center center;
+  color: #fff;
+}
+.no-touch #cd-cart .cd-item-remove:hover {
+  background-color: #e0e6ef;
+}
+
+#cd-cart .cd-checkout-btn, .cd-go-to-cart {
+  display: block;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: #ff0000;
+  color: #FFF;
+  text-align: center;
+}
+#cd-cart .cd-cart-total {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#cd-cart .cd-go-to-cart {
+  text-align: center;
+  margin: 1em 0;
+  background-color: #ff4d00;
+  border-radius: 20px;
+}
+#cd-cart .cd-go-to-cart a {
+  text-decoration: none;
+  color: #fff;
+}
+#cd-cart .cd-checkout-btn a {
+  text-decoration: none;
+  color: #fff;
+}
+#cd-cart .cd-checkout-btn {
+  border-radius: 20px;
+}
+@media only screen and (min-width: 1200px) {
+  #cd-cart > * {
+    padding: 0 2em;
   }
-  .sidebarright-products {
-    height: 100%;
-    background-color: black;
-    overflow-y: auto;
+  #cd-cart .cd-cart-items li {
+    padding: 1em 2em;
   }
-  .sidebarright-options {
-    position: absolute;
-    left: 0;
-    background-color: red;
-    width: 40px;
-    height: 60px;
+  #cd-cart .cd-item-remove {
+    right: 2em;
   }
+}
