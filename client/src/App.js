@@ -43,6 +43,7 @@ function App() {
           <Route exact path="/musicbar" component={MusicBar} />
           <Route exact path="/admin/products" component={ProductsAdmin} />
           <Route exact path="/admin/products/new" component={ProductsForm} />
+          <Route exact path="/admin/products/edit/:id" component={ProductsForm} />
           <Route exact path="/admin/categories/" component={CategoryAdmin} />
           <Route exact path="/admin/categories/new" component={AddCategories} />
           <Route exact path="/admin" component={Admin} />
