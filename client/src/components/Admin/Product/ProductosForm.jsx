@@ -157,7 +157,7 @@ const ProductosForm = () => {
             msg:'Debe llenar todos los campos del formulario',
             classes:'alert alert-danger text-center text-uppercase p3'
         }
-        if(inputs.name==='' || inputs.stock ===''|| inputs.description ===''|| inputs.price==='' || !inputs.genre) {
+        if(inputs.name==='' || inputs.stock ===''|| inputs.description ===''|| inputs.price==='' /* || !inputs.genre */) {
             dispatch(mostrarAlerta(alerta));
             return;
         }
@@ -165,10 +165,10 @@ const ProductosForm = () => {
             dispatch(mostrarAlerta(alerta));
             return;
         }
-        if(inputs.genre && inputs.genre.length<1){
+     /*    if(inputs.genre && inputs.genre.length<1){
             dispatch(mostrarAlerta(alerta));
             return;
-        }
+        } */
         //si no hay errores
         dispatch(ocultarAlertaAction());
 
@@ -222,7 +222,7 @@ const ProductosForm = () => {
                                     onSelect={onSelect}
                                     onRemove={onRemove}
                                     selectedValues={selectedValues}
-                                    required
+                                    /* required */
                                 />
                             </div>
                             <div className="mt-3">
@@ -242,7 +242,7 @@ const ProductosForm = () => {
                                     <label htmlFor="imagen" className="form-label"></label>
                                     {modoEdit 
                                     ? <input type="file" className="form-control form-control-lg" className={styles.input}  name="img"  accept="image/x-png,image/jpeg,image/jpg" onChange={imageHandler} />
-                                    : <input type="file" className="form-control form-control-lg" className={styles.input}  name="img"  accept="image/x-png,image/jpeg,image/jpg" onChange={imageHandler} required/>
+                                    : <input type="file" className="form-control form-control-lg" className={styles.input}  name="img"  accept="image/x-png,image/jpeg,image/jpg" onChange={imageHandler} /* required *//>
                                     }
                                 </div>
                             </div>

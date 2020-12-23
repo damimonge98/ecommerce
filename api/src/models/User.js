@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     sequelize.define('user', {
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             unique: {
                 args:true              
             },
@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             // Permite solo los caracteres nombrados
              validate: {
                 is: /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/g,

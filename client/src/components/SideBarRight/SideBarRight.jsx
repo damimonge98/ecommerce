@@ -9,6 +9,7 @@ import {
 } from "../../redux/reducers/carritoReducer";
 import ProductItem from "../ProductItem/ProductItem";
 import { Context } from "../../App";
+import {Link} from 'react-router-dom'
 
 export default function SideBarRight() {
   const { setRightBarOpen, isRightBarOpen } = useContext(Context);
@@ -88,9 +89,11 @@ export default function SideBarRight() {
               )}$`}
             </p>
           </div>
+          <Link to = '/cart/checkout'>
           <button className="cd-checkout-btn">
             <a href="#0">Go to checkout</a>
           </button>
+          </Link>
           <button className="cd-go-to-cart">
             <a href="#0">Go to cart page</a>
           </button>

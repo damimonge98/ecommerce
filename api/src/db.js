@@ -15,7 +15,7 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
+fs.readdirSync(path.join(__dirname, '/models')) 
   .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
     modelDefiners.push(require(path.join(__dirname, '/models', file)));
@@ -32,12 +32,17 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { Product } = sequelize.models;
 const { Categories } = sequelize.models;
-const {User}= sequelize.models
+const { User }= sequelize.models;
+const { Reviews }= sequelize.models
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Product.belongsToMany(Categories, { through: 'Product_Category'});
 Categories.belongsToMany(Product, { through: 'Product_Category'}); 
+Product.hasMany(Reviews, {as: 'reviews'});
+Reviews.belongsTo(Product);
+Reviews.belongsTo(User);
+User.hasOne(Reviews);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -17,8 +17,7 @@ const initialState = {
     loading: false,
     categoriasagregar: null,
     categoriaeditar: null,
-    productoeliminar: null,
-    productoeditar: null
+    categoriaeliminar: null,
 }
 
 export default function (state = initialState, action) {

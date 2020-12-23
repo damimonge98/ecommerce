@@ -30,9 +30,11 @@ server.post("/",upload.single('file'),async(req, res) => {
 		.then((newUser) => {
 			
 			res.send(newUser)
+			
 		}).catch((e) => {
             res.status(400)
-            res.send(e)
+			res.send(e)
+			console.log(e)
 		})
 })
 server.get('/', (req, res,) => {
