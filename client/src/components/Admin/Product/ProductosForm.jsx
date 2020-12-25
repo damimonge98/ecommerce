@@ -206,7 +206,7 @@ const ProductosForm = () => {
                          
                             <div className="mb-3">
                                 <label htmlFor="stock" className="form-label">Stock: *</label>
-                                <input type="number" className="form-control" id="stock" value={ stock || '' } placeholder="Stock" name="stock"  onChange={handleInputChange} min="1" max="9999999" required/>
+                                <input type="number" className="form-control" id="stock" value={ stock || '' } placeholder="Stock" name="stock"  onChange={handleInputChange} min="0" max="9999999" required/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="precio" className="form-label">Precio: *</label>
