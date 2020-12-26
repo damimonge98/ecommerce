@@ -74,17 +74,37 @@ const Cataloge = () => {
           {!currentProducts
             ? spinner()
             : currentProducts.map((i) => {
+              //validamos el stock. En caso que este agotado, le agregamos una propiedad
+              //para utilizarlo despues
+              if (i.stock === 0) {
                 return (
                   <div key={i.id}>
                     <Product
-                      image={i.img}
+                      image = {i.img}
                       name={i.name}
                       price={i.price}
                       description={i.description}
                       id={i.id}
-                    />
+                      sold_out = {true}
+                      />
+          
+  
                   </div>
-                );
+                )} else {
+                  return (
+                  <div key={i.id}>
+                    <Product
+                      image = {i.img}
+                      name={i.name}
+                      price={i.price}
+                      description={i.description}
+                      id={i.id}
+                      sold_out = {false}
+                      />
+                      
+                  </div>
+                )
+                }
               })}
           <div className="pag">
             <div className="pagnation">

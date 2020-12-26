@@ -6,7 +6,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { addProduct } from "../../redux/reducers/carritoReducer";
 import { addToast } from "../../redux/reducers/toastReducer";
 import { getProductId } from "../../redux/actions/productActions";
-import spinner from '../Spinner'
+import spinner from '../Spinner';
+import Swal from "sweetalert2";
 
 const ProductCard = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,22 @@ const ProductCard = () => {
     const cargarProductos = () => dispatch(getProductId(id));
     cargarProductos();
   }, []);
+
+
+
+const handleStock = (stock, products) => { //Este handle verifica si hay stock o no.
+  if (stock <= 0) { //En caso que no haya simplemente retorna un alert. 
+    return Swal.fire({
+  title: 'Ha ocurrido un error',
+  text: "Al parecer, este producto ya no esta disponible :(",
+  icon: 'error',
+  confirmButtonText: 'Aceptar'
+})
+  } //Caso contrario agrega los productos al carrito
+  dispatch(addProduct(products));
+  dispatch(addToast({type: "success",content: "Producto agregado!!!",}));
+}
+
 
   return (
     <div className="bodyb">
@@ -42,6 +59,12 @@ const ProductCard = () => {
               <hr className="line" />
               <p className="description">{products.description}</p>
             </div>
+
+            <div>
+              <hr className="line" />
+              <p className="stock">Stock disponible: {products.stock}</p>
+            </div>
+
             <div className="row my-3">
               {/*  <ul className="list-style">
                 <li>
@@ -68,13 +91,7 @@ const ProductCard = () => {
                     type="button"
                     className="btn btn-custom text-white"
                     onClick={() => {
-                      dispatch(addProduct(products));
-                      dispatch(
-                        addToast({
-                          type: "success",
-                          content: "Producto agregado!!!",
-                        })
-                      );
+                      handleStock(products.stock, products)
                     }}
                   >
                     <i className="fas fa-shopping-basket"></i>

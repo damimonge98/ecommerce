@@ -5,9 +5,11 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/reducers/carritoReducer";
 import { addToast } from "../../redux/reducers/toastReducer";
 
-export const Product = ({ id, image, name, description, price, stock }) => {
+export const Product = ({ id, image, name, description, price, stock, sold_out}) => {
   const dispatch = useDispatch();
-  return (
+
+  if (sold_out === false) {
+    return (
     <div className="card">
       <Link to={`/products/${id}`}>
         <img src={image} className="card-img-top" alt={name} />
@@ -40,6 +42,28 @@ export const Product = ({ id, image, name, description, price, stock }) => {
       </div>
     </div>
   );
+
+  } else {
+    return (
+
+    <div className="card">
+       <div class="ribbon"><span>AGOTADO</span> </div>
+      <Link to={`/products/${id}`}>
+        <img src={image} className = "card-img-top" alt={name} />
+      </Link>
+      <div className="div-h2">
+        <h2 className="card-h2">
+          {name}
+          <br />
+          {description}
+        </h2>
+      </div>
+
+    </div>
+  );
+  }
+
+  
 };
 
 export default Product;
