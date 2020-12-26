@@ -32,12 +32,18 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { Product } = sequelize.models;
 const { Categories } = sequelize.models;
-const {User}= sequelize.models
+const {User}= sequelize.models;
+const {Order} = sequelize.models;
+const {LineOrder} = sequelize.models;
+
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Product.belongsToMany(Categories, { through: 'Product_Category'});
-Categories.belongsToMany(Product, { through: 'Product_Category'}); 
+Categories.belongsToMany(Product, { through: 'Product_Category'});
+Order.belongsTo(User, { as: 'user' });
+Product.belongsToMany(Order, { through: LineOrder });
+Order.belongsToMany(Product, { through: LineOrder });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
