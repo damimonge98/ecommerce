@@ -1,0 +1,10 @@
+.order {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.orderProduct {
+  display: grid;
+  grid-template-columns: 40px 50% 100px 100px 40px;
+}

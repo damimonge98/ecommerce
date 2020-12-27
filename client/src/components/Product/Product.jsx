@@ -27,7 +27,14 @@ export const Product = ({ id, image, name, description, price, stock, sold_out})
           type="button"
           onClick={() => {
             dispatch(
-              addProduct({ id, image, name, description, price, stock })
+              addProduct({ 
+                id, 
+                image, 
+                name, 
+                description, 
+                price, 
+                stock, 
+                img: image, })
             );
             dispatch(
               addToast({
