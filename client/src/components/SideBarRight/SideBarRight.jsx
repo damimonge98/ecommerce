@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import "./SideBarRight.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from 'react-router-dom'
 import {
   clearAll,
   removeProduct,
@@ -9,10 +10,12 @@ import {
 } from "../../redux/reducers/carritoReducer";
 import ProductItem from "../ProductItem/ProductItem";
 import { Context } from "../../App";
+import { Link } from "react-router-dom";
 
 export default function SideBarRight() {
   const { setRightBarOpen, isRightBarOpen } = useContext(Context);
   const dispatch = useDispatch();
+  const location = useLocation();
   const productos = useSelector((state) => state.carrito.products);
   const products = useSelector((state) => state.products.productos);
   const shoppingCount = productos.reduce(
@@ -21,7 +24,7 @@ export default function SideBarRight() {
   );
 
   useEffect(() => {
-    if (productos.length > 0) {
+    if (productos.length > 0 && location.pathname === '/' ) {
       setRightBarOpen(true);
     }
   }, [productos]);
@@ -51,16 +54,16 @@ export default function SideBarRight() {
               }}
             >
               <a href="#0"> Empty </a>
-              <i className="fas fa-trash-alt"></i>
+              <i class="fas fa-trash-alt"></i>
             </p>
           </h2>
         </div>
-        <ul className="cd-cart-items">
+        <ul class="cd-cart-items">
           {productos.map((producto) => (
             <li>
               <a href="#0" class="cd-item-remove cd-img-replace">
                 <i
-                  className="fa fa-times"
+                  class="fa fa-times"
                   onClick={() => {
                     dispatch(removeAllProduct({ id: producto.id }));
                   }}
@@ -80,7 +83,7 @@ export default function SideBarRight() {
           ))}
         </ul>
         <div className="cd-bottom-div">
-          <div className="cd-cart-total">
+          <div class="cd-cart-total">
             <p>
               {`Total: ${productos.reduce(
                 (acc, item) => acc + item.price * item.cantidad,
@@ -91,9 +94,7 @@ export default function SideBarRight() {
           <button className="cd-checkout-btn">
             <a href="#0">Go to checkout</a>
           </button>
-          <button className="cd-go-to-cart">
-            <a href="#0">Go to cart page</a>
-          </button>
+            <Link role="button" to="/order" style={{textDecoration:'none'}} className="cd-go-to-cart">Go to cart page</Link>
         </div>
       </div>
     </div>

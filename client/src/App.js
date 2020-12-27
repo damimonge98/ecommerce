@@ -17,6 +17,7 @@ import { Toaster } from './components/toaster/toaster';
 import SideBarRight from './components/SideBarRight/SideBarRight'
 import Orders from './components/Admin/Orders/Orders'
 import UserForm from './components/User/UserForm.jsx'
+import Order from './components/order/Order';
 // el Context es para crear la conexión entre las acciones de Sidebar y el catálogo, para poner conectar el filtrado
 export const Context = React.createContext({
   currentCategory: null,
@@ -49,6 +50,7 @@ function App() {
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/orders" component={Orders} />
           <Route exact path="/user" component={UserForm} />
+          <Route exact path="/order" component={Order} />
         </Context.Provider>
       </BrowserRouter>
     </Provider>

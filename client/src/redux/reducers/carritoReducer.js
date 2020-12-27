@@ -12,7 +12,7 @@ const carritoSlice = createSlice({
         addProduct(state, action) {
             //Controlar el ingreso del prodcuto al carro
             const existe = state.products.find(x => x.id == action.payload.id);
-            const product = existe ? existe : { id: action.payload.id, name: action.payload.name, cantidad: 1 , price:action.payload.price}
+            const product = existe ? existe : { id: action.payload.id, name: action.payload.name, cantidad: 1 , price:action.payload.price, img: action.payload.img}
             product.cantidad += existe ? 1 : 0;
             if (!existe) state.products.push(product)
         },
