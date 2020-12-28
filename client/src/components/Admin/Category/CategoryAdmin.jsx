@@ -1,10 +1,11 @@
 import React ,{useState, useEffect }from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import styles  from './categoryAdmin.module.css';  
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Pagination from '../../Pagination/Pagination'
 import { getCategoriesAdmin, deleteCategory, editCategory } from "../../../redux/actions/categoryActions";
 import data from '../../../data/categories.json';
+import Swal from "sweetalert2";
 
 
 const CategoryAdmin = () => {
@@ -22,7 +23,19 @@ const CategoryAdmin = () => {
 
     //Handler para eliminar categoria  
     const eliminarCategoria = (id) => {
-      dispatch(deleteCategory (id))  }
+        Swal.fire({
+                title: 'Eliminar categoría',
+                text: "¿Esta seguro que desea eliminar la categoría? Una vez eliminada no se podrá recuperar.",
+                icon: 'warning',
+                confirmButtonText: 'Confirmar',
+                showDenyButton: true,
+                denyButtonText: "No"
+            })
+        .then((result) => {
+            if (result.isConfirmed) {
+              dispatch(deleteCategory (id))
+            }
+        })}
 
     //State para mostrar form de editar categoria en este mismo componente
     const [editState, setEditState] = useState(false); //inicialmente en false 
@@ -41,15 +54,32 @@ const CategoryAdmin = () => {
     name: "",
     description: ""
 });
+    //UseHistory para redireccionar
+    const history = useHistory();
 
 
 const handleSubmit = (event) => {
 
-    event.preventDefault();
+    event.preventDefault ();
+    console.log(data.name, data.description)
+
+    if (data.name && data.description !== '') {
     dispatch (editCategory(window.categoriaid, data))
-    //aca va editar categoria
-    alert ("La categoria  ha sido actualizada")
-    handleEdit();
+    Swal.fire ({
+        title: "Categoría actualizada",
+        text: "La categoría ha sido actualizada correctamente",
+        icon: "success",
+        confirmButtonText: "Aceptar"
+    })
+    handleEdit()
+    return}
+
+     Swal.fire({
+            title: "Error",
+            text: 'Por favor, ingrese todos los campos correctamente',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+            })
 }
 
 console.log(window.categoriaid)

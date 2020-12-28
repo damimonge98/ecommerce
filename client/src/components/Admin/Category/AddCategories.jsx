@@ -2,8 +2,13 @@ import React, {useState} from "react";
 import styles  from '../Product/productos-form.module.css';
 import { connect } from "react-redux";
 import { addCategory } from "../../../redux/actions/categoryActions";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function AddCategories (props) {
+
+ //useHistory para redireccion
+ const history = useHistory();
 
 const [data, setData] = useState({
 	name: "",
@@ -13,10 +18,22 @@ const [data, setData] = useState({
 
 const handleSubmit = (event) => {
 	event.preventDefault ();
-	console.log(event)
-	props.addCategory (data);
-	alert ("La categoria " + data.name + " ha sido agregada correctamente")
-	setData ({name: "", description: ""})
+	console.log(data.name, data.description)
+
+	if (data.name && data.description !== '') {
+	props.addCategory(data);
+	history.push('/admin/categories')
+	return}
+
+	 Swal.fire({
+            title: 'Error',
+            text: "Por favor, ingrese todos los campos correctamente",
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+            })
+	  
+
+	
 }
 
 const handleChange = (event) => {
@@ -24,6 +41,8 @@ const handleChange = (event) => {
 		 [event.target.name] : event.target.value
 	})
 }
+
+
 
 
 	return (
