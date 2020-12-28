@@ -1,10 +1,40 @@
-.order {
+.orderContainer{
   display: flex;
-  width: 100%;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container2{
+  margin-left: 200px;
+  margin-top: 20px;
+}
+#input-plus{
+  position: absolute;
+  margin-top: -25px;
+  margin-left: 17px;
+  font-size: 10px;
+  cursor: pointer;
 }
 
-.orderProduct {
-  display: grid;
-  grid-template-columns: 40px 50% 100px 100px 40px;
+#input-minus{
+  position: absolute;
+  margin-top: -25px;
+  margin-left: 3px;
+  font-size: 10px; 
+  cursor: pointer;
+}
+
+.table{
+  color: #00303f;
+  height: 100%;  
+  width: 100%;
+  background-color: #f5f4f4;
+}
+
+.btn.btn-customized{
+  background-color: purple;
+  color: #f5f4f4;
+}
+
+.heading{
+  cursor: pointer;
 }

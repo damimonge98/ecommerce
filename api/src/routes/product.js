@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product , Categories,Product_Category,conn} = require('../db.js');
+const { Product , Categories, Reviews,conn} = require('../db.js');
 const Sequelize = require('sequelize');
 const cors = require('cors');
 const multer = require('multer');//midleware para manejar el archivod de imagen
@@ -13,7 +13,7 @@ server.use(cors());
 server.get('/', (req, res, next) => {
 	Product.findAll({
 		include: {
-			model: Categories
+			all: true
 		}})
 		.then(products => {
 			res.send(products);
@@ -211,7 +211,7 @@ server.delete("/:id", async (req, res) => {
 	
 });
 
-// Ruta para obtener detalles de un ID específico
+// Ruta para obtener detalles de un producto específico
 
 server.get('/:id', (req, res) => {
 	Product.findOne({
@@ -219,7 +219,7 @@ server.get('/:id', (req, res) => {
 			id: req.params.id
 		},
 		include: {
-			model: Categories
+			all: true
 		}
 	})
 		.then(products => {
@@ -245,6 +245,22 @@ server.get("/category/:nombreCat", (req,res) => {
 	}))
 })
 
+// Ruta para obtener las reviews de un producto
 
-
+server.post('/:id/review', (req, res) => {
+	let { description, rating, userId } = req.body
+	const productId = req.params.id;
+	Reviews.create({
+		description: description,
+		rating: rating,
+	})
+		.then(newReview => {
+			newReview.setProduct(productId);
+			newReview.setUser(userId);
+		})
+		.then(() => {
+			res.status(201);
+		})
+		.catch(err => res.status(400).send(err));
+});
 module.exports = server;

@@ -5,6 +5,8 @@ import Pagination from "../../Pagination/Pagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import order from "../../../data/order.json";
+import { getOrder } from '../../../redux/actions/orderActions'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -16,20 +18,23 @@ const Orders = () => {
   const paginate = (pageNum) => setCurrentPage(pageNum);
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
+  const dispatch = useDispatch();
+  const order = useSelector((state) => state.order);
+
   let currentOrder =
     Array.isArray(orders) &&
     orders.slice(indexOfFirstProduct, indexOfLastProduct);
 
   useEffect(() => {
-    setOrders(order);
+    const cargarOrdenes = () => dispatch(getOrder())
+    setOrders(cargarOrdenes());
   }, []);
 
   const getId = (id) => {
     const checkboxId = orders.find((order) => id === order.id);
     setCheckbox(checkboxId);
   };
-  console.log("checkbox", checkbox);
-  console.log(Array.isArray(orders) && orders.map((order) => order.id));
+  console.log(orders)
 
   const removeData = (id) => {
     const deleteOrder = Array.isArray(orders) && orders.filter((c) => id !== c.id);
@@ -75,6 +80,7 @@ const Orders = () => {
               <th>Quantity</th>
               <th>Price</th>
               <th>Stock</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -92,6 +98,7 @@ const Orders = () => {
                     <td>{orders.quantity}</td>
                     <td>{orders.price}</td>
                     <td>{orders.stock}</td>
+                    <td>{orders.status}</td>
                   </tr>
                 );
               })}
