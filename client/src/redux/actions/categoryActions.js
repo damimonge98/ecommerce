@@ -10,6 +10,7 @@ import {
   EDITAR_CATEGORIA_EXITO
  } from "../types/categories.js";
 import clienteAxios from '../../config/axios.js';
+import Swal from "sweetalert2";
 
 export function addCategory(data) { //recibe la data pasada por el form de AddCategories
   return function (dispatch) {
@@ -19,6 +20,12 @@ export function addCategory(data) { //recibe la data pasada por el form de AddCa
       .then(res => {
         dispatch (agregarCategoria(res.data))
         dispatch(agregarCategoriaExito())
+         Swal.fire({
+                title: "Categoria agregada",
+                text: 'La categoria ha sido agregada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            })
       })
   }
 };
