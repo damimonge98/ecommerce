@@ -91,9 +91,11 @@ export default function SideBarRight() {
               )}$`}
             </p>
           </div>
+          <Link to = '/order/checkout'>
           <button className="cd-checkout-btn">
             <a href="#0">Go to checkout</a>
           </button>
+          </Link>
             <Link role="button" to="/order" style={{textDecoration:'none'}} className="cd-go-to-cart">Go to cart page</Link>
         </div>
       </div>
