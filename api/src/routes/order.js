@@ -27,4 +27,22 @@ server.get('user/:id/orders', (req, res,) => {
 		})
 });
 
+
+
+//ruta que retoma una orden en particular
+server.get('/user/:id/orders', (req, res) => {
+	const {id} = req.params;
+	console.log(id)
+	Order.findByPk(id)
+	.then(order=>{
+		if(order){
+			res.status(200).json(order)
+		}else{
+			res.status(200).json({msj:`La orden con numero de id ${id} no existe`})
+		}
+	}).catch(e=>{
+		res.status(400).json(e)
+	})
+});
+
 module.exports = server;
