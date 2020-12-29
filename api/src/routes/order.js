@@ -27,6 +27,7 @@ server.get('user/:id/orders', (req, res,) => {
 		})
 });
 
+
 //editar cantidades del carrito 
 server.put('/user/:idUser/cart', (req, res) => {
 	const userId = req.params.idUser;
@@ -45,6 +46,23 @@ server.put('/user/:idUser/cart', (req, res) => {
 			}).catch(e=>{
 				res.status(400).json(e)
 			})
+		}
+	}).catch(e=>{
+		res.status(400).json(e)
+	})
+});
+
+//ruta que retoma una orden en particular
+server.get('/user/:id/orders', (req, res) => {
+	const {id} = req.params;
+	console.log(id)
+	Order.findByPk(id)
+	.then(order=>{
+		if(order){
+			res.status(200).json(order)
+		}else{
+			res.status(200).json({msj:`La orden con numero de id ${id} no existe`})
+
 		}
 	}).catch(e=>{
 		res.status(400).json(e)
