@@ -27,4 +27,30 @@ server.get('user/:id/orders', (req, res,) => {
 		})
 });
 
+//editar cantidades del carrito 
+server.put('/user/:idUser/cart', (req, res) => {
+	const userId = req.params.idUser;
+	const {productId,cantidad }=req.body;
+	//encontrar orden que este en estado 'carrito'  y luego modificar la cantidad de cierto producto
+	Order.findOne({ where: { userId, state:'carrito' } })
+	.then(order=>{
+		if(order){
+			LineOrder.update({
+				cantidad,
+			},{ where: { orderId:order.id, productId  } },)
+			.then(updateCantidad=>{
+				if(updateCantidad){
+					res.status(200).json({msg:'cantidad actualizada correctamente'})
+				}
+			}).catch(e=>{
+				res.status(400).json(e)
+			})
+		}
+	}).catch(e=>{
+		res.status(400).json(e)
+	})
+});
+
+
+
 module.exports = server;
