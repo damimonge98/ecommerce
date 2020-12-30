@@ -138,10 +138,7 @@ server.post('/users/:idUser/cart', (req, res) => {
 					});
 				});
 			}
-		})
-		.catch(e=>{
-			res.status(400).json(e)
-		})
+		});
 });
 
 module.exports = server;
