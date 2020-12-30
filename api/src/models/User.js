@@ -43,10 +43,7 @@ module.exports = (sequelize) => {
         },
         photoURL: {
             type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                isUrl: true
-            }
+            allowNull: true
         },
         isAdmin: {
             type: DataTypes.STRING,
