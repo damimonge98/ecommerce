@@ -41,7 +41,6 @@ const { Reviews }= sequelize.models;
 // Product.hasMany(Reviews);
 Product.belongsToMany(Categories, { through: 'Product_Category'});
 Categories.belongsToMany(Product, { through: 'Product_Category'});
-User.hasMany(Order, { as: 'orders' });
 Order.belongsTo(User, { as: 'user' });
 Product.belongsToMany(Order, { through: LineOrder });
 Order.belongsToMany(Product, { through: LineOrder });
