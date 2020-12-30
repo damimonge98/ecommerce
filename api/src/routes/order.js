@@ -141,4 +141,18 @@ server.post('/users/:idUser/cart', (req, res) => {
 		});
 });
 
+server.put("/:id", (req,res) => {
+	const id = req.params.id
+	const state = req.body.state
+	if (id) {
+		Order.update ({
+			state:state},
+			{where: {id:id}}
+		)
+		.then (orderUpdated => res.status(201).json("Estado de orden actualizado"))
+		.catch (error => res.send(error))
+	}
+
+})
+
 module.exports = server;
