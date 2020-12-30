@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Order , User, LineOrder } = require('../db.js');
+const { Order , User, LineOrder, Product } = require('../db.js');
 const Sequelize = require('sequelize');
 
 const cors = require('cors');
@@ -16,7 +16,7 @@ server.get('/', (req, res, next) => {
 });
 
 // Ruta para obtener todas las ordenes de un usuario
-server.get('user/:id/orders', (req, res,) => {
+server.get('/users/:id/orders', (req, res,) => {
 	const { userId } = req.params;
 	Order.findAll ({
 		include: {
@@ -32,7 +32,7 @@ server.get('user/:id/orders', (req, res,) => {
 
 
 //ruta para vaciar el carrito
-server.delete('/user/:idUser/cart', (req, res) => {
+server.delete('/users/:idUser/cart', (req, res) => {
 	const userId = req.params.idUser;
 	//encontrar orden que este en estado 'carrito'  y luego eliminar o todos los productos relacionados a esa orden y al usuarioid
 	Order.findOne({ where: { userId, state:'carrito' } })
@@ -53,7 +53,7 @@ server.delete('/user/:idUser/cart', (req, res) => {
 });
 
 //editar cantidades del carrito 
-server.put('/user/:idUser/cart', (req, res) => {
+server.put('/users/:idUser/cart', (req, res) => {
 	const userId = req.params.idUser;
 	const {productId,cantidad }=req.body;
 	//encontrar orden que este en estado 'carrito'  y luego modificar la cantidad de cierto producto
@@ -77,7 +77,7 @@ server.put('/user/:idUser/cart', (req, res) => {
 });
 
 //ruta que retoma una orden en particular
-server.get('/user/:id/orders', (req, res) => {
+server.get('/users/:id/orders', (req, res) => {
 	const {id} = req.params;
 	console.log(id)
 	Order.findByPk(id)
@@ -90,6 +90,58 @@ server.get('/user/:id/orders', (req, res) => {
 	}).catch(e=>{
 		res.status(400).json(e)
 	})
+});
+
+//Ruta para crear una orden nueva o agregar un producto a una que ya existe
+server.post('/users/:idUser/cart', (req, res) => {
+	const userId = req.params.idUser;
+	const { productId } = req.body;
+	// Busca una orden que no este "creada", por eso esta en carrito
+	Order.findOne({ where: { userId: userId, state: 'carrito' } })
+		.then(order => {
+			// console.log(order);
+			// Si no hay nada en el carrito, crea una orden en ese estado
+			if (!order) {
+				Order.create({
+					state: 'carrito',
+					userId: userId
+				}).then(newOrder => {
+					// Busca el producto pasado por body y crea una nueva linea de orden con el
+					Product.findByPk(productId).then(product => {
+						LineOrder.create({
+							price: product.price,
+							cantidad: 1,
+							productId: productId,
+							orderId: newOrder.id
+						}).then(lineOrder => res.json(lineOrder));
+					});
+				});
+			} else {
+				// Si ya existe un carrito, busca el producto
+				Product.findByPk(productId).then(product => {
+					LineOrder.findOne({
+						where: { productId: product.id, orderId: order.id }
+					}).then(lineorder => {
+						// Si no existe una linea de orden de ese producto en ese carrito, crea una nueva
+						console.log(lineorder)
+						if(!lineorder) {
+							LineOrder.create({
+								price: product.price,
+								productId: product.id,
+								orderId: order.id
+							}).then(lineOrder => res.json(lineOrder));
+						} 
+						else {
+							// Aumenta en uno la cantidad de ese producto si ya existía una linea de orden creada
+							lineorder.update({ cantidad: Number(lineorder.cantidad) + 1 }).then(lineOrder => res.json(lineOrder));
+						}
+					});
+				});
+			}
+		})
+		.catch(e=>{
+			res.status(400).json(e)
+		})
 });
 
 module.exports = server;
