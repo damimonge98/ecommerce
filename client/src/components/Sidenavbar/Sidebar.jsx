@@ -12,11 +12,16 @@ import { Context } from "../../App";
 
 export default function SideBar() {
   //este es el set de la acción que se va a modificar en catálogo
-  const { setCurrentCategory, setRightBarOpen, isRightBarOpen } = useContext(Context);
+  const { setCurrentCategory, setRightBarOpen, isRightBarOpen } = useContext(
+    Context
+  );
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categorias);
   const productos = useSelector((state) => state.carrito.products);
-  const shoppingCount = productos.reduce((prev, curr) => (prev ?? 0) + curr.cantidad, 0);
+  const shoppingCount = productos.reduce(
+    (prev, curr) => (prev ?? 0) + curr.cantidad,
+    0
+  );
 
   // este handleClick es para que al hacer click al carrito se abra y se cierre
   const handleClick = () => {
@@ -27,13 +32,23 @@ export default function SideBar() {
     }
   };
 
- 
-
   return (
     <div className="parent-bar">
       <div className="sidebar-container">
         <ul className="sidebar-navigation">
-          <li className="header">...</li>
+          <li className="header">
+            <Link to={`/`} onClick={() => dispatch(getProducts())}>
+              <img
+                src="https://bit.ly/37jca0M"
+                onClick={() => dispatch(getProducts())}
+                alt=""
+                style = {{backgroundColor: 'transparent'}}
+                width="38"
+                height="38"
+                class="d-inline-block align-top"
+              />
+            </Link>
+          </li>
           {/* este boton lleva a home y setea la categoría a All, si la categoría es "All", todos los productos se muestran */}
           <li onClick={() => setCurrentCategory("All")}>
             {/* este dispatch de getProducts es porque cuando busco un nombre en la Searchbar y doy en Home se tiene que renderizar todo de nuevo */}
@@ -80,7 +95,7 @@ export default function SideBar() {
             </Dropdown>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link to={`/user`}>
               <i className="fa fa-user" aria-hidden="true"></i> Log In
             </Link>
           </li>
@@ -89,7 +104,7 @@ export default function SideBar() {
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
               <span className="badge badge-warning" id="lblCartCount">
                 {/* si no hay productos, no se va a mostrar el icono de la cuenta de productos */}
-                {productos.length > 0 ? shoppingCount: null}
+                {productos.length > 0 ? shoppingCount : null}
               </span>
               Shopping Cart
             </Link>

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import "./SideBarRight.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 import {
   clearAll,
   removeProduct,
@@ -24,7 +24,7 @@ export default function SideBarRight() {
   );
 
   useEffect(() => {
-    if (productos.length > 0 && location.pathname === '/' ) {
+    if (productos.length > 0 && location.pathname === "/") {
       setRightBarOpen(true);
     }
   }, [productos]);
@@ -91,12 +91,20 @@ export default function SideBarRight() {
               )}$`}
             </p>
           </div>
-          <Link to = '/order/checkout'>
-          <button className="cd-checkout-btn">
-            <a href="#0">Go to checkout</a>
-          </button>
+          <Link
+            to="/order/checkout"
+            style={{ textDecoration: "none" }}
+            className="cd-checkout-btn"
+          >
+            Go to checkout
           </Link>
-            <Link role="button" to="/order" style={{textDecoration:'none'}} className="cd-go-to-cart">Go to cart page</Link>
+          <Link
+            to="/order"
+            style={{ textDecoration: "none" }}
+            className="cd-go-to-cart"
+          >
+            Go to cart page
+          </Link>
         </div>
       </div>
     </div>

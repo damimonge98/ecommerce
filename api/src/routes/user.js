@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const  {User} = require('../db.js');
+const  { User } = require('../db.js');
 const cors = require('cors')
 const multer = require('multer')
 const {promisify} = require("util");
@@ -36,7 +36,10 @@ server.post("/",upload.single('file'),async(req, res) => {
 		})
 })
 server.get('/', (req, res,) => {
-	User.findAll()
+	User.findAll({
+		include: 
+		{all:true}
+	})
 		.then(users => {
 			res.send(users);
 		})
@@ -85,4 +88,6 @@ server.put('/:id', (req, res) => {
 });
 
 
+
+ 
 module.exports = server;
