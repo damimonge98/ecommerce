@@ -85,3 +85,7 @@
       overflow-x: auto;
     }
   }
+
+  .center {
+    text-align: center;
+  }

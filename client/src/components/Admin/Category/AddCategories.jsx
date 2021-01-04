@@ -1,9 +1,11 @@
 import React, {useState} from "react";
-import styles  from '../Product/productos-form.module.css';
 import { connect } from "react-redux";
 import { addCategory } from "../../../redux/actions/categoryActions";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import styles from "./addCategories.module.css";
 
 function AddCategories (props) {
 
@@ -47,17 +49,22 @@ const handleChange = (event) => {
 
 	return (
 		<div>
-			<form onSubmit = {handleSubmit} style={{marginLeft:"400px", padding:"40px"}}>
+			<Form onSubmit = {handleSubmit} style={{marginLeft:"400px", padding:"40px"}}>
 	 		<div>
-	 		<label> AÑADIR CATEGORIA </label>
+	 		<h3 className = {styles.center}>Agregar Categoria </h3>
 	 		<br/>
-	 		<input type="text" name = "name" placeholder = "Nombre..." onChange={handleChange} value = {data.name}/>
+	 		<Form.Label> Nombre:* </Form.Label>
+	 		<Form.Control type="text" column = "sm" size = "sm" name = "name" onChange={handleChange} value = {data.name}/>
 	 		<br/>
-	 		<input type= "text" name = "description" placeholder = "Descripcion..." onChange={handleChange} value = {data.description} />
+	 		<Form.Label> Descripcion:* </Form.Label>
+	 		<Form.Control type= "text" name = "description"  onChange={handleChange} value = {data.description} />
 	 		<br/>
-	 		<input type = "submit" value= "AÑADIR"/>
+	 		<Button type = "submit"> AÑADIR</Button>
 	 		</div>
-	 		</form>
+	 		</Form>
+
+
+
     </div>)
 }
 
