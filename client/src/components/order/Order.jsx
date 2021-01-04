@@ -35,7 +35,7 @@ const Order = () => {
       <div className="container2">
         <div className="row">
           <div className="col-sm-12 col-md-10 col-md-offset-1">
-            <table className="table table-hover">
+            <table className="table table-hover" id ='table-order'>
               <thead>
                 <tr>
                   <th>Product</th>

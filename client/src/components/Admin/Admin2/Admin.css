@@ -11,8 +11,16 @@
 
 .btn-right{
     margin-top: 40px;
+    width: 120px;
+}
+
+#center-button{
+    margin-top: 40px;
+    width: 120px;
+    height: 50px;
 }
 #right-button{
+    width: 120px;
     height: 50px;
 }
 #right-button:hover{
@@ -21,6 +29,7 @@
 }
 
 #left-button{
+    width: 120px;
     height: 50px;
 }
 

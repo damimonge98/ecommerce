@@ -99,6 +99,16 @@
   color: #FFF;
   text-align: center;
 }
+
+#cd-cart .cd-checkout-btn:hover {
+  color: #FFF;
+  opacity: 0.8;
+}
+#cd-cart .cd-go-to-cart:hover {
+  color:#FFF;
+  opacity: 0.8;
+}
+
 #cd-cart .cd-cart-total {
   padding-top: 1em;
   padding-bottom: 1em;

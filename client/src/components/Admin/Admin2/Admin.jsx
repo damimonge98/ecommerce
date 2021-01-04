@@ -20,6 +20,13 @@ export const Admin = () => {
             </button>
           </Link>
         </div>
+        <div className="btn-center">
+          <Link to={"/admin/orders/"}>
+            <button className="btn btn-light " id="center-button">
+              Ordenes &#43;
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

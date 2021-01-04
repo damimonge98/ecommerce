@@ -4,6 +4,17 @@
     justify-content: center;
     width: 375px;
     height: 500px;
-    margin-left: 400px;
-    background-color: rgb(34, 98, 119);
+    margin: 0 auto;
+  
+}
+
+.form-div{
+    height: 550px;
+    width: 400px;
+}
+
+.button{
+    margin-left: 25%;
+    width: 50%;
+    margin-top: 10px;
 }
