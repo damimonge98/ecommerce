@@ -16,13 +16,10 @@ server.get('/', (req, res, next) => {
 });
 
 // Ruta para obtener todas las ordenes de un usuario
-server.get('/users/:id/orders', (req, res,) => {
-	const { userId } = req.params;
-	Order.findAll ({
-		include: {
-			model: User, as: 'user',
-			where: {id: userId}
-		}
+server.get('/users/:id', (req, res,) => {
+	const { id } = req.params;
+	Order.findAll({
+		where: { userId: id }
 	})
 		.then(orderUsers => {
 			res.send(orderUsers);
@@ -123,7 +120,7 @@ server.post('/users/:idUser/cart', (req, res) => {
 						where: { productId: product.id, orderId: order.id }
 					}).then(lineorder => {
 						// Si no existe una linea de orden de ese producto en ese carrito, crea una nueva
-						console.log(lineorder)
+						// console.log(lineorder)
 						if(!lineorder) {
 							LineOrder.create({
 								price: product.price,
@@ -133,13 +130,26 @@ server.post('/users/:idUser/cart', (req, res) => {
 						} 
 						else {
 							// Aumenta en uno la cantidad de ese producto si ya existía una linea de orden creada
-							lineorder.update({ cantidad: Number(lineorder.cantidad) + 1 }).then(lineOrder => res.json(lineOrder));
+							lineorder.update({ cantidad: Number(lineorder.cantidad) + 1, price: Number(lineorder.price) + lineorder.price }).then(lineOrder => res.json(lineOrder));
 						}
 					});
 				});
 			}
 		});
 });
+
+server.get("/users/:userId/cart", (req, res) => {
+	const id = req.params.userId
+	Order.findOne({
+		where: { userId: id }
+	})
+		.then(orderUser => {
+			LineOrder.findAll()
+			.then(lineorder => {
+				res.send(lineorder)
+			})
+		})
+})
 
 server.put("/:id", (req,res) => {
 	const id = req.params.id
