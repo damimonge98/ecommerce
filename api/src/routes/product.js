@@ -211,7 +211,7 @@ server.delete("/:id", async (req, res) => {
 	
 });
 
-// Ruta para obtener detalles de un producto específico
+// Ruta para obtener detalles de un producto específico con reviews, lineOrder y sus categorías
 
 server.get('/:id', (req, res) => {
 	Product.findOne({
@@ -250,16 +250,22 @@ server.get("/category/:nombreCat", (req,res) => {
 server.post('/:id/review', (req, res) => {
 	let { description, rating, userId } = req.body
 	const productId = req.params.id;
+	if(userId) {
 	Reviews.create({
 		description: description,
 		rating: rating,
 		userId
 	})
 		.then(newReview => {
+			
 			newReview.setProduct(productId);
 			newReview.setUser(userId);
 			res.status(201).send(newReview);
 		})
 		.catch(err => res.status(400).send(err));
+	}
+	else if(!userId){
+		res.status(400).send('Tiene que existir el usuario para agregar una Review')
+	}
 });
 module.exports = server;

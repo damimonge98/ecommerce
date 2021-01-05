@@ -157,7 +157,7 @@ const handleChange = (event) => {
                     </table>
                     <Pagination
                         productPerPage={productPerPage}
-                        totalproduct={data.length}
+                        totalproduct={res.length}
                         paginate={paginate}
                         nextPage={nextPage}
                         prevPage={prevPage}
