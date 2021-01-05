@@ -21,6 +21,7 @@ import Order from './components/order/Order';
 import Checkout from './components/Checkout/Checkout';
 import OrdersDetail from './components/Admin/OrdersDetail/OrdersDetail';
 import UserOrdersDetail from './components/Admin/UserOrdersDetail/UserOrdersDetail';
+import Carousel from './components/Carousel/Carousel'
 // el Context es para crear la conexión entre las acciones de Sidebar y el catálogo, para poner conectar el filtrado
 export const Context = React.createContext({
   currentCategory: null,
@@ -40,7 +41,7 @@ function App() {
         <Context.Provider value={{ currentCategory, setCurrentCategory, isRightBarOpen, setRightBarOpen }}>
           <Sidebar />
           <Route exact path="/" component={Catalogue} />
-          <SideBarRight />
+          <Route path="/" component={SideBarRight}/>
           <Toaster />
           <Route exact path="/" component={SearchBar} />
           <Route exact path="/products/:id" component={ProductCard} />
@@ -57,6 +58,7 @@ function App() {
           <Route exact path="/order/checkout" component={Checkout} />
           <Route exact path="/admin/orders/:id" component={OrdersDetail} />
           <Route exact path="/admin/orders/users/:id" component={UserOrdersDetail} />
+          <Route exact path="/carousel" component={Carousel} />
         </Context.Provider>
       </BrowserRouter>
     </Provider>

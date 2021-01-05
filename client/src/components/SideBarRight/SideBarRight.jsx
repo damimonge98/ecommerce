@@ -18,11 +18,13 @@ export default function SideBarRight() {
   const location = useLocation();
   const productos = useSelector((state) => state.carrito.products);
   const products = useSelector((state) => state.products.productos);
+  const url = window.location.pathname;
+  const productsUrl = `/products/${products.id}`;
+  const catalogueUrl = '/'
   const shoppingCount = productos.reduce(
     (prev, curr) => (prev ?? 0) + curr.cantidad,
     0
   );
-
   useEffect(() => {
     if (productos.length > 0 && location.pathname === "/") {
       setRightBarOpen(true);
@@ -31,7 +33,13 @@ export default function SideBarRight() {
   return (
     <div
       className="sidebarright-container"
-      style={{ right: isRightBarOpen ? "0px" : "-400px" }}
+      style={{
+        right: isRightBarOpen ? "0px" : "-400px",
+        // Si está en products/:id no cambia el margin top
+        marginTop: url === productsUrl ? "0px" : null,
+        // Si está en el catálogo o en products/:id se ve, si no, está escondido
+        visibility: url === productsUrl ? 'visible': url === catalogueUrl ? 'visible': 'hidden'
+      }}
       id="cd-shadow-layer"
     >
       <div id="cd-cart">

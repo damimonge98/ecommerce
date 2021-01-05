@@ -1,10 +1,7 @@
 
-/* .container{
-    background:#313131;
-    color:white;
-    width: 50%;
-    border-radius: 15px;
-} */
+.container{
+    margin-left: 50%;
+}
 
 .heading{
     margin-top: 1rem;

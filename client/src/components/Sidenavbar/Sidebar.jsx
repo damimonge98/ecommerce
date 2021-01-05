@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Sidebar.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -12,9 +12,13 @@ import { Context } from "../../App";
 
 export default function SideBar() {
   //este es el set de la acción que se va a modificar en catálogo
-  const { setCurrentCategory, setRightBarOpen, isRightBarOpen } = useContext(
-    Context
-  );
+  const {
+    currentCategory,
+    setCurrentCategory,
+    setRightBarOpen,
+    isRightBarOpen,
+  } = useContext(Context);
+  const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categorias);
   const productos = useSelector((state) => state.carrito.products);
@@ -22,15 +26,21 @@ export default function SideBar() {
     (prev, curr) => (prev ?? 0) + curr.cantidad,
     0
   );
-
+  let url = window.location.pathname;
   // este handleClick es para que al hacer click al carrito se abra y se cierre
   const handleClick = () => {
     if (isRightBarOpen === false) {
       setRightBarOpen(true);
+    } else if (currentCategory === "Outside") {
+      history.push("/order");
     } else {
       setRightBarOpen(false);
     }
   };
+
+  const handleCategory = () => {
+    setCurrentCategory('Outside')
+  }
 
   return (
     <div className="parent-bar">
@@ -42,7 +52,7 @@ export default function SideBar() {
                 src="https://bit.ly/37jca0M"
                 onClick={() => dispatch(getProducts())}
                 alt=""
-                style = {{backgroundColor: 'transparent'}}
+                style={{ backgroundColor: "transparent" }}
                 width="38"
                 height="38"
                 class="d-inline-block align-top"
@@ -94,7 +104,7 @@ export default function SideBar() {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-          <li>
+          <li onClick = {handleCategory}>
             <Link to={`/user`}>
               <i className="fa fa-user" aria-hidden="true"></i> Log In
             </Link>
@@ -109,17 +119,17 @@ export default function SideBar() {
               Shopping Cart
             </Link>
           </li>
-          <li>
+          <li onClick = {handleCategory}>
             <Link to={`/`}>
               <i className="fa fa-ticket-alt" aria-hidden="true"></i> Concerts
             </Link>
           </li>
-          <li>
+          <li onClick = {handleCategory}>
             <Link to={`/admin`}>
               <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
             </Link>
           </li>
-          <li>
+          <li onClick = {handleCategory}>
             <Link to={`/`}>
               <i className="fa fa-info-circle" aria-hidden="true"></i>{" "}
               Information

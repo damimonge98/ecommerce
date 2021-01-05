@@ -3,7 +3,7 @@ import "./Admin.css";
 import { Link } from "react-router-dom";
 export const Admin = () => {
   return (
-    <div class="main">
+    <div class="mainAdmin">
       <h1 className = 'title'>Options: </h1>
       <div className="buttons">
         <div className="btn-left">
