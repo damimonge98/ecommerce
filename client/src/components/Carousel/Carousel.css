@@ -1,0 +1,13 @@
+.carouselDiv{
+    padding-top: 50px;
+    width: 1500px;
+    margin: 0 auto;
+    padding-left: 150px;
+    height: 1000px;
+    margin-bottom: -400px;
+  }
+  
+  #img-carousel{
+    width: 1500px;
+    height: 500px;
+  }

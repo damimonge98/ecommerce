@@ -6,6 +6,7 @@ import "./catalogue.css";
 import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
 import spinner from "../Spinner";
+import Carousel from '../Carousel/Carousel'
 // aca se van a renderizar todas las card de product
 
 const Cataloge = () => {
@@ -18,6 +19,7 @@ const Cataloge = () => {
   const [productPerPage, setProductPerPage] = useState(12);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+  
 
   if (!products.data) {
     var currentProducts =
@@ -69,43 +71,45 @@ const Cataloge = () => {
 
   return (
     <div>
+      <Carousel/>
       <div className="box">
+        <h1 style={{marginLeft:'350px', color: 'white'}}>Inicio</h1>
+        <hr/>
         <div className="container">
           {!currentProducts
             ? spinner()
             : currentProducts.map((i) => {
-              //validamos el stock. En caso que este agotado, le agregamos una propiedad
-              //para utilizarlo despues
-              if (i.stock === 0) {
-                return (
-                  <div key={i.id}>
-                    <Product
-                      image = {i.img}
-                      name={i.name}
-                      price={i.price}
-                      description={i.description}
-                      id={i.id}
-                      sold_out = {true}
-                      />
-          
-  
-                  </div>
-                )} else {
+                //validamos el stock. En caso que este agotado, le agregamos una propiedad
+                //para utilizarlo despues
+                if (i.stock === 0) {
                   return (
-                  <div key={i.id}>
-                    <Product
-                      image = {i.img}
-                      name={i.name}
-                      price={i.price}
-                      description={i.description}
-                      id={i.id}
-                      sold_out = {false}
+                    <div key={i.id}>
+                      <Product
+                        image={i.img}
+                        name={i.name}
+                        price={i.price}
+                        description={i.description}
+                        id={i.id}
+                        sold_out={true}
                       />
-                      
-                  </div>
-                )
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={i.id}>
+                      <Product
+                        image={i.img}
+                        name={i.name}
+                        price={i.price}
+                        description={i.description}
+                        id={i.id}
+                        sold_out={false}
+                      />
+                    </div>
+                  );
                 }
               })}
+              
           <div className="pag">
             <div className="pagnation">
               <Pagination
