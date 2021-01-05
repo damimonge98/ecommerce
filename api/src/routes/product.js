@@ -253,13 +253,12 @@ server.post('/:id/review', (req, res) => {
 	Reviews.create({
 		description: description,
 		rating: rating,
+		userId
 	})
 		.then(newReview => {
 			newReview.setProduct(productId);
 			newReview.setUser(userId);
-		})
-		.then(() => {
-			res.status(201);
+			res.status(201).send(newReview);
 		})
 		.catch(err => res.status(400).send(err));
 });

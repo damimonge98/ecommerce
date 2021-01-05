@@ -63,10 +63,6 @@ const Order = () => {
                             <h4 className="heading" onClick={() => history.push(`products/${product.id}`)}>
                               {product.name}
                             </h4>
-                            <span>Status: </span>
-                            <span className="text-success">
-                              <strong>In Stock</strong>
-                            </span>
                           </div>
                         </div>
                       </td>
