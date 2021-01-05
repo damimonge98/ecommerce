@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {useHistory} from 'react-router-dom'
 import Table from "react-bootstrap/Table";
-import "./Orders.css";
+import "./UserOrdersDetail.css";
 import Pagination from "../../Pagination/Pagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
-import { getOrder } from "../../../redux/actions/orderActions";
+import { getUserOrderDetail } from "../../../redux/actions/orderActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import spinner from "../../Spinner";
 
-const Orders = () => {
+const UserOrdersDetail = () => {
   const [orders, setOrders] = useState([]);
   const [checkbox, setCheckbox] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,15 +21,17 @@ const Orders = () => {
   const prevPage = () => setCurrentPage(currentPage - 1);
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.orden);
+  let url = window.location.pathname;
+  let id = url.substring(url.lastIndexOf("/") + 1);
   const history = useHistory();
-
 
   let currentOrder =
     Array.isArray(orders) &&
     orders.slice(indexOfFirstProduct, indexOfLastProduct);
 
   useEffect(() => {
-    const cargarOrdenes = () => dispatch(getOrder());
+    if (!order) return spinner();
+    const cargarOrdenes = () => dispatch(getUserOrderDetail(id));
     setOrders(cargarOrdenes());
   }, []);
 
@@ -47,11 +49,10 @@ const Orders = () => {
     setOrders(deleteOrder);
   }; */
 
-  console.log("currentOrder:", currentOrder);
   return (
     <div className="table-parent">
       <div className="row">
-       {/*  <div className="button-groups">
+        {/*  <div className="button-groups">
           <ButtonGroup aria-label="Basic example" id="button-group">
             <Button variant="primary">Edit</Button>
             <Button
@@ -79,13 +80,10 @@ const Orders = () => {
         <Table responsive="lg" striped bordered hover variant="dark">
           <thead>
             <tr>
-            {/*   <th>
+              {/*   <th>
                 <input type="checkbox" />
               </th> */}
               <th>Order ID</th>
-              <th>User ID</th>
-              <th>Username</th>
-              <th>Email</th>
               <th>State</th>
             </tr>
           </thead>
@@ -94,17 +92,14 @@ const Orders = () => {
               ? spinner()
               : Array.isArray(currentOrder) &&
                 currentOrder.map((allOrder) => {
-                  return (
+                    return (
                       <tr key={orders.id}>
-                      {/*   <th>
+                        {/*   <th>
                           <input
                             type="checkbox" onClick={() => getId(order.id)}
                           />
                         </th> */}
                         <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/${allOrder.id}`)}>{allOrder.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.username}</td>
-                        <td>{allOrder.user.email}</td>
                         <td>{allOrder.state}</td>
                       </tr>
                     );
@@ -128,4 +123,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default UserOrdersDetail;

@@ -22,8 +22,6 @@ const ProductCard = () => {
     cargarProductos();
   }, []);
 
-
-
 const handleStock = (stock, products) => { //Este handle verifica si hay stock o no.
   if (stock <= 0) { //En caso que no haya simplemente retorna un alert. 
     return Swal.fire({

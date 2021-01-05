@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {useHistory} from 'react-router-dom'
 import Table from "react-bootstrap/Table";
-import "./Orders.css";
+import "./OrdersDetail.css";
 import Pagination from "../../Pagination/Pagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
-import { getOrder } from "../../../redux/actions/orderActions";
+import { getOrderDetail } from "../../../redux/actions/orderActions";
 import { useSelector, useDispatch } from "react-redux";
 import spinner from "../../Spinner";
+import { useHistory } from "react-router-dom";
 
-const Orders = () => {
+const OrdersDetail = () => {
   const [orders, setOrders] = useState([]);
   const [checkbox, setCheckbox] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,14 +22,16 @@ const Orders = () => {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.orden);
   const history = useHistory();
-
+  let url = window.location.pathname;
+  let id = url.substring(url.lastIndexOf("/") + 1);
 
   let currentOrder =
     Array.isArray(orders) &&
     orders.slice(indexOfFirstProduct, indexOfLastProduct);
 
   useEffect(() => {
-    const cargarOrdenes = () => dispatch(getOrder());
+    if (!order) return spinner();
+    const cargarOrdenes = () => dispatch(getOrderDetail(id));
     setOrders(cargarOrdenes());
   }, []);
 
@@ -47,11 +49,10 @@ const Orders = () => {
     setOrders(deleteOrder);
   }; */
 
-  console.log("currentOrder:", currentOrder);
   return (
     <div className="table-parent">
       <div className="row">
-       {/*  <div className="button-groups">
+        {/*  <div className="button-groups">
           <ButtonGroup aria-label="Basic example" id="button-group">
             <Button variant="primary">Edit</Button>
             <Button
@@ -79,14 +80,15 @@ const Orders = () => {
         <Table responsive="lg" striped bordered hover variant="dark">
           <thead>
             <tr>
-            {/*   <th>
+              {/*   <th>
                 <input type="checkbox" />
               </th> */}
-              <th>Order ID</th>
-              <th>User ID</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>State</th>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -94,20 +96,29 @@ const Orders = () => {
               ? spinner()
               : Array.isArray(currentOrder) &&
                 currentOrder.map((allOrder) => {
-                  return (
+                  return allOrder.products.map((productOrder) => {
+                    return (
                       <tr key={orders.id}>
-                      {/*   <th>
+                        {/*   <th>
                           <input
                             type="checkbox" onClick={() => getId(order.id)}
                           />
                         </th> */}
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/${allOrder.id}`)}>{allOrder.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.username}</td>
-                        <td>{allOrder.user.email}</td>
-                        <td>{allOrder.state}</td>
+                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/products/${productOrder.id}`)}>{productOrder.id}</td>
+                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/products/${productOrder.id}`)}>{productOrder.name}</td>
+                        <td>{productOrder.lineOrder.cantidad}</td>
+                        <td>
+                          {productOrder.price}
+                        </td>
+                        <td>
+                          {productOrder.stock - productOrder.lineOrder.cantidad}
+                        </td>
+                        <td>
+                          {productOrder.price * productOrder.lineOrder.cantidad}
+                        </td>
                       </tr>
                     );
+                  });
                 })}
           </tbody>
         </Table>
@@ -128,4 +139,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default OrdersDetail;

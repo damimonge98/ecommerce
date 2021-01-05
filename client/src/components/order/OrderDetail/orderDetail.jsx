@@ -17,6 +17,4 @@ const OrderDetail = ({ product, addProduct,removeProduct, deleteProduct}) => {
   );
 };
 
-
-
 export default OrderDetail;
