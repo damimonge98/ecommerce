@@ -48,18 +48,18 @@ const handleChange = (event) => {
 
 
 	return (
-		<div>
-			<Form onSubmit = {handleSubmit} style={{marginLeft:"400px", padding:"40px"}}>
+		<div className = {styles.divFather}>
+			<Form onSubmit = {handleSubmit} /* style={{marginLeft:"400px", padding:"40px"}} */>
 	 		<div>
 	 		<h3 className = {styles.center}>Agregar Categoria </h3>
 	 		<br/>
-	 		<Form.Label> Nombre:* </Form.Label>
-	 		<Form.Control type="text" column = "sm" size = "sm" name = "name" onChange={handleChange} value = {data.name}/>
+	 		<Form.Label className = {styles.labelName}> Nombre:* </Form.Label>
+	 		<Form.Control className = {styles.formName} type="text" column = "sm" size = "sm" name = "name" onChange={handleChange} value = {data.name}/>
 	 		<br/>
-	 		<Form.Label> Descripcion:* </Form.Label>
-	 		<Form.Control type= "text" name = "description"  onChange={handleChange} value = {data.description} />
+	 		<Form.Label className = {styles.labelDescription}> Descripcion:* </Form.Label>
+	 		<Form.Control className = {styles.formDescription} type= "text" name = "description"  onChange={handleChange} value = {data.description} />
 	 		<br/>
-	 		<Button type = "submit"> AÑADIR</Button>
+	 		<Button type = "submit" className = {styles.btnSubmit}> Añadir</Button>
 	 		</div>
 	 		</Form>
 
