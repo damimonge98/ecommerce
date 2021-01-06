@@ -268,4 +268,53 @@ server.post('/:id/review', (req, res) => {
 		res.status(400).send('Tiene que existir el usuario para agregar una Review')
 	}
 });
+
+// Ruta para modificar una review
+
+server.put('/:id/review/:idReview', (req, res) => {
+	const { id, idReview } = req.params;
+	const { description, rating } = req.body;
+
+	// Busca una review con ese id
+	Reviews.findOne({ where: { id: idReview, productId: id }})
+		.then(review => {
+		// Si no existe
+			if(!review) {
+				res.send("No existe una review con ese id");
+			} else {
+				// Si existe
+				review.update({
+					description,
+					rating
+				}).then(reviewAct => {
+					if(reviewAct) {
+						res.status(200).json({ msj: `Review actualizada correctamente` })
+					}
+				}).catch(e => {
+					res.status(400).json(e);
+				})
+			}
+		}).catch(e => {
+			res.status(400).json(e);
+		})
+});
+
+// Ruta para eliminar una review
+
+server.delete('/:id/review/:idReview', (req, res) => {
+	const { id, idReview } = req.params;
+	// Busca una review
+	Reviews.findOne({ where: { id: idReview, productId: id} })
+		.then(review => {
+			// Corrobora si existe para destruirla
+			if(!review) {
+				res.status(200).json({ msg: "No existe dicha review" });
+			} else {
+				review.destroy().then(reviewDestroyed => {
+					res.status(200).json({ msg: "Review eliminada correctamente"});
+				})
+			}
+		})
+});
+
 module.exports = server;
