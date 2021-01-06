@@ -4,12 +4,15 @@ const cors = require('cors')
 const multer = require('multer')
 const {promisify} = require("util");
 const fs = require("fs");
+const bcript =require("bcrypt")
+
 server.use(cors());
 
 const upload= multer()
 server.post("/",upload.single('file'),async(req, res) => {
 	const {username, givenName, familyName, email, password, isAdmin } = req.body
 	console.log(req.body)
+	const hashPassword  =await bcript.hash(password,10)
 	//Procesar archivo de imagen recibido
 	const {file} = req;	
 	if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
@@ -23,7 +26,7 @@ server.post("/",upload.single('file'),async(req, res) => {
         givenName,
         familyName,
         email,
-        password,
+        password:hashPassword,
         photoURL:img,
         isAdmin 
     })

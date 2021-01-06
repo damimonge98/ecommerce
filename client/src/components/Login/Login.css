@@ -1,0 +1,92 @@
+.main-div{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: url(https://cutewallpaper.org/21/tomorrowland-wallpaper/Tomorrowland-2017-Hd-Wallpapers-Tomorrowland-2017-Hd-.jpg)no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.login{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color:transparent;
+    height: 500px;
+    width: 500px;
+    margin: 35%;
+}
+
+.img{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 250px;
+    width: 500px;
+    background: url(https://image.freepik.com/vector-gratis/ondas-voz-coloridas-o-movimiento-frecuencia-sonido-ritmo-radio-dj-amplitud_102902-274.jpg) no-repeat center center   ; 
+    
+  }
+
+.form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    width: 500px;
+    text-align: center;
+    background-color: rgb(10, 3, 73);
+}
+
+.name-user{
+    border-radius: 20px;
+    background-color: rgb(3, 7, 54);
+    padding-left:30px; 
+    
+    color:white;
+}
+.password-user{
+    border-radius: 20px;
+    background-color: rgb(3, 7, 54);
+    padding-left:30px; 
+    color:white;
+    
+}
+
+.legend{
+    position: relative;
+}
+
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-image: linear-gradient(125deg, #affff5 0, #9bfff4 12.5%, #83fff3 25%, #66faf2 37.5%, #3cf2f2 50%, #00eaf3 62.5%, #00e2f4 75%, #00dbf7 87.5%, #00d3fa 100%);
+    border: none;
+    margin-bottom: 10px;
+    
+}
+.button:hover{
+    transform: scale(1.1)
+}
+.link{
+font-size:10px;
+font-weight: 200;
+margin-left: 120px;
+}
+.registro{
+    height: 20px;
+    background-image: linear-gradient(125deg, #c53e3e 0, #ffc13b 12.5%, #87f82a 25%, #00f382 37.5%, #0b6cdb 50%, #480bee 62.5%, #af01ff 75%, #f700ad 87.5%, #fa0000 100%);
+    font-size: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.registro:hover{
+    transform: scale(1.1)
+}
