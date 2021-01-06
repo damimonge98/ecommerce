@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes ,Sequelize} = require('sequelize');
 
 module.exports = (sequelize) => {
     // defino el modelo
@@ -42,12 +42,21 @@ module.exports = (sequelize) => {
             } 
         },
         photoURL: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(1000),
             allowNull: true
         },
         isAdmin: {
             type: DataTypes.STRING,
             defaultValue: false
+        },
+        createdAt:{
+          type: DataTypes.DATE,
+          defaultValue:Sequelize.fn('NOW'),
+          allowNull:true
+        },
+        updatedAt:{
+          type: DataTypes.DATE,
+          allowNull:true
         }
     });
 };

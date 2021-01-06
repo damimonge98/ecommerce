@@ -4,6 +4,7 @@ const cors = require('cors')
 const bcript =require("bcrypt")
 const passport = require('passport');
 const jwt=require('jsonwebtoken');
+server.use(cors());
 require('../passport-config')(passport);
 
 //login
