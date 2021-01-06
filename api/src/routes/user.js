@@ -90,7 +90,25 @@ server.put('/:id', (req, res) => {
 	})
 });
 
+// Ruta para resetear la password
 
+server.post('/:id/passwordReset', (req, res) => {
+	const { id } = req.params;
+	const { password } = req.body;
+
+	User.findOne({ where: { id: id} })
+		.then(user => {
+			if(!user) {
+				res.status(400).json({ msh: "No existe dicho usuario "});
+			} else {
+				user.update({ password: password }).then(userUp => {
+					res.status(200).json({ msg: "Contraseña actualizada correctametne "});
+				}).catch(e => {
+					res.json(e);
+				})
+			}
+		})
+});
 
  
 module.exports = server;
