@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes,Sequelize } = require('sequelize');
 module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('categories', {
@@ -8,6 +8,15 @@ module.exports = (sequelize) => {
         },
         description: {
             type: DataTypes.STRING,
+        },
+        createdAt:{
+            type: DataTypes.DATE,
+            defaultValue:Sequelize.fn('NOW'), 
+            allowNull:true
+        },
+        updatedAt:{
+            type: DataTypes.DATE,
+            allowNull:true
         }
     });
 };
