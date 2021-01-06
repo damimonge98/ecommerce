@@ -20,6 +20,7 @@ import UserForm from './components/User/UserForm.jsx'
 import Order from './components/order/Order';
 import Checkout from './components/Checkout/Checkout';
 import OrdersDetail from './components/Admin/OrdersDetail/OrdersDetail';
+import Login from './components/Login/Login'
 import UserOrdersDetail from './components/Admin/UserOrdersDetail/UserOrdersDetail';
 import Carousel from './components/Carousel/Carousel'
 // el Context es para crear la conexión entre las acciones de Sidebar y el catálogo, para poner conectar el filtrado
@@ -44,6 +45,7 @@ function App() {
           <Route path="/" component={SideBarRight}/>
           <Toaster />
           <Route exact path="/" component={SearchBar} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/products/:id" component={ProductCard} />
           <Route exact path="/musicbar" component={MusicBar} />
           <Route exact path="/admin/products" component={ProductsAdmin} />
