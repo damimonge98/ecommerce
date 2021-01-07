@@ -1,3 +1,5 @@
 export const CREAR_USUARIO = 'CREAR_USUARIO';
 export const LOGIN_USER = 'LOGIN_USER'
 export const USER_AUNTENTICADO = 'USER_AUNTENTICADO'
+export const LOGOUT_USER = 'LOGOUT_USER'
+

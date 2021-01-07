@@ -1,7 +1,6 @@
 const server = require('express').Router();
 const  { User } = require('../db.js');
 const cors = require('cors')
-const bcript =require("bcrypt")
 const passport = require('passport');
 const jwt=require('jsonwebtoken');
 server.use(cors());
@@ -17,7 +16,7 @@ server.post('/', (req, res,next) => {
 			req.login(user,{session:false},err=>{
 				if(err) throw err;
 				//crear y asignar un token
-				const body = { id: user.id, email: user.email }
+				const body = { id: user.id,username : user.username , email: user.email, isAdmin: user.isAdmin }
 				const token = jwt.sign({user:body},process.env.TOKEN_SECRET);
 				res.header('auth-token',token).json({token});
 			});
@@ -36,5 +35,6 @@ server.get('/auth/facebook', passport.authenticate('facebook'));
 server.get('/auth/facebook/login_fb',
   passport.authenticate('facebook', { successRedirect: '/',
 									  failureRedirect: '/login' }));
+
 									  
 module.exports = server

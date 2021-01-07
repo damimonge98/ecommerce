@@ -5,6 +5,7 @@ const multer = require('multer')
 const {promisify} = require("util");
 const fs = require("fs");
 const bcript =require("bcrypt")
+const passport = require('passport');
 
 server.use(cors());
 
@@ -38,38 +39,46 @@ server.post("/",upload.single('file'),async(req, res) => {
             res.send(e)
 		})
 })
-server.get('/', (req, res,) => {
-	User.findAll({
-		include: 
-		{all:true}
-	})
-		.then(users => {
-			res.send(users);
+server.get('/', passport.authenticate("jwt",{session:false}),(req, res,) => {
+	
+	if(req.user.isAdmin && req.user.isAdmin === true){
+		return	User.findAll({
+				include: 
+				{all:true}
+			})
+			.then(users => {
+				res.send(users);
+			})
+	}	
+
+	res.status(401).json({msg:"Unauthorized"});
+});
+
+server.delete("/:id", passport.authenticate("jwt",{session:false}), (req, res) => {
+	if(req.user.isAdmin && req.user.isAdmin === true){
+		const {id}= req.params
+		User.findOne({
+			where:{
+				id:id
+			}
 		})
-});
+		.then((user) => {
+			if (!user) {
+			res.json({ message: "El id especificado no existe o contiene errores." });
+			} else {
+			user.destroy()
+			return res.json({ message: "User Deleted" });
+			}
 
-server.delete("/:id", (req, res) => {
-
-	const {id}= req.params
-	User.findOne({
-		where:{
-			id:id
-		}
-	})
-	.then((user) => {
-	  if (!user) {
-		res.json({ message: "El id especificado no existe o contiene errores." });
-	  } else {
-		user.destroy()
-		return res.json({ message: "User Deleted" });
-	  }
-
-	});
+		});
+	}else{
+		res.status(401).json({msg:"Unauthorized"});
+	}	
 
 });
 
 
-server.put('/:id', (req, res) => {
+server.put('/:id',passport.authenticate("jwt",{session:false}), (req, res) => {
 	const {id} = req.params;
 	const { username, email, givenName, familyName, password, photoURL, isAdmin } = req.body;
 	User.update(
@@ -90,9 +99,10 @@ server.put('/:id', (req, res) => {
 	})
 });
 
+
 // Ruta para resetear la password
 
-server.post('/:id/passwordReset', (req, res) => {
+server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}),(req, res) => {
 	const { id } = req.params;
 	const { password } = req.body;
 

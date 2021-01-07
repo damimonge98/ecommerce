@@ -1,30 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import './Login.css'
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { GetUsers,setUsers } from '../../redux/actions/userActions';
 import {useDispatch, useSelector} from 'react-redux'
-import jsonWebToken from 'jsonwebtoken'
 
 function Login(props) {
     const [data, setData] = useState({
         email: "",
         password:"",
     });
-    const [tokenKey, setTokenKey]= useState({})
 
     const dispatch = useDispatch()
 
     const loginUser = async data =>dispatch(GetUsers(data))
-    const userAUTH =  data => dispatch(setUsers(data))
-
-  useEffect(()=>{
-      const local = window.localStorage.getItem("tokenLogin") 
-    if(local){ 
-       const tokenDecode = jsonWebToken.decode(local)
-       userAUTH(tokenDecode)
-    }
-    },[]) 
-
+   
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -32,11 +21,14 @@ function Login(props) {
   const  handleSubmit = async (event) => {
     event.preventDefault();
     await loginUser(data)
-    await setTokenKey(token)
   
-}
-  const token = useSelector(state=>state.user.token);
+  }
 
+  const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
+
+  if(isAuthenticated){
+    return <Redirect to='/'/>
+  }
   
   return( 
     <div className="main-div">
