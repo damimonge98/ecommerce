@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import "./Sidebar.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory,Redirect } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,7 +8,9 @@ import {
   getCategoriesName,
 } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
+import {logoutAction} from "../../redux/actions/userActions";
 import { Context } from "../../App";
+
 
 export default function SideBar() {
   //este es el set de la acción que se va a modificar en catálogo
@@ -40,6 +42,22 @@ export default function SideBar() {
 
   const handleCategory = () => {
     setCurrentCategory('Outside')
+  }
+
+  
+  const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
+
+  const handleLogout=async ()=>{
+     //mandar llamar las action de user action
+     const logoutUser = async () => dispatch(logoutAction());
+     await logoutUser();
+ 
+ 
+     //vaciar local storage
+     await window.localStorage.clear()
+ 
+ 
+     return <Redirect to='/'/>
   }
 
   return (
@@ -104,11 +122,9 @@ export default function SideBar() {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-          <li onClick = {handleCategory}>
-            <Link to={`/user`}>
-              <i className="fa fa-user" aria-hidden="true"></i> Log In
-            </Link>
-          </li>
+        
+
+
           <li onClick={handleClick} className="shopping-icon">
             <Link to={`#`}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -129,6 +145,27 @@ export default function SideBar() {
               <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
             </Link>
           </li>
+          {!isAuthenticated ?     
+            <Fragment>
+              <li>
+                <Link to={`/user`}>
+                  <i className="fa fa-user" aria-hidden="true"></i> Sign In
+                </Link>
+              </li>
+              <li>
+                <Link to={`/login`}>
+                  <i className="fa fa-user" aria-hidden="true"></i> Log In
+                </Link>
+              </li>
+            </Fragment>  
+          : 
+            <li onClick={handleLogout}>
+              <Link >
+                <i className="fa fa-user" aria-hidden="true"></i> Logout
+              </Link>
+            </li>
+          
+          }  
           <li onClick = {handleCategory}>
             <Link to={`/`}>
               <i className="fa fa-info-circle" aria-hidden="true"></i>{" "}
