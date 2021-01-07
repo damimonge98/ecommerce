@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { Categories } = require('../db.js');
+const passport = require('passport');
 const cors = require('cors')
 server.use(cors());
 
