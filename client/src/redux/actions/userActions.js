@@ -1,9 +1,9 @@
 import {
   CREAR_USUARIO,
   LOGIN_USER,
-  USER_AUNTENTICADO
+  LOGOUT_USER
 } from '../types/Users';
-import axios from 'axios'
+import clienteAxios from '../../config/axios.js';
 import jsonWebToken from 'jsonwebtoken'
 
 export default function  CreateUser(file,data) {
@@ -15,7 +15,7 @@ usuarioData.append('email',data.email)
 usuarioData.append('password',data.password)
 usuarioData.append('file',file)
   return function(dispatch) {
-    return axios.post("http://localhost:3001/user/", usuarioData)
+    return clienteAxios.post("/user", usuarioData)
       .then(res => dispatch({ type: CREAR_USUARIO, payload: res.file }));
      
   };
@@ -23,25 +23,28 @@ usuarioData.append('file',file)
 
 export function  GetUsers (credencial) {
   return async function(dispatch) {
-     const respuesta = await axios.post("http://localhost:3001/login" , credencial)
-        dispatch(loginUser(respuesta.data))
+     const respuesta = await clienteAxios.post("/login" , credencial)
+     const tokenDecode = jsonWebToken.decode(respuesta.data.token)
+        await dispatch(loginUser(tokenDecode.user))
         window.localStorage.setItem("tokenLogin",respuesta.data.token)
         console.log("RESPUESTA",respuesta)
-        const tokenDecode = jsonWebToken.decode(respuesta.data.token)
-        dispatch(setUsers(tokenDecode))
+       // const tokenDecode = jsonWebToken.decode(respuesta.data.token)
+       // await dispatch(setUsers(tokenDecode))
   };
 }
 const loginUser =(user)=>(
-{ type: LOGIN_USER, payload: user }
+  { type: LOGIN_USER, payload: user }
 )
 
-
-export function  setUsers(user) {
-return function(dispatch) {
-   dispatch(userLogin(user))
-};
+//logout
+export function logoutAction () {
+  return async function(dispatch) {
+        await window.localStorage.removeItem("tokenLogin");
+        await window.localStorage.removeItem("state"); 
+        await dispatch(logoutUser())
+  };
 }
-const userLogin=(user)=>(
-{type: USER_AUNTENTICADO, payload: user}
-)
 
+const logoutUser =()=>(
+  { type: LOGOUT_USER, payload: null }
+)

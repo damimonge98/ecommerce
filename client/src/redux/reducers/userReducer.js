@@ -1,13 +1,14 @@
 import {
     CREAR_USUARIO,
     LOGIN_USER,
-    USER_AUNTENTICADO
+    LOGOUT_USER
     } from "../types/Users.js";
     
     //cada reducer tiene su propio state
     const initialState = {
         users: [],
         userAUTH:[],
+        isAuthenticated:false,
         token:"",
         error: null,
         loading: false,
@@ -22,16 +23,19 @@ import {
                     ...state,
                     categorias: action.payload
                 }
-                case LOGIN_USER:
-                    return {
-                        ...state,
-                        token: action.payload.data
-                    }
-                case USER_AUNTENTICADO:
-                    return {
-                        ...state,
-                        userAUTH: action.payload
-                    }
+            case LOGIN_USER:
+                return {
+                    ...state,
+                    userAUTH:action.payload,
+                    token: action.payload.token,
+                    isAuthenticated:true
+                }
+            case LOGOUT_USER:
+                return {
+                    ...state,
+                    userAUTH: action.payload,
+                    isAuthenticated:false
+                }    
             default:
                 return state;
         }
