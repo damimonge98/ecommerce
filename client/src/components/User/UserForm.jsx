@@ -5,6 +5,10 @@ import "./UserForm.css";
 import styles from "../Admin/Product/productos-form.module.css";
 import { connect } from "react-redux";
 import CreateUser from "../../redux/actions/userActions";
+import {useSelector} from 'react-redux';
+import { Redirect } from "react-router-dom";
+
+
 
 export function validate(input) {
   let errors = {};
@@ -89,6 +93,11 @@ const UserForm = (props) => {
     }
   };
 
+  const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
+
+  if(isAuthenticated){
+    return <Redirect to='/'/>
+  }
   return (
     <div className="container-main">
       <div className="form-div">

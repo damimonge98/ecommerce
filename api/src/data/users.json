@@ -1,6 +1,6 @@
 [
     {
-        "id":1,
+        
         "username":"admin",
         "email":"admin@mail.com",
         "givenName": "admin@mail.com",
@@ -11,7 +11,7 @@
        
     },
     {
-        "id":2,
+        
         "username":"carla2021",
         "email":"carla@mail.com",
         "givenName": "carla",
@@ -22,7 +22,7 @@
        
     },
     {
-        "id":3,
+        
         "username":"Alejo2021",
         "email":"alejo",
         "givenName": "alejo@mail.com",
@@ -33,7 +33,7 @@
        
     },
     {
-        "id":4,
+        
         "username":"pepito2021",
         "email":"pepito@mail.com",
         "givenName": "pepito",

@@ -1,7 +1,6 @@
 [
     {
         
-        "id":1,
         "name":"Guns & Roses",
         "price": 100,
         "stock": 50,
@@ -10,7 +9,6 @@
     },
     {
         
-        "id":2,
         "name": "Queen",
         "price": 100,
         "stock": 50,
@@ -19,7 +17,6 @@
     },
     {
         
-        "id":3,
         "name":"Nirvana",
         "price": 250,
         "stock": 35,
@@ -28,7 +25,6 @@
     },
     {
         
-        "id":4,
         "name":"Marc Anthony",
         "price": 250,
         "stock": 20,
@@ -37,7 +33,6 @@
     },
     {
         
-        "id":5,
         "name":"La Nueva Luna",
         "price": 200,
         "stock": 25,
@@ -46,7 +41,6 @@
     },
     {
         
-        "id":6,
         "name":"El Gran Combo de Puerto Rico",
         "price": 250,
         "stock": 20,
@@ -55,7 +49,6 @@
     },
     {
         
-        "id":7,
         "name":"Shakira",
         "price": 250,
         "stock": 20,
@@ -64,7 +57,6 @@
     },
     {
         
-        "id":8,
         "name":"Bacilos",
         "price": 250,
         "stock": 20,
@@ -73,7 +65,6 @@
     },
     {
         
-        "id":9,
         "name":"RBD",
         "price": 250,
         "stock": 20,
@@ -82,7 +73,7 @@
     },
     {
         
-        "id":10,
+        
         "name":"Backstreet boys",
         "price": 250,
         "stock": 20,
@@ -91,7 +82,7 @@
     },
     {
         
-        "id":11,
+        
         "name":"Timbiriche",
         "price": 250,
         "stock": 20,
@@ -100,7 +91,7 @@
     },
     {
         
-        "id":12,
+        
         "name":"Beyonce",
         "price": 250,
         "stock": 20,
@@ -109,7 +100,7 @@
     },
     {
         
-        "id":13,
+        
         "name":"Beastie Boys",
         "price": 250,
         "stock": 20,
@@ -118,7 +109,7 @@
     },
     {
         
-        "id":14,
+        
         "name":"Eminem",
         "price": 250,
         "stock": 20,
@@ -127,7 +118,7 @@
     },
     {
         
-        "id":15,
+        
         "name":"Jay-Z",
         "price": 250,
         "stock": 20,
@@ -136,7 +127,7 @@
     },
     {
         
-        "id":16,
+        
         "name":"Calle 13",
         "price": 250,
         "stock": 20,
@@ -145,7 +136,7 @@
     },
     {
         
-        "id":17,
+        
         "name":"Daddy Yankee",
         "price": 250,
         "stock": 20,
@@ -154,7 +145,7 @@
     },
     {
         
-        "id":18,
+        
         "name":"Bad Bunny",
         "price": 250,
         "stock": 20,
@@ -164,7 +155,7 @@
     ,
     {
         
-        "id":19,
+        
         "name":"Nicky Jam",
         "price": 250,
         "stock": 20,
@@ -173,7 +164,7 @@
     },
     {
         
-        "id":20,
+        
         "name":"Anitta",
         "price": 250,
         "stock": 20,
@@ -182,7 +173,7 @@
     },
     {
         
-        "id":21,
+        
         "name":"Alexis & Fido",
         "price": 250,
         "stock": 20,
@@ -191,7 +182,7 @@
     },
     {
         
-        "id":22,
+        
         "name":"The Weeknd",
         "price": 250,
         "stock": 20,
@@ -200,7 +191,7 @@
     },
     {
         
-        "id":23,
+        
         "name":"Duki",
         "price": 250,
         "stock": 20,
@@ -209,7 +200,7 @@
     },
     {
         
-        "id":24,
+        
         "name":"Linkin Park",
         "price": 250,
         "stock": 20,
