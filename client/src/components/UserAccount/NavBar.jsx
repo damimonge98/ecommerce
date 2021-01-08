@@ -6,12 +6,26 @@ import {NavLink} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {getUser} from "../../redux/actions/userActions"
+import {logoutAction} from "../../redux/actions/userActions";
 
 
 export default function UserNavBar () {
 
 	const dispatch = useDispatch()
 	const authUser = useSelector((state)=> state.user.userAUTH)
+
+	const handleLogout=async ()=>{
+		//mandar llamar las action de user action
+		const logoutUser = async () => dispatch(logoutAction());
+		await logoutUser();
+	
+	
+		//vaciar local storage
+		await window.localStorage.clear()
+	
+	
+		return 
+	 }
 
 
 	return (	<div>
@@ -21,7 +35,7 @@ export default function UserNavBar () {
   					<Dropdown.Item href="/account/me">Mi cuenta</Dropdown.Item>
   					<Dropdown.Item href="/account/me/orders">Compras</Dropdown.Item>
   					<Dropdown.Item href="/account/me/privacity">Privacidad</Dropdown.Item>
-   					<Dropdown.Item href="/account/me/logout">Salir</Dropdown.Item>
+   					<Dropdown.Item href="/" onClick = {handleLogout}>Salir</Dropdown.Item>
 				</DropdownButton>
 				</div>
 				

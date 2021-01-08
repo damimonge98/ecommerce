@@ -8,7 +8,6 @@ import {
   getCategoriesName,
 } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
-import {logoutAction} from "../../redux/actions/userActions";
 import { Context } from "../../App";
 
 
@@ -47,18 +46,7 @@ export default function SideBar() {
   
   const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
 
-  const handleLogout=async ()=>{
-     //mandar llamar las action de user action
-     const logoutUser = async () => dispatch(logoutAction());
-     await logoutUser();
- 
- 
-     //vaciar local storage
-     await window.localStorage.clear()
- 
- 
-     return <Redirect to='/'/>
-  }
+  
 
   return (
     <div className="parent-bar">
@@ -159,18 +147,13 @@ export default function SideBar() {
               </li>
             </Fragment>  
           : 
-          <Fragment>
-          <li onClick={handleLogout}>
-            <Link >
-              <i className="fa fa-user" aria-hidden="true"></i> Logout
-            </Link>
-          </li>
+          
           <li>
           <Link to={`/account/me`} >
           <i class="fa fa-user-circle-o" aria-hidden="true"></i> My Account
           </Link>
           </li>
-          </Fragment>
+        
           
           }  
           <li onClick = {handleCategory}>
