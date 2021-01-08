@@ -159,11 +159,18 @@ export default function SideBar() {
               </li>
             </Fragment>  
           : 
-            <li onClick={handleLogout}>
-              <Link >
-                <i className="fa fa-user" aria-hidden="true"></i> Logout
-              </Link>
-            </li>
+          <Fragment>
+          <li onClick={handleLogout}>
+            <Link >
+              <i className="fa fa-user" aria-hidden="true"></i> Logout
+            </Link>
+          </li>
+          <li>
+          <Link to={`/account/me`} >
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i> My Account
+          </Link>
+          </li>
+          </Fragment>
           
           }  
           <li onClick = {handleCategory}>
