@@ -1,0 +1,22 @@
+
+.containerDiv {
+	display: block;
+	justify-content: center;
+	margin-left: 300px;
+	margin-top: 30px;
+	height: 150px;
+}
+
+.optionDiv:hover {
+	background-color: #585757;
+}
+
+.titleDiv {
+	font-size: 40px;
+	text-align: center;
+}
+
+.infoDiv {
+	justify-content: space-around;
+}
+

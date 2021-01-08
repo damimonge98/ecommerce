@@ -22,7 +22,10 @@ import Checkout from './components/Checkout/Checkout';
 import OrdersDetail from './components/Admin/OrdersDetail/OrdersDetail';
 import Login from './components/Login/Login'
 import UserOrdersDetail from './components/Admin/UserOrdersDetail/UserOrdersDetail';
-import Carousel from './components/Carousel/Carousel'
+import Carousel from './components/Carousel/Carousel';
+import AccountSettings from "./components/UserAccount/AccountSettings.jsx";
+import UserOrders from "./components/UserAccount/Orders.jsx";
+import UserPrivacity from "./components/UserAccount/Privacity.jsx";
 // el Context es para crear la conexión entre las acciones de Sidebar y el catálogo, para poner conectar el filtrado
 export const Context = React.createContext({
   currentCategory: null,
@@ -61,6 +64,9 @@ function App() {
           <Route exact path="/admin/orders/:id" component={OrdersDetail} />
           <Route exact path="/admin/orders/users/:id" component={UserOrdersDetail} />
           <Route exact path="/carousel" component={Carousel} />
+          <Route exact path="/account/me" component={AccountSettings}/>
+          <Route exact path="/account/me/orders" component = {UserOrders} />
+          <Route exact path = "/account/me/privacity" component = {UserPrivacity} />
         </Context.Provider>
       </BrowserRouter>
     </Provider>

@@ -16,7 +16,7 @@ server.post('/', (req, res,next) => {
 			req.login(user,{session:false},err=>{
 				if(err) throw err;
 				//crear y asignar un token
-				const body = { id: user.id,username : user.username , email: user.email, isAdmin: user.isAdmin }
+				const body = { id: user.id,username : user.username , email: user.email, isAdmin: user.isAdmin, givenName: user.givenName, familyName: user.familyName,photoURL: user.photoURL }
 				const token = jwt.sign({user:body},process.env.TOKEN_SECRET);
 				res.header('auth-token',token).json({token});
 			});
