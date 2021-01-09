@@ -31,7 +31,7 @@ const ProductsAdmin = () => {
     const [productPerPage] = useState(10);
     const indexOfLastProduct = currentPage * productPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productPerPage;
-    const currentProducts = data.slice(
+    const currentProducts = Array.isArray(data) && data.slice(
         indexOfFirstProduct,
         indexOfLastProduct
     );
@@ -76,7 +76,7 @@ const ProductsAdmin = () => {
                         </thead>
                         <tbody>
                             {currentProducts.length === 0 ? <tr><td colSpan="7"> No hay productos</td></tr>: (
-                                currentProducts.map(producto => (
+                                Array.isArray(currentProducts) && currentProducts.map(producto => (
                                     <Producto
                                         key={producto.id}
                                         producto={producto}

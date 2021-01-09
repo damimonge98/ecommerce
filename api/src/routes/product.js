@@ -338,4 +338,20 @@ server.delete('/:id/review/:idReview', (req, res) => {
 		})
 });
 
+// Ruta para obtener todas las reviews de un producto
+
+server.get('/:id/reviews', (req, res) => {
+	Reviews.findAll({
+		where: {
+			productId: req.params.id
+		},
+		include: {
+				model: User
+		}
+	})
+		.then(products => {
+			res.send(products)
+		})
+});
+
 module.exports = server;

@@ -120,3 +120,16 @@
   font-weight: 100px;
 }
 
+.lineBox-h1 {
+  display: block;
+  width: 65%;
+  margin-left: 180px;
+}
+
+.catalogueParent-h1 {
+  display: none;
+}
+
+.lineParent-h1 {
+  display: none;
+}

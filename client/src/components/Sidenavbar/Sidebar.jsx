@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import "./Sidebar.css";
-import { Link, useHistory,Redirect } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,7 +9,6 @@ import {
 } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
-
 
 export default function SideBar() {
   //este es el set de la acción que se va a modificar en catálogo
@@ -27,10 +26,10 @@ export default function SideBar() {
     (prev, curr) => (prev ?? 0) + curr.cantidad,
     0
   );
-  let url = window.location.pathname;
+
   // este handleClick es para que al hacer click al carrito se abra y se cierre
   const handleClick = () => {
-    if (isRightBarOpen === false) {
+    if (currentCategory === "All" && isRightBarOpen === false) {
       setRightBarOpen(true);
     } else if (currentCategory === "Outside") {
       history.push("/order");
@@ -40,13 +39,11 @@ export default function SideBar() {
   };
 
   const handleCategory = () => {
-    setCurrentCategory('Outside')
-  }
+    setCurrentCategory("Outside");
+  };
 
-  
-  const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
-
-  
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const userAuthenticated = useSelector((state) => state.user.userAUTH);
 
   return (
     <div className="parent-bar">
@@ -73,7 +70,7 @@ export default function SideBar() {
             </Link>
           </li>
           <li>
-            {/* este  onClick a getCategories es para que siempre me imprima los nombres de las categorías al renderizar el dropdown */}
+            {/* este onClick a getCategories es para que siempre me imprima los nombres de las categorías al renderizar el dropdown */}
             <Dropdown
               className="nav-dropdown"
               onClick={() => dispatch(getCategories())}
@@ -110,9 +107,6 @@ export default function SideBar() {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-        
-
-
           <li onClick={handleClick} className="shopping-icon">
             <Link to={`#`}>
               <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -123,40 +117,40 @@ export default function SideBar() {
               Shopping Cart
             </Link>
           </li>
-          <li onClick = {handleCategory}>
+          <li onClick={handleCategory}>
             <Link to={`/`}>
               <i className="fa fa-ticket-alt" aria-hidden="true"></i> Concerts
             </Link>
           </li>
-          <li onClick = {handleCategory}>
-            <Link to={`/admin`}>
-              <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
-            </Link>
-          </li>
-          {!isAuthenticated ?     
+          {!userAuthenticated ? null : userAuthenticated.isAdmin === "true" ? (
+            <li onClick={handleCategory}>
+              <Link to={`/admin`}>
+                <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
+              </Link>
+            </li>
+          ) : null}
+          {!isAuthenticated ? (
             <Fragment>
-              <li>
+              <li onClick={handleCategory}>
                 <Link to={`/user`}>
                   <i className="fa fa-user" aria-hidden="true"></i> Sign In
                 </Link>
               </li>
-              <li>
+              <li onClick={handleCategory}>
                 <Link to={`/login`}>
                   <i className="fa fa-user" aria-hidden="true"></i> Log In
                 </Link>
               </li>
-            </Fragment>  
-          : 
-          
-          <li>
-          <Link to={`/account/me`} >
-          <i class="fa fa-user-circle-o" aria-hidden="true"></i> My Account
-          </Link>
-          </li>
-        
-          
-          }  
-          <li onClick = {handleCategory}>
+            </Fragment>
+          ) : (
+            <li onClick={handleCategory}>
+              <Link to={`/account/me`}>
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i> My
+                Account
+              </Link>
+            </li>
+          )}
+          <li onClick={handleCategory}>
             <Link to={`/`}>
               <i className="fa fa-info-circle" aria-hidden="true"></i>{" "}
               Information
