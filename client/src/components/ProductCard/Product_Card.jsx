@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Product_Card.css";
 import { useHistory, useParams } from "react-router-dom";
@@ -6,15 +6,32 @@ import { useHistory, useParams } from "react-router-dom";
 import { addProduct } from "../../redux/reducers/carritoReducer";
 import { addToast } from "../../redux/reducers/toastReducer";
 import { getProductId } from "../../redux/actions/productActions";
-import spinner from '../Spinner';
+import spinner from "../Spinner";
 import Swal from "sweetalert2";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { getReviews } from "../../redux/actions/reviewActions";
 
 const ProductCard = () => {
+  const [reviewProductsId, setReviewProductsId] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const history = useHistory();
   const toMusicBar = () => history.push("/musicbar");
   const products = useSelector((state) => state.products.productos);
+  const reviews = useSelector((state) => state.review.review);
   const { id } = useParams(); // con esto tomo el id de products que pido por ruta
+  // Almaceno directamente las calificaciones en esta constante
+  const ratingAverage = reviewProductsId.map((review) => review.rating);
+  // Esto es para tomar la suma total de las calificaciones de los usuarios
+  const ratingSum = reviewProductsId.reduce(
+    (prev, curr) => prev + curr.rating,
+    0
+  );
+  // Con esto saco el promedio
+  const ratingAv = ratingSum / ratingAverage.length;
 
   useEffect(() => {
     if (!products) return spinner();
@@ -22,19 +39,31 @@ const ProductCard = () => {
     cargarProductos();
   }, []);
 
-const handleStock = (stock, products) => { //Este handle verifica si hay stock o no.
-  if (stock <= 0) { //En caso que no haya simplemente retorna un alert. 
-    return Swal.fire({
-  title: 'Ha ocurrido un error',
-  text: "Al parecer, este producto ya no esta disponible :(",
-  icon: 'error',
-  confirmButtonText: 'Aceptar'
-})
-  } //Caso contrario agrega los productos al carrito
-  dispatch(addProduct(products));
-  dispatch(addToast({type: "success",content: "Producto agregado!!!",}));
-}
+  useEffect(() => {
+    if (!reviews) return spinner();
+    const cargarReviews = () => dispatch(getReviews(id));
+    cargarReviews();
+  }, []);
 
+  useEffect(() => {
+    if (!reviews) return spinner();
+    setReviewProductsId(reviews);
+  });
+
+  const handleStock = (stock, products) => {
+    //Este handle verifica si hay stock o no.
+    if (stock <= 0) {
+      //En caso que no haya simplemente retorna un alert.
+      return Swal.fire({
+        title: "Ha ocurrido un error",
+        text: "Al parecer, este producto ya no esta disponible :(",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    } //Caso contrario agrega los productos al carrito
+    dispatch(addProduct(products));
+    dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
+  };
 
   return (
     <div className="bodyb">
@@ -55,9 +84,101 @@ const handleStock = (stock, products) => { //Este handle verifica si hay stock o
                 $<span>{products.price}</span>
               </div>
               <hr className="line" />
+              <div className="d-flex justify-content-center">
+                <ul className="ratingStarsProductId">
+                  {reviewProductsId.length === 0
+                    ? null
+                    : Array.apply(null, { length: ratingAv.toFixed(1) }).map(
+                        (e, i) => {
+                          return (
+                            <li key={i}>
+                              {
+                                <i
+                                  className="fas fa-star"
+                                  id="starsProductCard"
+                                ></i>
+                              }
+                            </li>
+                          );
+                        }
+                      )}
+                </ul>
+              </div>
+              <p className="totalRating">
+                {ratingAv ? ratingAv.toFixed(1) : null}
+              </p>
+              <p
+                className="reviewsCount"
+                onClick={handleShow}
+                style={{ cursor: "pointer" }}
+              >
+                {ratingAverage.length === 0 ? (
+                  <p
+                    style={{ cursor: "auto", marginTop: "20px" }}
+                    onClick={ratingAverage.length === 0}
+                  >
+                    Todavía nadie ha opinado sobre este producto
+                  </p>
+                ) : (
+                  <p> {ratingAverage.length} opiniones</p>
+                )}
+              </p>
+              <Modal
+                show={ratingAverage.length === 0 ? false : show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                className="modalReviews"
+              >
+                <Modal.Header closeButton className="modalBody">
+                  <Modal.Title>
+                    Los usuarios que compraron con nosotros opinaron esto:
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modalBody">
+                  {!reviewProductsId
+                    ? spinner()
+                    : reviewProductsId.map((productReviews) => {
+                        return (
+                          <ul style={{ listStyle: "none" }}>
+                            <li>
+                              {Array.apply(null, {
+                                length: productReviews.rating,
+                              }).map((e, i) => {
+                                return (
+                                  <ul className="usersCalifications">
+                                    <li
+                                      key={i}
+                                      className="usersCalificationsLine"
+                                    >
+                                      {
+                                        <i
+                                          className="fas fa-star"
+                                          id="starsProductCard"
+                                        ></i>
+                                      }
+                                    </li>
+                                  </ul>
+                                );
+                              })}
+                              <br />
+                              {productReviews.user.username} opinó:
+                              <br />
+                              {productReviews.description}
+                              <hr />
+                            </li>
+                          </ul>
+                        );
+                      })}
+                </Modal.Body>
+                <Modal.Footer className="modalBody">
+                  <Button variant="danger" onClick={handleClose}>
+                    Cerrar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <p className="description">{products.description}</p>
             </div>
-
             <div>
               <hr className="line" />
               <p className="stock">Stock disponible: {products.stock}</p>
@@ -89,7 +210,7 @@ const handleStock = (stock, products) => { //Este handle verifica si hay stock o
                     type="button"
                     className="btn btn-custom text-white"
                     onClick={() => {
-                      handleStock(products.stock, products)
+                      handleStock(products.stock, products);
                     }}
                   >
                     <i className="fas fa-shopping-basket"></i>

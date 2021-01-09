@@ -47,7 +47,7 @@ function App() {
           <Route exact path="/" component={Catalogue} />
           <Route path="/" component={SideBarRight}/>
           <Toaster />
-          <Route exact path="/" component={SearchBar} />
+          <Route path="/" component={SearchBar} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/products/:id" component={ProductCard} />
           <Route exact path="/musicbar" component={MusicBar} />
@@ -63,7 +63,7 @@ function App() {
           <Route exact path="/order/checkout" component={Checkout} />
           <Route exact path="/admin/orders/:id" component={OrdersDetail} />
           <Route exact path="/admin/orders/users/:id" component={UserOrdersDetail} />
-          <Route exact path="/carousel" component={Carousel} />
+          <Route exact path="/" component={Carousel} />
           <Route exact path="/account/me" component={AccountSettings}/>
           <Route exact path="/account/me/orders" component = {UserOrders} />
           <Route exact path = "/account/me/privacity" component = {UserPrivacity} />

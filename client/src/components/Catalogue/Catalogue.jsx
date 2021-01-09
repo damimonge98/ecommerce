@@ -6,7 +6,8 @@ import "./catalogue.css";
 import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
 import spinner from "../Spinner";
-import Carousel from '../Carousel/Carousel'
+import Carousel from '../Carousel/Carousel';
+import { getAllReviews } from "../../redux/actions/reviewActions";
 // aca se van a renderizar todas las card de product
 
 const Cataloge = () => {
@@ -69,13 +70,15 @@ const Cataloge = () => {
     setProductos(cargarProductos());
   }, []);
 
+  useEffect(() => {
+    const getReviews = () => dispatch(getAllReviews());
+    getReviews();
+  },[])
+
   return (
     <div>
-      <Carousel/>
       <div className="box">
-        <h1 style={{marginLeft:'350px', color: 'white'}}>Inicio</h1>
-        <hr/>
-        <div className="container">
+        <div className="containerCatalogue">
           {!currentProducts
             ? spinner()
             : currentProducts.map((i) => {

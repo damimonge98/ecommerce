@@ -6,6 +6,7 @@ import { toastReducer } from "./toastReducer";
 import userReducer from "./userReducer";
 import alertaReducer from "./alertaReducer";
 import orderReducer from './orderReducer';
+import reviewReducer from './reviewReducer';
 
 export default combineReducers({
     products: productosReducer,
@@ -14,6 +15,7 @@ export default combineReducers({
     user : userReducer,
     categories : categoriesReducer,
     alerta: alertaReducer,
-    order: orderReducer
+    order: orderReducer,
+    review: reviewReducer
 });
 

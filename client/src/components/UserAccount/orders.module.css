@@ -1,13 +1,53 @@
 .table {
-	margin-left: 250px;
-	margin-right: 100px;
-	margin-top: 30px;
+  margin-left: 250px;
+  margin-right: 100px;
+  margin-top: 30px;
 }
-
 
 .titleDiv {
-	font-size: 30px;
-    text-align: center;
-    
+  font-size: 30px;
+  text-align: center;
 }
 
+.titleReviewFormUser {
+  cursor: pointer;
+}
+
+.modalContainer {
+  color: black;
+}
+
+/* .reviewsContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+  } */
+
+.inputDescription {
+  height: 100px;
+  width: 300px;
+  margin-left: 15%;
+}
+
+.labelDescription {
+  margin-left: 15%;
+}
+
+.ratingStars {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 250px;
+  margin-left: 10%;
+}
+
+.countCharacters {
+  margin-left: 15%;
+}
+
+.modalStyle {
+  color: #ffffff;
+  background-color: #2e2e2e;
+}

@@ -1,0 +1,9 @@
+.close {
+  background: transparent;
+  color: rgb(116, 115, 115);
+  border-radius: 20px;
+  box-shadow: #ffffff;
+  border: transparent;
+  transition: all ease-out 280ms;
+  font-size: 28px;
+}
