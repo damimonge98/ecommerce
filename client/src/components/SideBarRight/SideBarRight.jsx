@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "./SideBarRight.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -11,6 +11,10 @@ import {
 import ProductItem from "../ProductItem/ProductItem";
 import { Context } from "../../App";
 import { Link } from "react-router-dom";
+import { loadState } from "../../redux/maintainState/saveLoad";
+import { fetchCart } from "../../redux/reducers/carritoReducer";
+import clienteAxios from "../../config/axios";
+import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
 
 export default function SideBarRight() {
   const { setRightBarOpen, isRightBarOpen } = useContext(Context);
@@ -20,16 +24,54 @@ export default function SideBarRight() {
   const products = useSelector((state) => state.products.productos);
   const url = window.location.pathname;
   const productsUrl = `/products/${products.id}`;
-  const catalogueUrl = '/'
+  const catalogueUrl = "/";
   const shoppingCount = productos.reduce(
     (prev, curr) => (prev ?? 0) + curr.cantidad,
     0
   );
+  const userData = useSelector((state) => state.user);
+
   useEffect(() => {
     if (productos.length > 0 && location.pathname === "/") {
       setRightBarOpen(true);
     }
   }, [productos]);
+
+  useEffect(() => {
+    const moverLocalABack = async (state, userId) => {
+      console.log("mover local a back");
+      const result = await clienteAxios.get(`orders/users/${userId}/cart`);
+      console.log("result1:", result);
+      const data = result.data;
+      //pasar productos de state.carrito.products al back
+      for (const localProduct of state.carrito.products) {
+        const productBack = data.find((x) => x.productId == localProduct.id);
+        if (productBack) {
+          const result = clienteAxios.put(`orders/users/${userId}/cart`, {
+            productId: localProduct.id,
+            cantidad: productBack.cantidad + localProduct.cantidad,
+          });
+          console.log(result);
+        } else {
+          const result = clienteAxios.post(`orders/users/${userId}/cart`, {
+            productId: localProduct.id,
+            cantidad: localProduct.cantidad,
+          });
+          console.log(result);
+        }
+      }
+    };
+    if (userData.isAuthenticated) {
+      const state = loadState(false);
+      if (state && state.carrito.products.length > 0) {
+        moverLocalABack(state, userData.userAUTH.id);
+        //console.log(state.carrito.products);
+      }
+      dispatch(fetchCart(userData.userAUTH.id));
+    }
+  }, [userData]);
+
+
   return (
     <div
       className="sidebarright-container"
@@ -38,7 +80,12 @@ export default function SideBarRight() {
         // Si está en products/:id no cambia el margin top
         marginTop: url === productsUrl ? "0px" : null,
         // Si está en el catálogo o en products/:id se ve, si no, está escondido
-        visibility: url === productsUrl ? 'visible': url === catalogueUrl ? 'visible': 'hidden'
+        visibility:
+          url === productsUrl
+            ? "visible"
+            : url === catalogueUrl
+            ? "visible"
+            : "hidden",
       }}
       id="cd-shadow-layer"
     >

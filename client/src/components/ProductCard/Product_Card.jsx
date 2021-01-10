@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { getReviews } from "../../redux/actions/reviewActions";
+import clienteAxios from "../../config/axios";
+import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
 
 const ProductCard = () => {
   const [reviewProductsId, setReviewProductsId] = useState([]);
@@ -22,6 +24,7 @@ const ProductCard = () => {
   const toMusicBar = () => history.push("/musicbar");
   const products = useSelector((state) => state.products.productos);
   const reviews = useSelector((state) => state.review.review);
+  const currentUser = useSelector((state) => state.user);
   const { id } = useParams(); // con esto tomo el id de products que pido por ruta
   // Almaceno directamente las calificaciones en esta constante
   const ratingAverage = reviewProductsId.map((review) => review.rating);
@@ -50,7 +53,7 @@ const ProductCard = () => {
     setReviewProductsId(reviews);
   });
 
-  const handleStock = (stock, products) => {
+  const handleStock = async (stock, products, user, cantidad) => {
     //Este handle verifica si hay stock o no.
     if (stock <= 0) {
       //En caso que no haya simplemente retorna un alert.
@@ -61,6 +64,26 @@ const ProductCard = () => {
         confirmButtonText: "Aceptar",
       });
     } //Caso contrario agrega los productos al carrito
+    if (user.isAuthenticated) {
+      const result = await clienteAxios.get(
+        `orders/users/${user.userAUTH.id}/cart`
+      );
+      const data = result.data;
+      const productBack = data.find((x) => x.productId == products.id);
+      if (productBack) {
+        const result = clienteAxios.put(
+          `orders/users/${user.userAUTH.id}/cart`,
+          { productId: products.id, cantidad: productBack.cantidad + 1 }
+        );
+        console.log(result);
+      } else {
+        const result = clienteAxios.post(
+          `orders/users/${user.userAUTH.id}/cart`,
+          { productId: products.id, cantidad: 1 }
+        );
+        console.log(result);
+      }
+    }
     dispatch(addProduct(products));
     dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
   };
@@ -210,7 +233,7 @@ const ProductCard = () => {
                     type="button"
                     className="btn btn-custom text-white"
                     onClick={() => {
-                      handleStock(products.stock, products);
+                      handleStock(products.stock, products, currentUser, 0);
                     }}
                   >
                     <i className="fas fa-shopping-basket"></i>

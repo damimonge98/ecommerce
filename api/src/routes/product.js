@@ -27,9 +27,9 @@ server.get('/', (req, res, next) => {
 
 const upload = multer();
 //ruta para guardar producto con sus categorias
-server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false}),async (req, res,next)=>{
+server.post("/",upload.single("file")/* ,passport.authenticate("jwt",{session:false}) */,async (req, res,next)=>{
 	console.log(req.user)
-	if(req.user.isAdmin && req.user.isAdmin === true || req.user.isAdmin==='true' ){
+	/* if(req.user.isAdmin && req.user.isAdmin === true || req.user.isAdmin==='true' ){ */
 		
 		//procesar los  datos recibidos del formulario que hacen parte del body
 		var { name, description, price,stock, genre } = req.body;
@@ -60,9 +60,9 @@ server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false
 		.catch(e=>{
 			res.status(400).json(e)
 		}) 
-	}else{
+/* 	}else{
 		res.status(401).json({msg:"Unauthorized"});
-	}
+	} */
 
 });
 

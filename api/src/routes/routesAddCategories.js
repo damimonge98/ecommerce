@@ -13,8 +13,8 @@ server.get('/', (req, res, next) => {
         .catch(next);
 });
 
-server.post("/", passport.authenticate("jwt",{session:false}),(req, res) => {
-    if(req.user.isAdmin && req.user.isAdmin === true || req.user.isAdmin==='true' ){
+server.post("/", /* passport.authenticate("jwt",{session:false}),*/(req, res)  => {
+/*     if(req.user.isAdmin && req.user.isAdmin === true || req.user.isAdmin==='true' ){ */
         const {name, description} = req.body
             Categories.create({
             name,
@@ -24,9 +24,9 @@ server.post("/", passport.authenticate("jwt",{session:false}),(req, res) => {
                     res.status(201)
                     res.send(newCategorie)
                 })
-    }else{
+    /* }else{
 		res.status(401).json({msg:"Unauthorized"});
-	}            
+	} */            
 })
 
 //Ruta para obtener detalles de un ID específico
