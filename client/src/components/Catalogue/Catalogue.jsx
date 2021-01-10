@@ -6,8 +6,11 @@ import "./catalogue.css";
 import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
 import spinner from "../Spinner";
-import Carousel from '../Carousel/Carousel';
 import { getAllReviews } from "../../redux/actions/reviewActions";
+import { loadState } from "../../redux/maintainState/saveLoad";
+import { fetchCart } from "../../redux/reducers/carritoReducer";
+import clienteAxios from "../../config/axios";
+import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
 // aca se van a renderizar todas las card de product
 
 const Cataloge = () => {
@@ -20,13 +23,25 @@ const Cataloge = () => {
   const [productPerPage, setProductPerPage] = useState(12);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
-  
+  const userAuthenticated = useSelector((state) => state.user.userAUTH);
+  const userData = useSelector((state) => state.user);
 
+  const idUser = useSelector((state) => state.user.userAUTH);
+  const [state, setState] = useState(0); //Estado solamente para que el useEffect reconozca
+  //un cambio en el componente y lo vuelva a renderizar
+
+  useEffect(() => {
+    if(userData.isAuthenticated){
+    const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
+    obtenerUserOrden();
+  }
+  }, [state]);
+  
   if (!products.data) {
-    var currentProducts =
-      // le paso Array.isArray para que reconozca que products es un array, (va a devolver un booleano) sin esto, no lo reconoce por el delay entre la conexión del servidor y el catálogo
-      Array.isArray(productos) &&
-      productos.slice(indexOfFirstProduct, indexOfLastProduct);
+    var currentProducts = !products
+      ? spinner()
+      : Array.isArray(products) &&
+        products.slice(indexOfFirstProduct, indexOfLastProduct);
   } else {
     currentProducts = products.data;
   }
@@ -43,7 +58,7 @@ const Cataloge = () => {
       if (currentCategory === "All") await setProductos(products);
     })();
   });
-
+ 
   useEffect(() => {
     if (!products) return spinner();
     (async () => {
@@ -73,7 +88,7 @@ const Cataloge = () => {
   useEffect(() => {
     const getReviews = () => dispatch(getAllReviews());
     getReviews();
-  },[])
+  }, []);
 
   return (
     <div>
@@ -112,7 +127,7 @@ const Cataloge = () => {
                   );
                 }
               })}
-              
+
           <div className="pag">
             <div className="pagnation">
               <Pagination
