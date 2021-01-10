@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {getUser} from "../../redux/actions/userActions"
 import {logoutAction} from "../../redux/actions/userActions";
-
+import {clearCarrito} from '../../redux/reducers/carritoReducer'
 
 export default function UserNavBar () {
 
@@ -16,6 +16,7 @@ export default function UserNavBar () {
 
 	const handleLogout=async ()=>{
 		//mandar llamar las action de user action
+		dispatch(clearCarrito());
 		const logoutUser = async () => dispatch(logoutAction());
 		await logoutUser();
 	

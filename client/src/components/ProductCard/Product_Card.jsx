@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Product_Card.css";
 import { useHistory, useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { getReviews } from "../../redux/actions/reviewActions";
+import clienteAxios from "../../config/axios";
+import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
 
 const ProductCard = () => {
   const [reviewProductsId, setReviewProductsId] = useState([]);
@@ -21,7 +23,9 @@ const ProductCard = () => {
   const history = useHistory();
   const toMusicBar = () => history.push("/musicbar");
   const products = useSelector((state) => state.products.productos);
+  const productosCarrito = useSelector((state) => state.carrito.products);
   const reviews = useSelector((state) => state.review.review);
+  const currentUser = useSelector((state) => state.user);
   const { id } = useParams(); // con esto tomo el id de products que pido por ruta
   // Almaceno directamente las calificaciones en esta constante
   const ratingAverage = reviewProductsId.map((review) => review.rating);
@@ -50,20 +54,30 @@ const ProductCard = () => {
     setReviewProductsId(reviews);
   });
 
-  const handleStock = (stock, products) => {
-    //Este handle verifica si hay stock o no.
-    if (stock <= 0) {
-      //En caso que no haya simplemente retorna un alert.
-      return Swal.fire({
-        title: "Ha ocurrido un error",
-        text: "Al parecer, este producto ya no esta disponible :(",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-    } //Caso contrario agrega los productos al carrito
-    dispatch(addProduct(products));
-    dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
-  };
+  const handleStock = useCallback(
+    async (stock, products, user) => {
+      //Este handle verifica si hay stock o no.
+      if (stock <= 0) {
+        //En caso que no haya simplemente retorna un alert.
+        return Swal.fire({
+          title: "Ha ocurrido un error",
+          text: "Al parecer, este producto ya no esta disponible :(",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+      } //Caso contrario agrega los productos al carrito
+      const pc = productosCarrito.find((x) => x.id == products.id);
+      dispatch(
+        addProduct({
+          userId: user,
+          product: products,
+          cantidadActual: pc ? pc.cantidad : 0,
+        })
+      );
+      dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
+    },
+    [productosCarrito]
+  );
 
   return (
     <div className="bodyb">
@@ -210,7 +224,13 @@ const ProductCard = () => {
                     type="button"
                     className="btn btn-custom text-white"
                     onClick={() => {
-                      handleStock(products.stock, products);
+                      handleStock(
+                        products.stock,
+                        products,
+                        currentUser.isAuthenticated
+                          ? currentUser.userAUTH.id
+                          : 0
+                      );
                     }}
                   >
                     <i className="fas fa-shopping-basket"></i>
