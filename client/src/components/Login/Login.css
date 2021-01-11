@@ -1,36 +1,36 @@
-.main-div{
+.main-div {
     position: absolute;
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    background: url(https://cutewallpaper.org/21/tomorrowland-wallpaper/Tomorrowland-2017-Hd-Wallpapers-Tomorrowland-2017-Hd-.jpg)no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
-.login{
+  }
+  .login {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color:transparent;
+    background-color: transparent;
     height: 500px;
     width: 500px;
-    margin: 35%;
-}
-
-.img{
+    margin: 0 auto;
+    
+  }
+  
+  .img {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     height: 250px;
     width: 500px;
-    background: url(https://image.freepik.com/vector-gratis/ondas-voz-coloridas-o-movimiento-frecuencia-sonido-ritmo-radio-dj-amplitud_102902-274.jpg) no-repeat center center   ; 
-    
+    background: url(https://i.pinimg.com/originals/45/07/bb/4507bbb0616b7712f765a3a0053d1cab.gif)
+      no-repeat center center;
   }
-
-.form{
+  
+  .form {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -38,55 +38,92 @@
     height: 250px;
     width: 500px;
     text-align: center;
-    background-color: rgb(10, 3, 73);
-}
-
-.name-user{
+    background-color: #1a1a1a;
+  }
+  
+  .name-user {
     border-radius: 20px;
-    background-color: rgb(3, 7, 54);
-    padding-left:30px; 
-    
-    color:white;
-}
-.password-user{
+    background-color: #1a1a1a;
+    padding-left: 30px;
+    color: white;
+    border: 1px solid #313131;
+  }
+  .passwordUser {
     border-radius: 20px;
-    background-color: rgb(3, 7, 54);
-    padding-left:30px; 
-    color:white;
-    
-}
-
-.legend{
+    background-color: #1a1a1a !important;
+    padding-left: 30px;
+    color: white;
+    border: 1px solid #313131;
+  }
+  
+  .passwordUser:focus {
+    outline: none;
+    border-bottom: 1px solid rgb(114, 114, 114);;
+  }
+  
+  .name-user:focus {
+    outline: none;
+    border-bottom: 1px solid rgb(114, 114, 114);;
+  }
+  
+  .legend {
     position: relative;
-}
-
-
-.button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+  
+  .buttonLogin {
     border-radius: 20px;
-    background-image: linear-gradient(125deg, #affff5 0, #9bfff4 12.5%, #83fff3 25%, #66faf2 37.5%, #3cf2f2 50%, #00eaf3 62.5%, #00e2f4 75%, #00dbf7 87.5%, #00d3fa 100%);
     border: none;
     margin-bottom: 10px;
-    
-}
-.button:hover{
-    transform: scale(1.1)
-}
-.link{
-font-size:10px;
-font-weight: 200;
-margin-left: 120px;
-}
-.registro{
+    background-color:rgb(114, 114, 114);
+    color: rgb(255, 255, 255);
+    width: 150px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .buttonLogin:hover {
+    opacity: 0.8;
+  }
+  
+  .link {
+    font-size: 12px;
+    font-weight: 200;
+    margin-left: 120px;
+    color: #ffff;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+    color: rgb(93, 106, 255);
+  }
+  .registro {
     height: 20px;
-    background-image: linear-gradient(125deg, #c53e3e 0, #ffc13b 12.5%, #87f82a 25%, #00f382 37.5%, #0b6cdb 50%, #480bee 62.5%, #af01ff 75%, #f700ad 87.5%, #fa0000 100%);
-    font-size: 10px;
+    background-color: transparent;
+    font-size: 14px;
     border: none;
     border-radius: 5px;
     font-weight: 600;
-}
-.registro:hover{
-    transform: scale(1.1)
-}
+    color: #ffff;
+  }
+  .registro:hover {
+    transform: scale(1.1);
+  }
+  
+  #iconPassword {
+    margin-left: 10px;
+    position: absolute;
+    color: #ffffff;
+    margin-top: 6px;
+  }
+  
+  #iconUser {
+    margin-left: 10px;
+    position: absolute;
+    color: #ffffff;
+    margin-top: 6px;
+  }
+  
