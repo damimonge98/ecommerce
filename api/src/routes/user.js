@@ -102,16 +102,17 @@ server.put('/:id',passport.authenticate("jwt",{session:false}), (req, res) => {
 
 // Ruta para resetear la password
 
-server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}),(req, res) => {
+server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}), async(req, res) => {
 	const { id } = req.params;
 	const { password } = req.body;
+	const hash = await bcript.hash(password, 10);
 
 	User.findOne({ where: { id: id} })
 		.then(user => {
 			if(!user) {
-				res.status(400).json({ msh: "No existe dicho usuario "});
+				res.status(400).json({ msg: "No existe dicho usuario "});
 			} else {
-				user.update({ password: password }).then(userUp => {
+				user.update({ password: hash }).then(userUp => {
 					res.status(200).json({ msg: "Contraseña actualizada correctametne "});
 				}).catch(e => {
 					res.json(e);
