@@ -54,6 +54,8 @@ const ProductCard = () => {
     setReviewProductsId(reviews);
   });
 
+  console.log(reviewProductsId)
+
   const handleStock = useCallback(
     async (stock, products, user) => {
       //Este handle verifica si hay stock o no.
