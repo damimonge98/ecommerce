@@ -6,9 +6,8 @@ import styles from "../Admin/Product/productos-form.module.css";
 import { connect } from "react-redux";
 import CreateUser from "../../redux/actions/userActions";
 import {useSelector} from 'react-redux';
-import { Redirect } from "react-router-dom";
-
-
+import { Redirect, useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 export function validate(input) {
   let errors = {};
@@ -39,6 +38,7 @@ const UserForm = (props) => {
   const [ImgUrl, setImgUrl] = useState(
     "http://localhost:3001/img/producto-sin-foto.jpg"
   );
+  const history = useHistory()
   const [data, setData] = useState({
     username: "",
     givenName: "",
@@ -56,6 +56,13 @@ const UserForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     /* usuarioData.append('photoURL',data.photoURL) */
+    Swal.fire({
+      icon: "success",
+      title: `Usuario creado con éxito`,
+      showConfirmButton: true,
+      background: "#19191a",
+    }) 
+    history.push('./login')
     props.CreateUser(file, data);
   };
 

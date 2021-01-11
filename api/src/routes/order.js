@@ -173,7 +173,7 @@ server.get("/users/:userId/cart", (req, res) => {
 		where: { userId: id }
 	})
 		.then(orderUser => {
-			LineOrder.findAll()
+			LineOrder.findAll({ where: { orderId: orderUser.id } })
 				.then(lineorder => {
 					if (id) {
 						res.send(lineorder)
@@ -183,6 +183,7 @@ server.get("/users/:userId/cart", (req, res) => {
 				})
 		})
 })
+
 
 server.put("/:id", (req, res) => {
 	const id = req.params.id

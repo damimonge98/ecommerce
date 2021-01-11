@@ -16,8 +16,8 @@ usuarioData.append('password',data.password)
 usuarioData.append('file',file)
   return function(dispatch) {
     return clienteAxios.post("/user", usuarioData)
-      .then(res => dispatch({ type: CREAR_USUARIO, payload: res.file }));
-     
+      .then(res => dispatch({ type: CREAR_USUARIO, payload: res.file })
+      );
   };
 }
 
