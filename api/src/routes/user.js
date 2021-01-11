@@ -78,18 +78,16 @@ server.delete("/:id", passport.authenticate("jwt",{session:false}), (req, res) =
 });
 
 
-server.put('/:id',passport.authenticate("jwt",{session:false}), (req, res) => {
+server.put('/:id' /*,passport.authenticate("jwt",{session:false})*/, (req, res) => {
 	const {id} = req.params;
-	const { username, email, givenName, familyName, password, photoURL, isAdmin } = req.body;
+	const { username, email, givenName, familyName, photoURL} = req.body;
 	User.update(
 		{
 			username,
 			email,
 			givenName,
 			familyName,
-			password,
-			photoURL,
-			isAdmin
+			photoURL
 		},
 		{ returning: true, where: { id }}
 	).then(updatedUser => {
