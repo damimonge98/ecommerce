@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product , Categories, Reviews,conn} = require('../db.js');
+const { Product , Categories, Reviews,conn, User} = require('../db.js');
 const Sequelize = require('sequelize');
 const cors = require('cors');
 const multer = require('multer');//midleware para manejar el archivod de imagen
