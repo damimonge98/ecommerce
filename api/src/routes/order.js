@@ -128,7 +128,7 @@ server.post('/users/:idUser/cart', (req, res) => {
 							if (product.stock >= 1) {
 								LineOrder.create({
 									price: product.price,
-									cantidad: 1,
+									cantidad,
 									productId: productId,
 									orderId: newOrder.id
 								}).then(lineOrder => {
