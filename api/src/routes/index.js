@@ -7,6 +7,7 @@ const userRouter = require("./user.js");
 const orderRouter = require("./order.js");
 const reviewsRouter = require("./reviews.js")
 const auth = require('./auth.js')
+/* const google = require('./google') */
 const router = Router();
 
 // load each router on a route

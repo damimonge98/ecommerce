@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link, Redirect } from "react-router-dom";
-import { GetUsers } from "../../redux/actions/userActions";
+import { GetUsers,GetUsersGoogle } from "../../redux/actions/userActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import GoogleLogin from 'react-google-login';
+import bcrypt from 'bcryptjs'
 function Login(props) {
   const [data, setData] = useState({
     email: "",
@@ -16,6 +18,7 @@ function Login(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userAUTH);
   const loginUser = async (data) => dispatch(GetUsers(data));
+ console.log(data)
 
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -37,11 +40,25 @@ function Login(props) {
     });
     history.push("./");
   };
-
+/* const loguearGoogle=async()=>{
+  await loginGoogle()
+} */
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   if (isAuthenticated) {
     return <Redirect to = './'/>
+  }
+
+  const responseGoogle = async(res)=>{
+   /*  const hashPassword  = await bcrypt.hash(res.profileObj.googleId ,10) */
+     setData({ ...data, email:res.profileObj.email, password:res.profileObj.googleId } )
+      await loginUser(data)
+      await Swal.fire({
+        icon: "success",
+        title: `Bienvenido`,
+        showConfirmButton: true,
+        background: "#19191a",
+      });
   }
 
   return (
@@ -91,6 +108,14 @@ function Login(props) {
               </Link>
             </div>
           </form>
+          <GoogleLogin
+    clientId="62493798452-akjoostfaul0rmoqbfjfvbusiqnbj9u3.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+    isSignedIn={true}
+  />
         </div>
       </div>
     </div>

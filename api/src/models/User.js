@@ -3,6 +3,10 @@ const { DataTypes ,Sequelize} = require('sequelize');
 module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('user', {
+        googleId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -10,9 +14,9 @@ module.exports = (sequelize) => {
                 args:true              
             },
             // Permite solo los caracteres nombrados
-             validate: {
+/*              validate: {
                 is: /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/,
-            } 
+            }  */
         },
         email: {
             type: DataTypes.TEXT,
@@ -37,9 +41,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             // Permite solo los caracteres nombrados
-             validate: {
+/*              validate: {
                 is: /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/g,
-            } 
+            }  */
         },
         photoURL: {
             type: DataTypes.STRING(1000),

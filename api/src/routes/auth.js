@@ -4,6 +4,8 @@ const cors = require('cors')
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 server.use(cors());
+server.use(passport.initialize())
+server.use(passport.session())
 require('../passport-config')(passport);
 
 //login
@@ -39,7 +41,7 @@ server.get('/auth/facebook/login_fb',
 	}));
 
 // Ruta para actualizar el rol de un usuario, para hacerlo administrador o sacarle ese rol
-
+ 
 server.put('/auth/promote/:id', passport.authenticate("jwt", { session: false }),(req, res) => {
 	const { isAdmin } = req.body;
 	User.update({ isAdmin },
@@ -48,5 +50,18 @@ server.put('/auth/promote/:id', passport.authenticate("jwt", { session: false })
 			res.send(userPromoted)
 		})
 })
+
+
+server.get('/auth/google',
+passport.authenticate('google', { scope: ['profile','email'] }));
+
+
+server.get('/auth/google/login', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('http://localhost:3000/login');
+  });
+
 
 module.exports = server
