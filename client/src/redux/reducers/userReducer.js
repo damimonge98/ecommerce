@@ -1,5 +1,7 @@
 import {
     CREAR_USUARIO,
+    EDITAR_FOTO,
+    EDITAR_FOTO_EXITO,
     LOGIN_USER,
     LOGOUT_USER
     } from "../types/Users.js";
@@ -8,6 +10,7 @@ import {
     const initialState = {
         users: [],
         userAUTH:[],
+        newImage: null,
         isAuthenticated:false,
         token:"",
         error: null,
@@ -36,6 +39,15 @@ import {
                     userAUTH: action.payload,
                     isAuthenticated:false
                 }    
+            case EDITAR_FOTO:
+                return {
+                    ...state,
+                    newImage : action.payload
+                }
+            case EDITAR_FOTO_EXITO:
+                return {
+                    ...state,
+                }
             default:
                 return state;
         }

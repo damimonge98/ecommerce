@@ -1,7 +1,11 @@
 import {
   CREAR_USUARIO,
   LOGIN_USER,
-  LOGOUT_USER
+  LOGOUT_USER,
+  ACTUALIZAR_USUARIO,
+  ACTUALIZAR_CONTRASEÑA,
+  EDITAR_FOTO,
+  EDITAR_FOTO_EXITO
 } from '../types/Users';
 import clienteAxios from '../../config/axios.js';
 import jsonWebToken from 'jsonwebtoken'
@@ -61,3 +65,61 @@ export function  GetUsersGoogle () {
        // await dispatch(setUsers(tokenDecode))
   };
 }
+
+//actualizar info de usuario
+
+export function updateUser (id, data) {
+  return async function (dispatch) {
+    dispatch (editarUsuario(data))
+    return clienteAxios.put("/user/" + id, {username: data.username, givenName: data.givenName, familyName: data.familyName, email: data.email} )
+  }
+}
+
+
+const editarUsuario = function (data) {
+  return ({
+    type: ACTUALIZAR_USUARIO,
+    payload: data
+  });
+}
+
+export function resetPassword (password,id) {
+  return async function (dispatch) {
+    dispatch (actualizarContraseña (password))
+    return clienteAxios.post("/user/" + id + "/passwordReset", {password: password})
+  }
+}
+
+const actualizarContraseña = function (password) {
+  return ({
+    type: ACTUALIZAR_CONTRASEÑA,
+    payload: password
+  })
+}
+
+
+export function editUserImage(file, id) { //recibe la data pasada por el form de AddCategories
+  return function (dispatch) {
+    //se le pasa por body a la url para añadir la categoria
+    return clienteAxios.put("/user/" +id + "/image", file)
+      .then(res => {
+        console.log(res.data)
+        dispatch(editarFoto(res.data))
+        dispatch(editarFotoExito())
+      })
+      .catch (err =>{
+        console.log(err)
+      })
+  }
+};
+
+  const editarFoto = function (url) {
+    return {
+      type: EDITAR_FOTO,
+      payload: url
+    }
+  }
+
+  const editarFotoExito = function () {
+    return {type: EDITAR_FOTO_EXITO}
+  }
