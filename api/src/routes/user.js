@@ -11,7 +11,7 @@ server.use(cors());
 
 const upload= multer()
 server.post("/",upload.single('file'),async(req, res) => {
-	const {username, givenName, familyName, email, password, isAdmin } = req.body
+	const {username, givenName, familyName, email, password, isAdmin,googleId } = req.body
 	console.log(req.body)
 	const hashPassword  =await bcript.hash(password,10)
 	//Procesar archivo de imagen recibido
@@ -29,7 +29,9 @@ server.post("/",upload.single('file'),async(req, res) => {
         email,
         password:hashPassword,
         photoURL:img,
-        isAdmin 
+		isAdmin,
+		googleId
+		
     })
 		.then((newUser) => {
 			

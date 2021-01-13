@@ -5,6 +5,9 @@ const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { decode } = require('jsonwebtoken');
+const bcript =require("bcrypt")
 
 module.exports = function (passport){
    
@@ -57,5 +60,40 @@ module.exports = function (passport){
         });
       }
     ));
+
+    passport.use(new GoogleStrategy({
+        clientID: process.env.CLIENT_ID_GO,
+        clientSecret: process.env.CLIENT_SECRET_GO,
+        callbackURL: "http://localhost:3001/login/auth/google/login"
+      },
+      function (accessToken, refreshToken,profile, cb)  {
+          (async()=>{
+          const hashPassword  = await bcript.hash(profile.id,10)
+          console.log(hashPassword)
+        User.findOrCreate({where:{ googleId: profile.id },defaults:{
+            username: profile.displayName,
+            email: profile.emails[0].value,
+            givenName: profile.name.givenName,
+            familyName: profile.name.familyName,
+            password: hashPassword,
+            photoURL: profile.photos.value,
+            isAdmin: false,
+        }})
+        .then(user=>{
+            cb(null,user)
+        }).catch(err=>{
+            cb(err,null)
+        })
+    })()}
+    ))
+
+    passport.serializeUser((user, done) => {
+        done(null, user);
+    });
+    
+    passport.deserializeUser((id, done) => {
+        done(null, user);
+    });
+
 
 }
