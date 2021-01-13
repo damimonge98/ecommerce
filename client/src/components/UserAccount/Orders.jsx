@@ -15,6 +15,10 @@ import Form from "react-bootstrap/Form";
 export default function UserOrders() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [starClicked, setStarClicked] = useState({
+    color: " ",
+    clicked: false,
+  });
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const res = useSelector((state) => state.order.orden);
@@ -26,6 +30,7 @@ export default function UserOrders() {
     rating: 0,
     count: 0,
     userId: idUser,
+    clicked: false,
   });
 
   const [state, setState] = useState(0); //Estado solamente para que el useEffect reconozca
@@ -51,6 +56,20 @@ export default function UserOrders() {
       description: e.target.value,
     });
 
+  /*   const starsHandler = () => {
+    if (starClicked.clicked === false) {
+      setStarClicked({
+        clicked: true,
+        color: "yellow",
+      });
+    } else {
+      setStarClicked({
+        clicked: false,
+        color: "white",
+      });
+    }
+  }; */
+  console.log(data);
   return (
     <div>
       <NavBar />
@@ -129,8 +148,8 @@ export default function UserOrders() {
                       keyboard={false}
                       className={styles.modalContainer}
                     >
-                      <Modal.Header closeButton className ={styles.modalStyle}>
-                        <Modal.Title className ={styles.modalStyle}>
+                      <Modal.Header closeButton className={styles.modalStyle}>
+                        <Modal.Title className={styles.modalStyle}>
                           En{" "}
                           <img
                             src="https://bit.ly/37jca0M"
@@ -142,10 +161,13 @@ export default function UserOrders() {
                       <Form
                         onSubmit={(e) => {
                           e.preventDefault();
-                          dispatch(addReview(data, el.products[window.index].id));
-                          history.push('/')
-                        }}>
-                        <Modal.Body className ={styles.modalStyle}>
+                          dispatch(
+                            addReview(data, el.products[window.index].id)
+                          );
+                          history.push("/");
+                        }}
+                      >
+                        <Modal.Body className={styles.modalStyle}>
                           <Form.Group controlId="formBasicEmail">
                             <Form.Label className={styles.labelDescription}>
                               Cuéntanos que te pareció{" "}
@@ -171,25 +193,71 @@ export default function UserOrders() {
                             </Form.Label>
                           </Form.Group>
 
-                          <ul className={styles.ratingStars}>
-                            {Array.apply(null, { length: 5 }).map((e, i) => {
-                              return (
-                                <li key={i}>
-                                  {
-                                    <i
-                                      onClick={() =>
-                                        setData({ ...data, rating: i + 1 })
-                                      }
-                                      className="fas fa-star"
-                                      value={data.rating}
-                                    ></i>
-                                  }
-                                </li>
-                              );
-                            })}
-                          </ul>
+                          <div class="starrating risingstar d-flex justify-content-center flex-row-reverse" id = "divStars">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rating"
+                              value={data.rating}
+                              onClick={() =>
+                                setData({ ...data, rating: 5 })
+                              }
+                            />
+                            <label for="star5" title="5 star">
+                              
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rating"
+                              value={data.rating}
+                              onClick={() =>
+                                setData({ ...data, rating: 4 })
+                              }
+                            />
+                            <label for="star4" title="4 star">
+                              
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rating"
+                              value={data.rating}
+                              onClick={() =>
+                                setData({ ...data, rating: 3 })
+                              }
+                            />
+                            <label for="star3" title="3 star">
+                              
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rating"
+                              value={data.rating}
+                              onClick={() =>
+                                setData({ ...data, rating: 2 })
+                              }
+                            />
+                            <label for="star2" title="2 star">
+                              
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rating"
+                              value={data.rating}
+                              onClick={() =>
+                                setData({ ...data, rating: 1 })
+                              
+                              }
+                            />
+                            <label for="star1" title="1 star">
+                              
+                            </label>
+                          </div>
                         </Modal.Body>
-                        <Modal.Footer className ={styles.modalStyle}>
+                        <Modal.Footer className={styles.modalStyle}>
                           <Button variant="danger" onClick={handleClose}>
                             Close
                           </Button>
@@ -208,4 +276,20 @@ export default function UserOrders() {
       </div>
     </div>
   );
+}
+{
+  /* <i
+  onClick={() => {
+    setData({ ...data, rating: i + 1 });
+    starsHandler();
+  }}
+  style={{
+    color: starClicked.clicked === true ? "yellow" : "white",
+    cursor: "pointer",
+  }}
+  className="fas fa-star"
+  value={data.rating}
+  id={styles.starsFormRating}
+></i>;
+ */
 }
