@@ -10,20 +10,32 @@
   margin-right: 900px;
 }
 
-/* .navSearch {
-  margin-left: 400px;
-} */
-
-/* #input-search {
-  background-color: #525252;
-  border: transparent;
-  color: white;
-  width: 140px;
-} */
-
-/* #icon-search {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+.d-flexsearch{
+  display:flexbox
 }
- */
+
+#input-filtersearch {
+  background-color: #151515;
+  border: transparent;
+  width: 200px;
+  border-radius: 20px;
+  color: white;
+}
+
+.checks{
+  display: inline-block;
+  width: 80%;
+  padding-left: 30px;
+  padding-top: 6px;
+  
+}
+
+@media only screen and (max-width: 1360px) {
+  .checks{
+    display: block;
+    width: 100%;
+    padding-left: 30px;
+    padding-top: 6px;
+    
+  }
+}
