@@ -6,8 +6,9 @@ import styles from "../Admin/Product/productos-form.module.css";
 import { connect } from "react-redux";
 import CreateUser from "../../redux/actions/userActions";
 import {useSelector} from 'react-redux';
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
+import clienteAxios from '../../config/axios'
 
 export function validate(input) {
   let errors = {};
@@ -47,6 +48,7 @@ const UserForm = (props) => {
     password: "",
     photoURL: "",
   });
+  
 
   const handleChange = (event) => {
     setErrors(validate({ ...data, [event.target.name]: event.target.value }));
@@ -105,8 +107,15 @@ const UserForm = (props) => {
   if(isAuthenticated){
     return <Redirect to='/'/>
   }
+
+  const handleGoogle =(e)=>{
+    history.push('http://localhost:3001/login/auth/google')
+     
+  }
   return (
+
     <div className="container-main">
+      
       <div className="form-div">
         <Form onSubmit={handleSubmit}>
           <legend>Formulario de Registro</legend>
@@ -200,8 +209,18 @@ const UserForm = (props) => {
             Enviar
           </Button>
         </Form>
+        
+        <div class="google-btn">
+  <div class="google-icon-wrapper">
+    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+  </div>
+  
+  <p /* onClick={handleGoogle} */  class="btn-text"><b><a href="http://localhost:3001/login/auth/google"> Sign in with google</a></b></p>
+</div>
+
       </div>
     </div>
+    
   );
 };
 function mapDispatchToProps(dispatch) {
