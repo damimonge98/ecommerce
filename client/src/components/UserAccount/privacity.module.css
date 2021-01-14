@@ -30,6 +30,23 @@
     display:flex;
     justify-content: center;
     align-items: center;
+    height: 300px;
+    margin-top: 150px;
     
-	
+    
+}
+
+.labelstyles {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.editInfo {
+    display: block;
+    margin: all;
+}
+
+.modal {
+    background-color: #2e2e2e;
 }

@@ -121,5 +121,28 @@ server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}), 
 		})
 });
 
+// Ruta para editar la imagen de un usuario en particular
+server.put('/:id/image', upload.single("file"),/*passport.authenticate("jwt",{session:false}),*/async (req, res, next) => {
+	const id = req.params.id
+	const {file} = req;	
+	
+	if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
+		const fileName = 'userimg' + '_' + Date.now() + file.detectedFileExtension;
+		var img = `http://localhost:3001/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+		//guardar archivo de imagen en el servidor 
+		const pipeline = promisify(require("stream").pipeline);
+		await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img-user/${fileName}`)).catch(e=>{console.log(e)});
+		
+		User.update({
+			photoURL:img,
+		}, {where: {id}})
+		.then(updatedUser => {
+			console.log(img)
+			res.status(201).json(img)
+		})	
+	})
+	
+	
+
  
 module.exports = server;
