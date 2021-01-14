@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Table from "react-bootstrap/Table";
 import "./Orders.css";
 import Pagination from "../../Pagination/Pagination";
@@ -11,7 +11,6 @@ import spinner from "../../Spinner";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [checkbox, setCheckbox] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(8);
   const indexOfLastProduct = currentPage * productPerPage;
@@ -23,6 +22,17 @@ const Orders = () => {
   const order = useSelector((state) => state.order.orden);
   const history = useHistory();
 
+  const [filter, setFilter] = useState("none");
+  const [checked, setChecked] = useState(false)
+  const [checkbox, setcheckbox] = useState({
+    carrito:false,
+    creada:false,
+    procesando:false,
+    cancelada:false,
+    completada:false
+  })
+
+  const [searchTerm, setSearchTerm] = useState("")
 
   let currentOrder =
     Array.isArray(orders) &&
@@ -47,11 +57,76 @@ const Orders = () => {
     setOrders(deleteOrder);
   }; */
 
-  console.log("currentOrder:", currentOrder);
+  const handleCheckbox = e => {
+    var elemento=e.target.name;
+    var checkboxes = checkbox;
+    if(checkbox[elemento] === false){
+      for (let key in checkboxes) {
+        checkboxes[key] = false;
+      }
+      checkboxes[e.target.name] = true;
+    }else{
+      const checkboxes = checkbox;
+      for (let key in checkboxes) {
+        checkboxes[key] = false;
+      }
+    }
+     
+    setcheckbox( checkboxes );
+
+    if (filter === e.target.value) setFilter("none");
+    else {
+      setFilter(e.target.value);
+      setChecked(true)};
+  };
+
+  const lista=()=> {
+    return currentOrder.filter(item => {
+      const state=item.state.toString().toLowerCase();
+      if (state === filter ){
+        return state.includes(filter)
+      }else if(filter === "none"){
+        return currentOrder
+      }
+    });
+  }
+
+
+ 
   return (
     <div className="table-parent">
+      <div class="mb-4">
+        <div className="row">
+          <div className="d-flexsearch form-check form-check-inline mb-3  col-2" >
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  id="input-filtersearch" onChange={e=>{setSearchTerm(e.target.value)}}  data-toggle="tooltip" data-placement="top" title="Buscar por email o estado"/>
+          </div>
+        <div className="checks col-10 pl-5 ">
+          <div class="form-check form-check-inline ">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="carrito" name="carrito" checked={checkbox.carrito}  onChange={handleCheckbox} data-toggle="tooltip" data-placement="top" title="Filtrar por estado carrito"/>
+            <label class="form-check-label" for="inlineCheckbox1">Carrito</label>
+          </div>
+          <div class="form-check form-check-inline  ">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="creada" name="creada" checked={checkbox.creada} onChange={handleCheckbox} data-toggle="tooltip" data-placement="top" title="Filtrar por estado creada"/>
+            <label class="form-check-label" for="inlineCheckbox2">Creada</label>
+          </div>
+          
+          <div class="form-check form-check-inline ">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="procesando" name="procesando" checked={checkbox.procesando} onChange={handleCheckbox} data-toggle="tooltip" data-placement="top" title="Filtrar por estado procesando"/>
+            <label class="form-check-label" for="inlineCheckbox3">Procesando</label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="cancelada" name="cancelada" checked={checkbox.cancelada} onChange={handleCheckbox} data-toggle="tooltip" data-placement="top" title="Filtrar por estado cancelada"/>
+            <label class="form-check-label" for="inlineCheckbox3">Cancelada</label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="completada" name="completada" checked={checkbox.completada} onChange={handleCheckbox} data-toggle="tooltip" data-placement="top" title="Filtrar por estado completada"/>
+            <label class="form-check-label" for="inlineCheckbox3">Completada</label>
+          </div>
+        </div>
+        </div>
+      </div>
       <div className="row">
-       {/*  <div className="button-groups">
+        {/*  <div className="button-groups">
           <ButtonGroup aria-label="Basic example" id="button-group">
             <Button variant="primary">Edit</Button>
             <Button
@@ -76,10 +151,13 @@ const Orders = () => {
             </div>
           </ButtonGroup>
         </div> */}
+
+
+
         <Table responsive="lg" striped bordered hover variant="dark">
           <thead>
             <tr>
-            {/*   <th>
+              {/*   <th>
                 <input type="checkbox" />
               </th> */}
               <th>Order ID</th>
@@ -90,25 +168,31 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {!currentOrder
+            {!lista() 
               ? spinner()
-              : Array.isArray(currentOrder) &&
-                currentOrder.map((allOrder) => {
-                  return (
-                      <tr key={orders.id}>
-                      {/*   <th>
+              : Array.isArray(lista()) &&
+              lista().filter(val=>{
+                if(searchTerm==""){
+                  return val
+                }else if(val.state.toLowerCase().includes(searchTerm.toLowerCase()) || val.user.email.toLowerCase().includes(searchTerm.toLowerCase())){
+                  return val;
+                }
+              }).map((allOrder) => {
+                return (
+                  <tr key={orders.id}>
+                    {/*   <th>
                           <input
                             type="checkbox" onClick={() => getId(order.id)}
                           />
                         </th> */}
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/${allOrder.id}`)}>{allOrder.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.id}</td>
-                        <td style = {{cursor: 'pointer'}} onClick = {() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.username}</td>
-                        <td>{allOrder.user.email}</td>
-                        <td>{allOrder.state}</td>
-                      </tr>
-                    );
-                })}
+                    <td style={{ cursor: 'pointer' }} onClick={() => history.push(`/admin/orders/${allOrder.id}`)}>{allOrder.id}</td>
+                    <td style={{ cursor: 'pointer' }} onClick={() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.id}</td>
+                    <td style={{ cursor: 'pointer' }} onClick={() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.username}</td>
+                    <td>{allOrder.user.email}</td>
+                    <td>{allOrder.state}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
       </div>
