@@ -42,7 +42,7 @@ server.get('/auth/facebook/login_fb',
 
 // Ruta para actualizar el rol de un usuario, para hacerlo administrador o sacarle ese rol
  
-server.put('/auth/promote/:id', passport.authenticate("jwt", { session: false }),(req, res) => {
+server.put('/auth/promote/:id', /* passport.authenticate("jwt", { session: false }), */(req, res) => {
 	const { isAdmin } = req.body;
 	User.update({ isAdmin },
 		{ returning: true, where: { id: req.params.id } })

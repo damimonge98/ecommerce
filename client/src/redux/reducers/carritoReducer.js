@@ -11,7 +11,13 @@ export const fetchCart = createAsyncThunk(
         const result = await clienteAxios.get(
             `orders/users/${userId}/cart`
         );
-        const data = result.data;
+       
+        var data;
+        if(Array.isArray(result.data)){
+            data= result.data[0]
+        }else{
+            data = result.data;
+        }
         return data;
         // const productsBack = data.find((x) => x.productId == products.id);
         // return productsBack;
@@ -39,38 +45,75 @@ addProduct(state, action) {
 export const addProduct = createAsyncThunk(
     'carrito/addProduct',
     async ({ userId, product, cantidadActual }, thunkAPI) => {
+       
         if (userId > 0) {
             const result = await clienteAxios.get(
                 `orders/users/${userId}/cart`
             );
-            const data = result.data;
-            const productBack = data.find((x) => x.productId == product.id);
+           
+            var data;
+            if(Array.isArray(result.data)){
+                data= result.data[0].products;
+            }else{
+                data = result.data.products;
+            }
+            
+            const lineOrderBack = await data.map(lineOrder => lineOrder.lineOrder)
+          
+            const productBack = lineOrderBack.find((x) => x.productId == product.id);
+
+            
             if (productBack) {
-                const result = await clienteAxios.put(
+                var resultPut = await clienteAxios.put(
                     `orders/users/${userId}/cart`,
                     { productId: product.id, cantidad: productBack.cantidad + 1 }
                 );
-                console.log(result);
+                return {
+                    ...product,
+                    cantidad: productBack.cantidad + 1,
+                }
+                
             } else {
-                const result = await clienteAxios.post(
+                var resultPost = await clienteAxios.post(
                     `orders/users/${userId}/cart`,
                     { productId: product.id, cantidad: 1 }
                 );
-                console.log(result);
+                console.log(resultPost)    
+                
+                return {
+                    ...product,
+                    id:resultPost.data.product.id,
+                    name:resultPost.data.product.name,
+                    cantidad: resultPost.data.lineOrder.cantidad,
+                    price:resultPost.data.lineOrder.price,
+                    img: resultPost.data.product.img,
+                }
             }
-            return {
-                ...product,
-                cantidad: productBack.cantidad + 1
-            }
+
+           
+
+           
         } else {
             return {
                 ...product,
-                cantidad: cantidadActual + 1
+                cantidad: cantidadActual + 1,
+               
+
             }
         }
     }
 )
 
+/* export const clearCarrito = createAsyncThunk(
+    'carrito/clearCarrito',
+    async (userId, thunkAPI) => {
+        //const productos = JSON.parse(localStorage.getItem('carritoGuest') ?? '[]');
+        //return productos;
+        const result = await clienteAxios.delete(`orders/users/${userId}/cart`);
+        //console.log(result);
+        return result.status == 200;
+    }
+) */
 
 const carritoSlice = createSlice({
     name: 'carrito',
@@ -99,31 +142,42 @@ const carritoSlice = createSlice({
     extraReducers: {
         [fetchCart.fulfilled]: (state, action) => {
             state.products = [];
-            for (const product of action.payload) {
-                const _product = { id: product.productId, name: 'completar datos', cantidad: product.cantidad, price: product.price, img: '' }
-                state.products.push(_product)
-            }
 
+            if(Array.isArray(action.payload.products)){
+                for (const  product of action.payload.products) {
+                   
+                    const _product = { id: product.lineOrder.productId, name: product.name, cantidad: product.lineOrder.cantidad, price: product.lineOrder.price, img: product.name }
+                    state.products.push(_product)
+                }
+            }
             // Add user to the state array
             //state.entities.push(action.payload)
-            console.log(action.payload);
+          
             localStorage.clear("carritoGuest")
+          
         },
+        
         [loadGuestCart.fulfilled]: (state, action) => {
             state.products = [];
-            console.log('loadGuestCart', action.payload);
             for (const product of action.payload) {
-                const _product = { id: product.id, name: 'completar datos', cantidad: product.cantidad, price: product.price, img: '' }
+                const _product = { id: product.id, name: product.name, cantidad: product.cantidad, price: product.price, img: product.img }
                 state.products.push(_product)
             }
         },
+        
         [addProduct.fulfilled]: (state, action) => {
-            const _producto = action.payload;
-            const existe = state.products.find(x => x.id == _producto.id);
+            const _producto = action.payload
+            const existe = state.products.find(x => x.id === action.payload.id);
             const producto = existe ? existe : { id: _producto.id, name: _producto.name, cantidad: _producto.cantidad, price: _producto.price, img: _producto.img }
             producto.cantidad = _producto.cantidad;
             if (!existe) state.products.push(producto)
-        }
+        },
+        /* [addProduct.rejected]: (state, action) => {
+            console.log(action);
+        },
+        [clearCarrito.fulfilled]: (state, action) => {
+            state.products = [];
+        } */
     }
 },
 )

@@ -15,10 +15,6 @@ import Form from "react-bootstrap/Form";
 export default function UserOrders() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [starClicked, setStarClicked] = useState({
-    color: " ",
-    clicked: false,
-  });
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const res = useSelector((state) => state.order.orden);
@@ -56,20 +52,6 @@ export default function UserOrders() {
       description: e.target.value,
     });
 
-  /*   const starsHandler = () => {
-    if (starClicked.clicked === false) {
-      setStarClicked({
-        clicked: true,
-        color: "yellow",
-      });
-    } else {
-      setStarClicked({
-        clicked: false,
-        color: "white",
-      });
-    }
-  }; */
-  console.log(data);
   return (
     <div>
       <NavBar />
