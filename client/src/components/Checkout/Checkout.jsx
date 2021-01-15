@@ -1,209 +1,318 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Checkout.css";
-import Form from "react-bootstrap/Form";
+import styles from "./checkout.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  getUserOrderDetail,
+  editOrder,
+} from "../../redux/actions/orderActions.js";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import clienteAxios from "../../config/axios";
+import Swal from "sweetalert2";
+import spinner from "../Spinner";
 
-export const Checkout = () => {
+// Esto es la key para poder conectar la app a Stripe y poder registrar los pagos
+const stripePromise = loadStripe(
+  "pk_test_51I9eUyAGbg8RF4WLkKsRgGfWIgR9wIoW4KC4kSdb2E81C1FXYgl3pn3SveppX9HipsVD2AEAKkvdPHlV9KvzQcr800h6zYpCtE",
+  { locale: "es" }
+);
+
+const ElementCheckout = () => {
+  const orderProducts = [];
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState(0);
+  const orden = useSelector((state) => state.order.orden);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  orden.map((productsOrder) =>
+    productsOrder.products.map((lineOrder) => orderProducts.push(lineOrder))
+  );
+  const totalProductsPrice = orderProducts.reduce(
+    (acc, item) => acc + item.lineOrder.price * item.lineOrder.cantidad,
+    0
+  );
+  // En esta variable almaceno los nombres de los productos almacenados en el carrito de la orden
+  let productList = orderProducts.map((productsName) => productsName.name);
+  // Esta función es para obtener todos los productos en una sola línea separados por "," y mandarlos a la ruta de pago
+  let productListNames = Object.keys(productList)
+    .map(function (key) {
+      return productList[key];
+    })
+    .join(", ");
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+      billing_details: {
+        name: username.nameUser,
+        email: email.email,
+      },
+    });
+    setLoading(true);
+    if (!error) {
+      const { id } = paymentMethod;
+      try {
+        const { data } = await clienteAxios.post("/payment/api/checkout", {
+          id,
+          amount: totalProductsPrice * 100,
+          description: productListNames,
+        });
+        elements.getElement(CardElement).clear();
+        await Swal.fire({
+          icon: "success",
+          title: `Tu pago ha sido realizado con exito`,
+          text:
+            "Te estaremos enviando los siguientes pasos a seguir a tu email, gracias por elegirnos",
+          showConfirmButton: true,
+          background: "#19191a",
+        });
+
+        // Cambia el estado de la orden a creada
+        dispatch(editOrder({ state: "creada" }, orden[0].id));
+        setState(state + 1);
+      } catch (err) {
+        console.log("message", error);
+      }
+      setLoading(false);
+    } else {
+      await Swal.fire({
+        title: "Error",
+        text: "error",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+
+  console.log(orden[0].state);
+
+  useEffect(() => {
+    // Cuando se submitea la orden, el valor del estado pasa de 0 a 1, es para redireccionar a Home,
+    // Igualmente si está la orden creada o en un estado distinto a carrito, ya no se puede entrar a hacer el checkout
+    if (state > 0 || orden[0].state !== "carrito") {
+      history.push("/");
+    }
+  }, [state]);
+
+  const handleEmailUser = (e) => {
+    setEmail({ ...email, email: e.target.value });
+  };
+
+  const handleCardName = (e) =>
+    setUsername({ ...username, nameUser: e.target.value });
+
   return (
-    <div className="container">
-      <div className="col-md-8 order-md-1">
-        <h4 className="mb-3">Billing address</h4>
-        <form className="needs-validation" novalidate>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label for="firstName">First name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                placeholder=""
-                value=""
-                required
-              />
-              <div className="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label for="lastName">Last name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="lastName"
-                placeholder=""
-                value=""
-                required
-              />
-              <div className="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-3">
-            <label for="email">
-              Email <span className="text-muted"></span>
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="you@example.com"
-            />
-            <div className="invalid-feedback">
-              Please enter a valid email address for shipping updates.
-            </div>
-          </div>
-
-          <div className="mb-3">
-            <label for="address">Address</label>
-            <input
-              type="text"
-              className="form-control"
-              id="address"
-              placeholder="1234 Main St"
-              required
-            />
-            <div className="invalid-feedback">
-              Please enter your shipping address.
-            </div>
-          </div>
-
-          <div className="mb-3">
-            <label for="address2">
-              Address 2 <span className="text-muted">(Optional)</span>
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="address2"
-              placeholder="Apartment or suite"
-            />
-          </div>
-
-          <div className="row">
-            <div className="col-md-3 mb-3">
-              <label for="state">Country</label>
-              <Form.Control as="select">
-                <option value="">Choose...</option>
-                <option>Argentina</option>
-              </Form.Control>
-              <div className="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <label for="state">State</label>
-              <Form.Control as="select">
-                <option value="">Choose...</option>
-                <option>Buenos Aires</option>
-              </Form.Control>
-              <div className="invalid-feedback">
-                Please select a valid state.
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <label for="zip">Zip</label>
-              <input
-                type="text"
-                className="form-control"
-                id="zip"
-                placeholder=""
-                required
-              />
-              <div className="invalid-feedback">Zip code required.</div>
-            </div>
-          </div>
-          <hr className="mb-4" />
-          <div className="col-100">
-            <h3>Payment</h3>
-            <label for="fname">Accepted Cards</label>
-            <div className="icon-container">
-              <img src="https://img.icons8.com/color/72/visa.png" alt="" style = {{height: "50px"}}/>
-              <img src="https://img.icons8.com/color/amex.png" />
-              <img src="https://img.icons8.com/color/mastercard.png" />
-              <img src="https://img.icons8.com/color/discover.png" />
-            </div>
-          </div>
-          <hr className="mb-4" />
-
-          <h4 className="mb-3">Payment</h4>
-
-          <div className="d-block my-3">
-            <Form.Check aria-label="option 1" label="Credit Card" />
-            <Form.Check aria-label="option 1" label="Debit Card" />
-          </div>
-          <hr className="mb-4" />
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label for="cc-name">Name on card</label>
-              <input
-                type="text"
-                className="form-control"
-                id="cc-name"
-                placeholder=""
-                required
-              />
-              <small className="text-muted">
-                Full name as displayed on card
-              </small>
-              <div className="invalid-feedback">Name on card is required</div>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label for="cc-number">Credit card number</label>
-              <input
-                type="text"
-                className="form-control"
-                id="cc-number"
-                placeholder=""
-                required
-              />
-              <div className="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1 mb-3">
-              <label for="cc-expiration">Expiration</label>
-              <input
-                type="text"
-                className="form-control"
-                id="cc-expiration"
-                placeholder="MM"
-                required
-              />
-              <div className="invalid-feedback">Expiration date required</div>
-            </div>
-            <div className="col-md-1 mb-3">
-              <label for="cc-expiration"></label>
-              <input
-                type="text"
-                className="form-control"
-                id="cc-expiration"
-                placeholder="YY"
-                required
-              />
-              <div className="invalid-feedback">Expiration date required</div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <label for="cc-cvv">CVV</label>
-              <input
-                type="text"
-                className="form-control"
-                id="cc-cvv"
-                placeholder=""
-                required
-              />
-              <div className="invalid-feedback">Security code required</div>
-            </div>
-          </div>
-          <hr className="mb-4" />
-          <button className="btn btn-primary btn-lg btn-block" type="submit">
-            Proceed
-          </button>
-        </form>
+    <form className={`${styles.form} form-group`} onSubmit={handleSubmit}>
+      <div className="form-group">
+        <div className={styles.iconInputEmail}>
+          <i class="fa fa-envelope"></i>
+        </div>
+        <span className={styles.spanEmail}>Email:</span>{" "}
+        <input
+          className={styles.inputEmail}
+          placeholder="usuario@gmail.com"
+          onChange={(e) => handleEmailUser(e)}
+        />{" "}
+        <div className={styles.iconInputName}>
+          <i class="fas fa-money-check"></i>
+        </div>
+        <span className={styles.spanCardName}>Nombre en la tarjeta:</span>{" "}
+        <input
+          className={styles.inputName}
+          placeholder="Elon Musk"
+          onChange={(e) => handleCardName(e)}
+        />{" "}
+        <span className={styles.spanCardNumber}>Números de la tarjeta:</span>{" "}
+        <CardElement
+          className={styles.inputCardNumber}
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
+            },
+          }}
+        />
       </div>
-    </div>
+      <button className={styles.btn} disabled={!stripe}>
+        {loading ? spinner() : "Pagar"}
+      </button>
+    </form>
+  );
+};
+
+const Checkout = () => {
+  const [orders, setOrders] = useState([]);
+  const productos = useSelector((state) => state.carrito.products);
+  const orden = useSelector((state) => state.order.orden);
+  const dispatch = useDispatch();
+  const shoppingCount = productos.reduce(
+    (prev, curr) => (prev ?? 0) + curr.cantidad,
+    0
+  );
+  const idUser = useSelector((state) => state.user.userAUTH);
+  const userData = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (userData.isAuthenticated) {
+      const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
+      obtenerUserOrden();
+    }
+  }, []);
+
+  useEffect(() => {
+    let allOrders = [];
+    orden.map((orderProducts) => {
+      orderProducts.products.map((lineOrders) => {
+        allOrders.push(lineOrders);
+      });
+    });
+    setOrders(allOrders);
+  }, []);
+
+  return (
+    <Elements stripe={stripePromise}>
+      <div className={styles.cardParent}>
+        <div className={styles.card}>
+          <div className={styles.cardBody}>
+            <div className={`row`} id={styles.row}>
+              <div className={styles.divTitle}>
+                <h1>Orden de Compra</h1>
+              </div>
+              <div className="col-md-7">
+                <div className={`${styles.left} border`}>
+                  <div className="row">
+                    <h2>Datos de Facturación</h2>{" "}
+                    <span className={styles.header}>Métodos de Pago</span>
+                    <div className={styles.icons}>
+                      {" "}
+                      <img
+                        src="https://i.ibb.co/2tnzSMb/kisspng-credit-card-e-commerce-visa-payment-mastercard-visa-5abe3402f09681-0399249915224145949855.png"
+                        alt="kisspng-credit-card-e-commerce-visa-payment-mastercard-visa-5abe3402f09681-0399249915224145949855"
+                        border="0"
+                      />{" "}
+                      <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" />{" "}
+                      <img
+                        src="https://i.ibb.co/jM9ym3V/pngegg.png"
+                        alt="pngegg"
+                        border="0"
+                      />
+                      <img
+                        src="https://i.ibb.co/VW4X5YD/pngwing-com.png"
+                        border="0"
+                      />
+                      <img
+                        src="https://i.ibb.co/9vDSFMS/pngwing-com-3.png"
+                        alt="pngwing-com-3"
+                        border="0"
+                      />
+                      <img
+                        src="https://i.ibb.co/QNhtgPP/pnghut-jcb-co-ltd-logo-payment-industry-mastercard-jcb-images.png"
+                        alt="pnghut-jcb-co-ltd-logo-payment-industry-mastercard-jcb-images"
+                        border="0"
+                      />
+                    </div>
+                  </div>
+
+                  <form className={styles.form}>
+                    <div className={`row`} id={styles.row}>
+                      <div className={styles.col4}>
+                        <ElementCheckout />
+                      </div>
+                      <div className={styles.col4}></div>
+                    </div>{" "}
+                  </form>
+                </div>
+              </div>
+              <div className="col-md-5">
+                <div className={`${styles.right} border`}>
+                  <div className={styles.header}>Tus productos</div>
+                  <p>
+                    {shoppingCount === 0 ? (
+                      <p>No hay productos</p>
+                    ) : shoppingCount < 2 ? (
+                      <p>{shoppingCount} producto</p>
+                    ) : (
+                      <p>{shoppingCount} productos</p>
+                    )}
+                  </p>
+                  {orders.map((product) => {
+                    return (
+                      <div>
+                        <div className={`row item`} id={styles.row}>
+                          <div className={`col-4 align-self-center`}>
+                            <img
+                              id={styles.imgOrder}
+                              className="img-fluid"
+                              src={product.img}
+                            />
+                          </div>
+                          <div className="col-8">
+                            <div className={`row`} id={styles.row}>
+                              <b>
+                                $ {product.price * product.lineOrder.cantidad}
+                              </b>
+                            </div>
+                            <div className={`row text-muted`} id={styles.row}>
+                              <p>{product.name}</p>
+                            </div>
+                            <div className={`row`} id={styles.row}>
+                              <p>Cantidad: {product.lineOrder.cantidad}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <hr />
+                  <div className={`row lower`}>
+                    <div>
+                      <div className="col text-center">
+                        <b>Total a pagar</b>
+                      </div>
+                      <div className="col text-center">
+                        <b>
+                          ${" "}
+                          {productos.reduce(
+                            (acc, item) => acc + item.price * item.cantidad,
+                            0
+                          )}
+                        </b>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`${styles.row} row lower`}>
+                    <div className="col text-left"></div>
+                  </div>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div> </div>
+        </div>
+      </div>
+    </Elements>
   );
 };
 

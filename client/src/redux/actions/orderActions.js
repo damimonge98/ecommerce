@@ -7,7 +7,8 @@ import {
   ELIMINAR_ORDEN,
   ELIMINAR_ORDEN_EXITO,
   EDITAR_ORDEN,
-  EDITAR_ORDEN_EXITO
+  EDITAR_ORDEN_EXITO,
+  EDITAR_ORDEN_ERROR
  } from "../types/orders.js";
 import clienteAxios from '../../config/axios.js';
 
@@ -112,23 +113,31 @@ const eliminarOrdenExito = () => ({
 
 })
 
-export function editOrder (id, data) {
-  return function (dispatch) {
-    dispatch (editarOrden({id: id, name: data.name, description: data.description}))
-    return clienteAxios.put ("/orders/" +id, {name: data.name, description: data.description})
-    .then (res => {
-      console.log(res.data)
-      dispatch (editarOrdenExito())
-    })
-     .catch (err =>{
-        console.log(err)
-      })
+export function editOrder(data, id) {
+  return async (dispatch) => {
+    dispatch(editarOrden());
+
+    try {
+      await clienteAxios.put(`/orders/${id}`, data);
+      dispatch(editarOrdenExito(data));
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+      dispatch(editarOrdenError());
+    }
   }
 }
 
-const editarOrden = (data) => ({
-  type: EDITAR_ORDEN,
-  payload: data});
+const editarOrden = () => ({
+  type: EDITAR_ORDEN
+});
 
-const editarOrdenExito = () => ({
-  type: EDITAR_ORDEN_EXITO})
+const editarOrdenExito = (data) => ({
+  type: EDITAR_ORDEN_EXITO,
+  payload: data
+})
+
+const editarOrdenError = () => ({
+  type: EDITAR_ORDEN_ERROR,
+  payload: true
+})

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./SideBarRight.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   clearCarrito,
   removeProduct,
@@ -16,13 +16,14 @@ import { loadState } from "../../redux/maintainState/saveLoad";
 import { fetchCart } from "../../redux/reducers/carritoReducer";
 import clienteAxios from "../../config/axios";
 import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
+import Swal from 'sweetalert2';
 
 export default function SideBarRight() {
   const { setRightBarOpen, isRightBarOpen } = useContext(Context);
   const dispatch = useDispatch();
   const location = useLocation();
   const productos = useSelector((state) => state.carrito.products);
-  const products = useSelector((state) => state.products.productos);
+  const products = useSelector((state) => state.products.productos)
   const url = window.location.pathname;
   const productsUrl = `/products/${products.id}`;
   const catalogueUrl = "/";
@@ -31,34 +32,48 @@ export default function SideBarRight() {
     0
   );
   const userData = useSelector((state) => state.user);
+  const userAUTH = useSelector((state) => state.user.userAUTH);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const history = useHistory()
 
   useEffect(() => {
     if (productos.length > 0 && location.pathname === "/") {
-      setRightBarOpen(true);
+       setRightBarOpen(true);
     }
   }, [productos]);
 
   useEffect(() => {
     const moverLocalABack = async (state, userId) => {
-      console.log("mover local a back");
-      const result = await clienteAxios.get(`orders/users/${userId}/cart`);
-      console.log("result1:", result);
-      const data = result.data;
+    
+      const result = await clienteAxios.get(`orders/users/${userAUTH.id}/cart`);
+     
+      var data;
+      if(Array.isArray(result.data)){
+          data= result.data[0].products;
+      }else{
+          data = result.data.products;
+      }
+    
       //pasar productos de state.carrito.products al back
       for (const localProduct of state) {
-        const productBack = data.find((x) => x.productId == localProduct.id);
+        
+        if(typeof data !== 'undefined'){
+          var lineOrderBack = data.map(firstLoop => firstLoop.lineOrder)
+          var productBack = lineOrderBack.find((x) => x.productId == localProduct.id);
+        }
+
         if (productBack) {
-          const result = await clienteAxios.put(`orders/users/${userId}/cart`, {
+          const result = await clienteAxios.put(`orders/users/${userAUTH.id}/cart`, {
             productId: localProduct.id,
             cantidad: productBack.cantidad + localProduct.cantidad,
           });
-          console.log(result);
+         
         } else {
-          const result = await clienteAxios.post(`orders/users/${userId}/cart`, {
+          const result = await clienteAxios.post(`orders/users/${userAUTH.id}/cart`, {
             productId: localProduct.id,
             cantidad: localProduct.cantidad,
           });
-          console.log(result);
+          
         }
       }
       dispatch(fetchCart(userData.userAUTH.id));
@@ -67,7 +82,7 @@ export default function SideBarRight() {
       const state = JSON.parse(localStorage.getItem("carritoGuest"), "[]");
       if (state && state.length > 0) {
         moverLocalABack(state, userData.userAUTH.id);
-        //console.log(state.carrito.products);
+        
       }else{
         dispatch(fetchCart(userData.userAUTH.id));
       }
@@ -76,6 +91,18 @@ export default function SideBarRight() {
       dispatch(loadGuestCart(0));
     }
   }, [userData]);
+
+  const handleLogin = () => {
+    if(!isAuthenticated){
+      Swal.fire({
+        icon: "info",
+        title: `Tienes que identificarte para concluir tu compra`,
+        confirmButtonText: `Ok`,
+        background: "#19191a",
+      });
+    }
+    history.push("./login");
+  }
 
   return (
     <div
@@ -151,13 +178,16 @@ export default function SideBarRight() {
               )}$`}
             </p>
           </div>
+          
           <Link
             to="/order/checkout"
             style={{ textDecoration: "none" }}
             className="cd-checkout-btn"
           >
-            Go to checkout
+           <p onClick = {handleLogin}>Go to checkout</p>
+           
           </Link>
+          
           <Link
             to="/order"
             style={{ textDecoration: "none" }}

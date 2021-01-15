@@ -5,10 +5,9 @@ import "./UserForm.css";
 import styles from "../Admin/Product/productos-form.module.css";
 import { connect } from "react-redux";
 import CreateUser from "../../redux/actions/userActions";
-import {useSelector} from 'react-redux';
-import { Link, Redirect, useHistory } from "react-router-dom";
-import Swal from 'sweetalert2'
-import clienteAxios from '../../config/axios'
+import { useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function validate(input) {
   let errors = {};
@@ -39,7 +38,7 @@ const UserForm = (props) => {
   const [ImgUrl, setImgUrl] = useState(
     "http://localhost:3001/img/producto-sin-foto.jpg"
   );
-  const history = useHistory()
+  const history = useHistory();
   const [data, setData] = useState({
     username: "",
     givenName: "",
@@ -48,7 +47,6 @@ const UserForm = (props) => {
     password: "",
     photoURL: "",
   });
-  
 
   const handleChange = (event) => {
     setErrors(validate({ ...data, [event.target.name]: event.target.value }));
@@ -63,8 +61,8 @@ const UserForm = (props) => {
       title: `Usuario creado con éxito`,
       showConfirmButton: true,
       background: "#19191a",
-    }) 
-    history.push('./login')
+    });
+    history.push("./login");
     props.CreateUser(file, data);
   };
 
@@ -87,7 +85,7 @@ const UserForm = (props) => {
     }
   };
 
-  //manejador de imagen obtenida en el input
+  // Manejador de imagen obtenida en el input
   const imageHandler = async (e) => {
     const file = await obtenerFileImg(e);
     await setFile(file);
@@ -102,20 +100,14 @@ const UserForm = (props) => {
     }
   };
 
-  const isAuthenticated = useSelector(state=>state.user.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
-  if(isAuthenticated){
-    return <Redirect to='/'/>
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
   }
 
-  const handleGoogle =(e)=>{
-    history.push('http://localhost:3001/login/auth/google')
-     
-  }
   return (
-
     <div className="container-main">
-      
       <div className="form-div">
         <Form onSubmit={handleSubmit}>
           <legend>Formulario de Registro</legend>
@@ -160,7 +152,7 @@ const UserForm = (props) => {
             <Form.Label>Imagen de Perfil *</Form.Label>
             <br></br>
             <img src={ImgUrl} id="" alt="" className={styles.img} />
-         {/*    <Form.Control
+            {/*    <Form.Control
               name="photoURL"
               value={data.photoURL}
               onChange={handleimage}
@@ -202,25 +194,31 @@ const UserForm = (props) => {
             />
             {errors.username && <p className="danger">{errors.password}</p>}
           </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-           {/*  <Form.Check type="checkbox" label="Check me out" /> */}
-          </Form.Group>
-          <Button variant="success" type="submit" className = 'button'>
+          <Form.Group controlId="formBasicCheckbox"></Form.Group>
+          <Button variant="success" type="submit" className="button">
             Enviar
           </Button>
         </Form>
-        
-        <div class="google-btn">
-  <div class="google-icon-wrapper">
-    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-  </div>
-  
-  <p /* onClick={handleGoogle} */  class="btn-text"><b><a href="http://localhost:3001/login/auth/google"> Sign in with google</a></b></p>
-</div>
 
+        <div class="google-btn">
+          <div class="google-icon-wrapper">
+            <img
+              class="google-icon"
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            />
+          </div>
+
+          <p class="btn-text">
+            <b>
+              <a href="http://localhost:3001/login/auth/google">
+                {" "}
+                Sign in with google
+              </a>
+            </b>
+          </p>
+        </div>
       </div>
     </div>
-    
   );
 };
 function mapDispatchToProps(dispatch) {

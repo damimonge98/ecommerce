@@ -76,7 +76,7 @@ server.put('/users/:idUser/cart', (req, res) => {
 				}, { where: { orderId: order.id, productId } })
 					.then(updateCantidad => {
 						if (updateCantidad) {
-							res.status(200).json({ msg: 'cantidad actualizada correctamente' })
+							res.status(200).json({ msg: 'cantidad actualizada correctamente',product:updateCantidad })
 						}
 					}).catch(e => {
 						res.status(400).json(e)
@@ -111,7 +111,7 @@ server.get('/:id', (req, res) => {
 //Ruta para crear una orden nueva o agregar un producto a una que ya existe
 server.post('/users/:idUser/cart', (req, res) => {
 	const userId = req.params.idUser;
-	const { productId } = req.body;
+	const { productId, cantidad } = req.body;
 	// Busca una orden que no este "creada", por eso esta en carrito
 	Order.findOne({ where: { userId: userId, state: 'carrito' } })
 		.then(order => {
@@ -128,7 +128,7 @@ server.post('/users/:idUser/cart', (req, res) => {
 							if (product.stock >= 1) {
 								LineOrder.create({
 									price: product.price,
-									cantidad,
+									cantidad: 1,
 									productId: productId,
 									orderId: newOrder.id
 								}).then(lineOrder => {
@@ -141,7 +141,9 @@ server.post('/users/:idUser/cart', (req, res) => {
 				});
 			} else {
 				// Si ya existe un carrito, busca el producto
+				var productResult;
 				Product.findByPk(productId).then(product => {
+					productResult=product
 					LineOrder.findOne({
 						where: { productId: product.id, orderId: order.id }
 					}).then(lineorder => {
@@ -151,8 +153,9 @@ server.post('/users/:idUser/cart', (req, res) => {
 							LineOrder.create({
 								price: product.price,
 								productId: product.id,
-								orderId: order.id
-							}).then(lineOrder => res.json(lineOrder));
+								orderId: order.id,
+								cantidad: cantidad
+							}).then(lineOrder => res.json({lineOrder,product:productResult}));
 						}
 						else if (product.stock <= 0) {
 							res.status(400).send('No puedes agregar un producto sin stock al carrito')
@@ -167,7 +170,7 @@ server.post('/users/:idUser/cart', (req, res) => {
 		});
 });
 
-server.get("/users/:userId/cart", (req, res) => {
+/* server.get("/users/:userId/cart", (req, res) => {
 	const id = req.params.userId
 	Order.findOne({
 		where: { userId: id }
@@ -182,7 +185,36 @@ server.get("/users/:userId/cart", (req, res) => {
 					}
 				})
 		})
+}) */
+
+//trae la orden de un usuario que este en estado carrito con sus productos
+server.get("/users/:userId/cart", (req, res) => {
+	const id = req.params.userId
+	Order.findOrCreate({
+		 where: { userId: id, state:'carrito' }, include: { model: Product },
+		defaults:{
+			state:'carrito',
+			userId: id
+		}
+	})
+		.then((orderUser) => {res.send(orderUser)
+		//	console.log(orderUser)
+	}
+		)
 })
+
+
+/* server.get("/users/:userId/cart", (req, res) => {
+	const id = req.params.userId
+	Order.findOne({
+		 where: { userId: id, state:'carrito' }, include: { model: Product },
+		
+	})
+		.then((orderUser) => {res.send(orderUser)
+		//	console.log(orderUser)
+	}
+		)
+}) */
 
 
 server.put("/:id", (req, res) => {

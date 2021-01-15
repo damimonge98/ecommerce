@@ -32,7 +32,7 @@ export default function UserNavBar () {
 	return (	<div>
 				<div className = {styles.divNavBar}> 
 				<img src = {authUser.photoURL} className = {styles.img}/>
-				<DropdownButton id="dropdown-basic-button" title={authUser.username}>
+				<DropdownButton id="dropdown-basic-button" className = {styles.dropdownbutton} title={authUser.username}>
   					<Dropdown.Item href="/account/me">Mi cuenta</Dropdown.Item>
   					<Dropdown.Item href="/account/me/orders">Compras</Dropdown.Item>
   					<Dropdown.Item href="/account/me/privacity">Privacidad</Dropdown.Item>

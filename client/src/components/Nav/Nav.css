@@ -1,9 +1,10 @@
- .navbar-custom {
+.navbar-custom {
   background-color: #151515;
   height: 78px;
   margin-top: 0px;
   width: 100%;
-  /* position: fixed; */
+  position: fixed;
+  z-index: 10;
 }
 
 .d-flex {

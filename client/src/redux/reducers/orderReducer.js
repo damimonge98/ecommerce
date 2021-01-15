@@ -1,4 +1,4 @@
-import { 
+import {
     AGREGAR_ORDEN,
     AGREGAR_ORDEN_EXITO,
     DESCARGA_ORDEN,
@@ -8,9 +8,9 @@ import {
     ELIMINAR_ORDEN_EXITO,
     EDITAR_ORDEN,
     EDITAR_ORDEN_EXITO
-   } from "../types/orders.js";
+} from "../types/orders.js";
 
-  const initialState = {
+const initialState = {
     orden: [],
     error: null,
     loading: false,
@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ordenagregar: null,
-                orden: state.orden.concat (state.ordenagregar)
+                orden: state.orden.concat(state.ordenagregar)
             }
         case DESCARGA_ORDEN_ERROR:
             return {
@@ -48,26 +48,28 @@ export default function (state = initialState, action) {
             }
 
         case ELIMINAR_ORDEN:
-          return {
-            ...state,
-            ordeneliminar: action.payload
-          }
+            return {
+                ...state,
+                ordeneliminar: action.payload
+            }
         case ELIMINAR_ORDEN_EXITO:
-        return {
-            ...state,
-            orden: state.orden.filter(orden => orden.id !== state.ordeneliminar)
-          }
+            return {
+                ...state,
+                orden: state.orden.filter(orden => orden.id !== state.ordeneliminar)
+            }
         case EDITAR_ORDEN:
-        return {
-            ...state,
-            ordeneditar: action.payload,
-            orden: state.orden.filter(orden => orden.id !== action.payload.id)
-        }
+            return {
+                ...state,
+                ordeneditar: action.payload,
+            }
         case EDITAR_ORDEN_EXITO:
-        return {
-            ...state,
-            orden: state.orden.concat (state.ordeneditar)
-        }
+            return {
+                ...state,
+                ordeneditar: null,
+                orden: state.orden.map(orden =>
+                    orden.id === action.payload.id ? orden = action.payload : orden
+                )
+            }
         default:
             return state;
     }
