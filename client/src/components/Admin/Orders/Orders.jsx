@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from 'react-router-dom'
 import Table from "react-bootstrap/Table";
-import "./Orders.css";
+import styles from "./Orders.css";
 import Pagination from "../../Pagination/Pagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
-import { getOrder } from "../../../redux/actions/orderActions";
+import { getOrder, editOrder } from "../../../redux/actions/orderActions";
 import { useSelector, useDispatch } from "react-redux";
 import spinner from "../../Spinner";
+import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Swal from "sweetalert2";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -20,6 +24,7 @@ const Orders = () => {
   const prevPage = () => setCurrentPage(currentPage - 1);
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.orden);
+  const ordenEditar = useSelector((state)=> state.order.ordenEditar)
   const history = useHistory();
 
   const [filter, setFilter] = useState("none");
@@ -33,6 +38,9 @@ const Orders = () => {
   })
 
   const [searchTerm, setSearchTerm] = useState("")
+  const [show, setShow] = useState (false);
+  const [orderId, setOrderId] = useState(null)
+  const [stateName, setStateName] = useState(null)
 
   let currentOrder =
     Array.isArray(orders) &&
@@ -41,7 +49,7 @@ const Orders = () => {
   useEffect(() => {
     const cargarOrdenes = () => dispatch(getOrder());
     setOrders(cargarOrdenes());
-  }, []);
+  }, [ordenEditar]);
 
   useEffect(() => {
     setOrders(order);
@@ -91,6 +99,37 @@ const Orders = () => {
     });
   }
 
+  
+  const handleState = function (orderId, stateName) {
+    setOrderId(orderId)
+    setStateName (stateName)
+    setShow(true)
+  }
+
+  const handleClose = function () {
+    setShow (false)
+  }
+
+  const handleChangeState = function () {
+    dispatch(editOrder({state: stateName}, orderId))
+    Swal.fire ({
+      title: "Estado actualizado",
+      icon: "success",
+      confirmButtonTex: "Aceptar"
+    })
+    .then ((result)=> {
+      if (result.isConfirmed) {
+        window.location.reload()
+        setShow(false) 
+      } else {
+        window.location.reload()
+      }
+    })
+  }
+
+  const states = ["carrito", "creada", "procesando", "cancelada", "completada"]
+  console.log(stateName)
+  console.log(orderId)
 
  
   return (
@@ -189,8 +228,9 @@ const Orders = () => {
                     <td style={{ cursor: 'pointer' }} onClick={() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.id}</td>
                     <td style={{ cursor: 'pointer' }} onClick={() => history.push(`/admin/orders/users/${allOrder.user.id}`)}>{allOrder.user.username}</td>
                     <td>{allOrder.user.email}</td>
-                    <td>{allOrder.state}</td>
+                    <td>{allOrder.state + " "}<button  onClick = {()=>{handleState(allOrder.id, allOrder.state)}}><i class="fas fa-cog"></i></button></td>
                   </tr>
+                 
                 );
               })}
           </tbody>
@@ -208,8 +248,29 @@ const Orders = () => {
           />
         </div>
       </div>
+                  <Modal show={show} size = "sm" onhide = {handleClose}>
+                  <Modal.Header id = "modal" >
+                      <Modal.Title id = "modal.title">
+                      <h4>Modificar estado</h4>
+                      </Modal.Title>
+                      <Button variant = "danger" size = "sm" onClick={handleClose}>X</Button>
+                  </Modal.Header>
+                  
+                  <Modal.Body id = "modal">
+                    <h6>Orden # {orderId}</h6>
+                    <DropdownButton size = "sm" id="dropdown-basic-button" title={stateName}>
+                    {states.map((el)=> {return <Dropdown.Item onClick = {()=> {setStateName(el)}}>{el}</Dropdown.Item>})}
+                    </DropdownButton>
+                  </Modal.Body>
+
+                  <Modal.Footer id = "modal">
+                    <Button variant="primary" onClick = {handleChangeState}>Guardar cambios</Button>
+                  </Modal.Footer>
+              </Modal>
     </div>
   );
 };
+
+
 
 export default Orders;
