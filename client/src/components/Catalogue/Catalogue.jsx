@@ -7,9 +7,6 @@ import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
 import spinner from "../Spinner";
 import { getAllReviews } from "../../redux/actions/reviewActions";
-import { loadState } from "../../redux/maintainState/saveLoad";
-import { fetchCart } from "../../redux/reducers/carritoReducer";
-import clienteAxios from "../../config/axios";
 import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
 // aca se van a renderizar todas las card de product
 
@@ -31,17 +28,17 @@ const Cataloge = () => {
   //un cambio en el componente y lo vuelva a renderizar
 
   useEffect(() => {
-    if(userData.isAuthenticated){
-    const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
-    obtenerUserOrden();
-  }
+    if (userData.isAuthenticated) {
+      const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
+      obtenerUserOrden();
+    }
   }, [state]);
-  
+
   if (!products.data) {
-    var currentProducts = !products
+    var currentProducts = !productos
       ? spinner()
-      : Array.isArray(products) &&
-        products.slice(indexOfFirstProduct, indexOfLastProduct);
+      : Array.isArray(productos) &&
+        productos.slice(indexOfFirstProduct, indexOfLastProduct);
   } else {
     currentProducts = products.data;
   }
@@ -58,7 +55,7 @@ const Cataloge = () => {
       if (currentCategory === "All") await setProductos(products);
     })();
   });
- 
+
   useEffect(() => {
     if (!products) return spinner();
     (async () => {

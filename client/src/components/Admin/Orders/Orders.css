@@ -1,9 +1,17 @@
-.table-parent {
+.main-div{
+  margin-top: 90px;
+}
+
+.tableParent{
   width: 60% !important;
   margin: 0 auto;
   text-align: center;
-  padding-top: 40px;
-} 
+  padding-top: 20px;
+}
+
+#tableResponsive{
+  margin: 0 auto;
+}
 
 .button-groups {
   padding-bottom: 20px;
@@ -12,10 +20,6 @@
 
 .d-flexsearch{
   display:flexbox
-}
-
-.filter{
-  padding-top: 60px;
 }
 
 #input-filtersearch {
@@ -30,7 +34,7 @@
   display: inline-block;
   width: 80%;
   padding-left: 30px;
-  padding-top: 6px;
+  padding-top: 80px;
   
 }
 

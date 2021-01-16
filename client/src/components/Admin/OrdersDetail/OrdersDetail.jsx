@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import { getOrderDetail } from "../../../redux/actions/orderActions";
 import { useSelector, useDispatch } from "react-redux";
 import spinner from "../../Spinner";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const OrdersDetail = () => {
   const [orders, setOrders] = useState([]);
@@ -24,6 +24,7 @@ const OrdersDetail = () => {
   const history = useHistory();
   let url = window.location.pathname;
   let id = url.substring(url.lastIndexOf("/") + 1);
+  const orderId = useParams()
 
   let currentOrder =
     Array.isArray(orders) &&
@@ -39,50 +40,12 @@ const OrdersDetail = () => {
     setOrders(order);
   });
 
-  /*  const getId = (id) => {
-    const checkboxId = orders.find((order) => id === order.id);
-    setCheckbox(checkboxId);
-  };
-
-  const removeData = (id) => {
-    const deleteOrder = Array.isArray(orders) && orders.filter((c) => id !== c.id);
-    setOrders(deleteOrder);
-  }; */
-
   return (
     <div className="table-parent">
       <div className="row">
-        {/*  <div className="button-groups">
-          <ButtonGroup aria-label="Basic example" id="button-group">
-            <Button variant="primary">Edit</Button>
-            <Button
-              variant="danger"  onClick={() => removeData(checkbox)}
-            >
-              Delete
-            </Button>
-            <Button variant="success">Download</Button>
-            <div className="navSearch">
-              <div class="form-group has-search">
-                <span
-                  class="fa fa-search form-control-feedback"
-                  id="icon-search"
-                ></span>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search"
-                  id="input-search"
-                />
-              </div>
-            </div>
-          </ButtonGroup>
-        </div> */}
         <Table responsive="lg" striped bordered hover variant="dark">
           <thead>
             <tr>
-              {/*   <th>
-                <input type="checkbox" />
-              </th> */}
               <th>Product ID</th>
               <th>Product Name</th>
               <th>Quantity</th>

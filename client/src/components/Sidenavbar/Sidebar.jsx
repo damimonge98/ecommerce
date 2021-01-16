@@ -9,6 +9,7 @@ import {
 } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { Context } from "../../App";
+import Collapse from "react-bootstrap/Collapse";
 
 export default function SideBar() {
   //este es el set de la acción que se va a modificar en catálogo
@@ -58,7 +59,7 @@ export default function SideBar() {
                 style={{ backgroundColor: "transparent" }}
                 width="38"
                 height="38"
-                className="d-inline-block align-top"
+                class="d-inline-block align-top"
               />
             </Link>
           </li>
@@ -144,10 +145,57 @@ export default function SideBar() {
             </Fragment>
           ) : (
             <li onClick={handleCategory}>
-              <Link to={`/account/me`}>
-                <i className="fa fa-user-circle-o" aria-hidden="true"></i> My
-                Account
-              </Link>
+              <Dropdown className="nav-dropdown">
+                <Dropdown.Toggle variant="" className="dropdown-basic">
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i> My
+                  Account
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="nav-dropdown-list">
+                  <Dropdown.Item>
+                    <ul>
+                      <li
+                        className="list-categories"
+                        onClick={() => history.push("/account/me")}
+                      >
+                        {" "}
+                        <i
+                          class="fa fa-user-circle-o"
+                          aria-hidden="true"
+                          style={{ marginLeft: "-25px" }}
+                        ></i>
+                        Mi Perfil
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <ul>
+                      <li
+                        onClick={() => history.push("/account/me/privacity")}
+                        className="list-categories"
+                      >
+                        <i
+                          class="fa fa-user-edit"
+                          aria-hidden="true"
+                          style={{ marginLeft: "-25px" }}
+                        ></i>
+                        Editar Perfil
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <ul>
+                      <li onClick={() => history.push("/account/me/orders")} className="list-categories">
+                        <i
+                          class="fa fa-shopping-basket"
+                          aria-hidden="true"
+                          style={{ marginLeft: "-25px" }}
+                        ></i>
+                        Mis Compras
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </li>
           )}
           <li onClick={handleCategory}>
