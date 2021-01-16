@@ -16,7 +16,9 @@ export function addOrder(data) { //recibe la data pasada por el form de Addorder
   return function (dispatch) {
     console.log("data", data)
     //se le pasa por body a la url para añadir la Orden
-    return clienteAxios.post('/orders/', { name: data.name, description: data.description })
+    var accesToken =   localStorage.getItem("tokenLogin");
+    
+    return clienteAxios.post('/orders/', { name: data.name, description: data.description },{headers:{Authorization:`Bearer ${accesToken}` }})
       .then(res => {
         dispatch (agregarOrden(res.data))
         dispatch(agregarOrdenExito())
@@ -92,7 +94,8 @@ export function deleteOrder(id) {
     console.log("id", id)
     dispatch (eliminarOrden(id))
     //se le pasa por body a la url para añadir la Orden
-    return clienteAxios.delete('/orders/' + id)
+    var accesToken =   localStorage.getItem("tokenLogin");
+    return clienteAxios.delete('/orders/' + id,{headers:{Authorization:`Bearer ${accesToken}` }})
       .then(res => {
         console.log(res.data)
         dispatch(eliminarOrdenExito())
@@ -118,7 +121,8 @@ export function editOrder(data, id) {
     dispatch(editarOrden());
 
     try {
-      await clienteAxios.put(`/orders/${id}`, data);
+      var accesToken =   localStorage.getItem("tokenLogin");
+      await clienteAxios.put(`/orders/${id}`, data,{headers:{Authorization:`Bearer ${accesToken}` }});
       dispatch(editarOrdenExito(data));
       console.log(data)
     } catch (error) {

@@ -12,11 +12,15 @@ import {
 import clienteAxios from '../../config/axios.js';
 import Swal from "sweetalert2";
 
+
+
+
 export function addCategory(data) { //recibe la data pasada por el form de AddCategories
   return function (dispatch) {
     console.log("data", data)
+    var accesToken =   localStorage.getItem("tokenLogin");
     //se le pasa por body a la url para añadir la categoria
-    return clienteAxios.post('/categories/', { name: data.name, description: data.description })
+    return clienteAxios.post('/categories/', { name: data.name, description: data.description },{headers:{Authorization:`Bearer ${accesToken}` }})
       .then(res => {
         dispatch (agregarCategoria(res.data))
         dispatch(agregarCategoriaExito())
@@ -101,8 +105,9 @@ export function deleteCategory(id) { //recibe la data pasada por el form de AddC
   return function (dispatch) {
     console.log("id", id)
     dispatch (eliminarCategoria(id))
+    var accesToken =   localStorage.getItem("tokenLogin");
     //se le pasa por body a la url para añadir la categoria
-    return clienteAxios.delete('/categories/' + id)
+    return clienteAxios.delete('/categories/' + id ,{headers:{Authorization:`Bearer ${accesToken}` }})
       .then(res => {
         console.log(res.data)
         dispatch(eliminarCategoriaExito())
@@ -128,7 +133,8 @@ export function editCategory (id, data) {
   console.log("data", data)
   return function (dispatch) {
     dispatch (editarCategoria({id: id, name: data.name, description: data.description}))
-    return clienteAxios.put ("/categories/" +id, {name: data.name, description: data.description})
+    var accesToken =   localStorage.getItem("tokenLogin");
+    return clienteAxios.put ("/categories/" +id, {name: data.name, description: data.description},{headers:{Authorization:`Bearer ${accesToken}` }})
     .then (res => {
       console.log(res.data)
       dispatch (editarCategoriaExito())

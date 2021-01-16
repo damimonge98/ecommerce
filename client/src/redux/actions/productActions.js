@@ -16,11 +16,14 @@ import {
 import clienteAxios from '../../config/axios.js';
 import Swal from 'sweetalert2';
 
+
+
+
  // Función que descarga los productos de la base de datos
 export function obtenerProductosAction() {
+    
     return async (dispatch) => {
         dispatch( descargarProductos() );
-
         try {
             const respuesta = await clienteAxios.get('/products');
             dispatch( descargaProductosExitosa(respuesta.data) )
@@ -79,7 +82,8 @@ export function crearNuevoProductoAction(producto){
       dispatch(agregarproducto());
       try {
           //insertar en base de datos
-          await clienteAxios.post('/products',producto);
+          var accesToken =   localStorage.getItem("tokenLogin");
+          await clienteAxios.post('/products',producto,{headers:{Authorization:`Bearer ${accesToken}` }});
           //si todo sale bien, actualizar el state
           dispatch(agregarProductoExito(producto))
           //alerta
@@ -124,9 +128,10 @@ const agregarProductoError = estado => ({
 export function borrarProductoAction(id) {
   return async (dispatch) => {
       dispatch(obtenerProductoEliminar(id) );
-
+    
       try {
-          await clienteAxios.delete(`/products/${id}`);
+          var accesToken =   localStorage.getItem("tokenLogin");
+          await clienteAxios.delete(`/products/${id}`,{headers:{Authorization:`Bearer ${accesToken}` }});
           dispatch( eliminarProductoExito() );
 
           // Si se elimina, mostrar alerta
@@ -175,7 +180,8 @@ export function editarProductoAction(producto,id) {
       dispatch( editarProducto() );
 
       try {
-          await clienteAxios.put(`/products/${id}`, producto);    
+          var accesToken =   localStorage.getItem("tokenLogin");
+          await clienteAxios.put(`/products/${id}`, producto,{headers:{Authorization:`Bearer ${accesToken}` }});    
           dispatch( editarProductoExito(producto) );
            //alerta
           await Swal.fire(

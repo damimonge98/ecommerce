@@ -8,8 +8,8 @@ import {
   EDITAR_FOTO_EXITO
 } from '../types/Users';
 import clienteAxios from '../../config/axios.js';
-import jsonWebToken from 'jsonwebtoken'
-import Swal from "sweetalert2"
+import jsonWebToken from 'jsonwebtoken';
+import Swal from "sweetalert2";
 
 export default function CreateUser(file, data) {
   const usuarioData = new FormData();
@@ -38,7 +38,7 @@ export function GetUsers(credencial) {
     localStorage.setItem("tokenLogin", respuesta.data.token)
     const tokenDecode = jsonWebToken.decode(respuesta.data.token)
     await dispatch(loginUser(tokenDecode.user))
-    console.log(respuesta.data.token)
+   // console.log(respuesta.data.token)
 
   };
 }
@@ -77,7 +77,8 @@ export function GetUsersGoogle() {
 export function updateUser(id, data) {
   return async function (dispatch) {
     dispatch(editarUsuario(data))
-    return clienteAxios.put("/user/" + id, { username: data.username, givenName: data.givenName, familyName: data.familyName, email: data.email })
+    var accesToken =   localStorage.getItem("tokenLogin");
+    return clienteAxios.put("/user/" + id, { username: data.username, givenName: data.givenName, familyName: data.familyName, email: data.email },{headers:{Authorization:`Bearer ${accesToken}` }})
   }
 }
 
