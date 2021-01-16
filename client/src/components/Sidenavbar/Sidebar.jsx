@@ -58,7 +58,7 @@ export default function SideBar() {
                 style={{ backgroundColor: "transparent" }}
                 width="38"
                 height="38"
-                class="d-inline-block align-top"
+                className="d-inline-block align-top"
               />
             </Link>
           </li>
@@ -145,7 +145,7 @@ export default function SideBar() {
           ) : (
             <li onClick={handleCategory}>
               <Link to={`/account/me`}>
-                <i class="fa fa-user-circle-o" aria-hidden="true"></i> My
+                <i className="fa fa-user-circle-o" aria-hidden="true"></i> My
                 Account
               </Link>
             </li>

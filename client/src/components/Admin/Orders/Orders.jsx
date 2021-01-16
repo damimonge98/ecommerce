@@ -132,9 +132,9 @@ const Orders = () => {
   console.log(orderId)
 
  
-  return (
+  return ( 
     <div className="table-parent">
-      <div class="mb-4">
+      <div class="filter mb-4">
         <div className="row">
           <div className="d-flexsearch form-check form-check-inline mb-3  col-2" >
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  id="input-filtersearch" onChange={e=>{setSearchTerm(e.target.value)}}  data-toggle="tooltip" data-placement="top" title="Buscar por email o estado"/>

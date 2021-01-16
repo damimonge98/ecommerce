@@ -3,7 +3,7 @@
   margin: 0 auto;
   text-align: center;
   padding-top: 40px;
-}
+} 
 
 .button-groups {
   padding-bottom: 20px;
@@ -12,6 +12,10 @@
 
 .d-flexsearch{
   display:flexbox
+}
+
+.filter{
+  padding-top: 60px;
 }
 
 #input-filtersearch {

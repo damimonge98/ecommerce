@@ -52,16 +52,18 @@ export const addProduct = createAsyncThunk(
             );
            
             var data;
+            var primerProduct;
             if(Array.isArray(result.data)){
                 data= result.data[0].products;
+                primerProduct=await result.data[1]
             }else{
                 data = result.data.products;
             }
             
-            const lineOrderBack = await data.map(lineOrder => lineOrder.lineOrder)
-          
-            const productBack = lineOrderBack.find((x) => x.productId == product.id);
-
+            if(primerProduct !== true){
+                const lineOrderBack = await data.map(lineOrder => lineOrder.lineOrder)
+                var productBack = await lineOrderBack.find((x) => x.productId == product.id);
+            }
             
             if (productBack) {
                 var resultPut = await clienteAxios.put(
