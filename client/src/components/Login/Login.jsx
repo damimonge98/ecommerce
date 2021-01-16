@@ -50,7 +50,7 @@ function Login(props) {
   }
 
   const responseGoogle = async (res) => {
-    /* try { */
+    try {
      setData({
       ...data,
       email: res.profileObj.email,
@@ -63,9 +63,9 @@ function Login(props) {
       showConfirmButton: true,
       background: "#19191a",
     });
-  /* } catch(error) {
+  } catch(error) {
     console.log("error", error)
-  } */
+  }
   };
 
   return (

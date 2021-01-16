@@ -21,6 +21,7 @@ import Error404 from '../components/Error/Error404';
 import AccountSettings from "../components/UserAccount/AccountSettings.jsx";
 import UserOrders from "../components/UserAccount/Orders.jsx";
 import UserPrivacity from "../components/UserAccount/Privacity.jsx";
+import OrderProductsDetails from '../components/UserAccount/OrderProductsDetails';
 //redux
 import {useSelector} from 'react-redux';
 
@@ -55,6 +56,7 @@ const Routes = () => {
             <PrivateRoute exact path='/account/me' component={AccountSettings} isAuth={isAuth}/>
             <PrivateRoute exact path='/account/me/orders' component={UserOrders} isAuth={isAuth}/>
             <PrivateRoute exact path='/account/me/privacity' component={UserPrivacity} isAuth={isAuth}/>
+            <PublicRoute exact path='/account/me/orders/:id' component={OrderProductsDetails}/>
             {/* Rutas publicas */}
             <PublicRoute exact path='/login' component={Login}/>
             <PublicRoute exact path='/user' component={UserForm}/>

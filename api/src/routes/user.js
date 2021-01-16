@@ -122,7 +122,7 @@ server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}), 
 });
 
 // Ruta para editar la imagen de un usuario en particular
-server.put('/:id/image', upload.single("file"),/*passport.authenticate("jwt",{session:false}),*/async (req, res, next) => {
+server.put('/:id/image', upload.single("file"),passport.authenticate("jwt",{session:false}),async (req, res, next) => {
 	const id = req.params.id
 	const {file} = req;	
 	
@@ -142,7 +142,12 @@ server.put('/:id/image', upload.single("file"),/*passport.authenticate("jwt",{se
 		})	
 	})
 	
-	
+server.get('/all', (req,res) => {
+	User.findAll()
+	.then(users => {
+		res.send(users)
+	})
+})	
 
  
 module.exports = server;
