@@ -8,6 +8,7 @@ const orderRouter = require("./order.js");
 const reviewsRouter = require("./reviews.js")
 const auth = require('./auth.js')
 const paymentRouter = require('./payment.js')
+const emailRouter = require('./nodemailer.js');
 /* const google = require('./google') */
 const router = Router();
 
@@ -21,6 +22,7 @@ router.use('/orders', orderRouter);
 router.use('/user', userRouter);
 router.use('/login', auth);
 router.use('/reviews', reviewsRouter);
-router.use('/payment', paymentRouter)
+router.use('/payment', paymentRouter);
+router.use('/email', emailRouter);
 
 module.exports = router;
