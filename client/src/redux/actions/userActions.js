@@ -35,12 +35,11 @@ export default function CreateUser(file, data) {
 export function GetUsers(credencial) {
   return async function (dispatch) {
     const respuesta = await clienteAxios.post("/login", credencial)
+    localStorage.setItem("tokenLogin", respuesta.data.token)
     const tokenDecode = jsonWebToken.decode(respuesta.data.token)
     await dispatch(loginUser(tokenDecode.user))
-    window.localStorage.setItem("tokenLogin", respuesta.data.token)
-    console.log("RESPUESTA", respuesta)
-    // const tokenDecode = jsonWebToken.decode(respuesta.data.token)
-    // await dispatch(setUsers(tokenDecode))
+    console.log(respuesta.data.token)
+
   };
 }
 const loginUser = (user) => (

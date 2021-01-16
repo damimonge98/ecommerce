@@ -2,13 +2,13 @@ import React, { useEffect, useContext, useState } from "react";
 import "./SideBarRight.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
-import { 
-  clearCarrito,
+import {
+  clearCar,
   removeProduct,
   addProduct,
   removeAllProduct,
   loadGuestCart,
-} from "../../redux/reducers/carritoReducer";
+}  from "../../redux/reducers/carritoReducer";
 import ProductItem from "../ProductItem/ProductItem";
 import { Context } from "../../App";
 import { Link } from "react-router-dom";
@@ -137,7 +137,7 @@ export default function SideBarRight() {
             <p
               className="cd-empty"
               onClick={() => {
-                dispatch(clearCarrito());
+                dispatch(clearCar(userAUTH.id));
               }}
             >
               <a href="#0"> Empty </a>
