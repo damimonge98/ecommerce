@@ -106,7 +106,7 @@ export const addProduct = createAsyncThunk(
     }
 )
 
-/* export const clearCarrito = createAsyncThunk(
+export const clearCar = createAsyncThunk(
     'carrito/clearCarrito',
     async (userId, thunkAPI) => {
         //const productos = JSON.parse(localStorage.getItem('carritoGuest') ?? '[]');
@@ -115,7 +115,7 @@ export const addProduct = createAsyncThunk(
         //console.log(result);
         return result.status == 200;
     }
-) */
+)
 
 const carritoSlice = createSlice({
     name: 'carrito',
@@ -155,7 +155,7 @@ const carritoSlice = createSlice({
             // Add user to the state array
             //state.entities.push(action.payload)
           
-            localStorage.clear("carritoGuest")
+            localStorage.removeItem("carritoGuest")
           
         },
         
@@ -180,6 +180,10 @@ const carritoSlice = createSlice({
         [clearCarrito.fulfilled]: (state, action) => {
             state.products = [];
         } */
+        
+        [clearCar.fulfilled]: (state, action) => {
+            state.products = [];
+        }
     }
 },
 )
