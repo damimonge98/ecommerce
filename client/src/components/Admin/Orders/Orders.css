@@ -19,9 +19,11 @@
 }
 
 .d-flexsearch{
-  display:flexbox
+  display:flexbox;
 }
-
+.filter{
+  padding-top: 80px;
+}
 #input-filtersearch {
   background-color: #151515;
   border: transparent;
