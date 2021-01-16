@@ -42,6 +42,15 @@
         "photoURL":"https://i.pinimg.com/280x280_RS/0b/b4/a1/0bb4a197e00538bfc3b0476b9a117f8f.jpg",
         "isAdmin":false
        
+    },
+    {
+        "username":"anabel21",
+        "email":"anabel@mail.com",
+        "givenName": "anabel",
+        "familyName": "monera",
+        "password":"$2b$10$R4uqjhvnabtq42eh7Kmo.OWq7qfBx.h35e9jFIi6Klo55dyEDKvIm",
+        "photoURL":"https://pbs.twimg.com/profile_images/908766619660414976/YUL54Rul.jpg",
+        "isAdmin":false
     }
     
 ]
