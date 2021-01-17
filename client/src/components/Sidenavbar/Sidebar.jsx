@@ -118,16 +118,58 @@ export default function SideBar() {
               Shopping Cart
             </Link>
           </li>
-          <li onClick={handleCategory}>
-            <Link to={`/`}>
-              <i className="fa fa-ticket-alt" aria-hidden="true"></i> Concerts
-            </Link>
-          </li>
+         
           {!userAuthenticated ? null : userAuthenticated.isAdmin === "true" ? (
             <li onClick={handleCategory}>
-              <Link to={`/admin`}>
-                <i className="fa fa-user-cog" aria-hidden="true"></i> Admin
-              </Link>
+              <Dropdown className="nav-dropdown">
+                <Dropdown.Toggle variant="" className="dropdown-basic">
+                  <span>
+                    <i
+                      className="fa fa-user-cog"
+                      aria-hidden="true"
+                      style={{ paddingRight: "4px" }}
+                    ></i>
+                    Admin
+                  </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="nav-dropdown-list">
+                  <Dropdown.Item>
+                    <ul>
+                      <li
+                        className="list-categories"
+                        onClick={() => history.push("/admin")}
+                      >
+                        {" "}
+                        <i class="fa fa-business-time" aria-hidden="true"></i>
+                        Dashboard
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <ul>
+                      <li
+                        className="list-categories"
+                        onClick={() => history.push("/admin/products")}
+                      >
+                        {" "}
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                        Productos
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <ul>
+                      <li
+                        onClick={() => history.push("/admin/categories")}
+                        className="list-categories"
+                      >
+                        <i class="fa fa-columns" aria-hidden="true"></i>
+                        Categorías
+                      </li>
+                    </ul>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </li>
           ) : null}
           {!isAuthenticated ? (
@@ -184,7 +226,10 @@ export default function SideBar() {
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <ul>
-                      <li onClick={() => history.push("/account/me/orders")} className="list-categories">
+                      <li
+                        onClick={() => history.push("/account/me/orders")}
+                        className="list-categories"
+                      >
                         <i
                           class="fa fa-shopping-basket"
                           aria-hidden="true"

@@ -11,7 +11,7 @@ import styles from "./orders.module.css";
 import "./closeBtn.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import Modal from "react-bootstrap/Modal"; 
+import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -70,575 +70,238 @@ export default function UserOrders() {
 
   return (
     <div>
-      <NavBar />
-
       <div className={styles.table}>
         <h1>Detalle de la orden #{res[0].id}</h1>
         <hr />
-        <Table striped bordered variant="dark">
-          <thead>
-            <th scope="col"></th>
-          </thead>
+        <Table  variant="">
           <tbody>
             {res.map((el) => {
               return (
-                <tr style={{ borderBottom: "1px solid black" }}>
-                    <div style={{backgroundColor:"#21252"}}>
-                  <Row className="align-items-center" >
-                    <Col >
-                      <h6 >Fecha Creada/Actualizada</h6>
-                    </Col>
-                    <Col>
-                      <h6>{el.updatedAt}</h6>
-                    </Col>
-                  </Row>
-                  </div>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Número de orden</h6>
-                    </Col>
-                    <Col>
-                      <h6>{el.id}</h6>
-                    </Col>
-                  </Row>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Productos</h6>
-                    </Col>
-                    <Col>
-                    <DropdownButton>
-                      {el.products.map((product) => {
-                        return (
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleProduct(el.products.indexOf(product), el.id)
-                            }
-                          >
-                            {product.name}
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </DropdownButton>
-                    </Col>
-                  </Row>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Descripción</h6>
-                    </Col>
-                    <Col>
-                      <h6>
-                        {el.products[window.index] && window.orderId === el.id
-                          ? el.products[window.index].description
-                          : ""}
-                      </h6>
-                    </Col>
-                  </Row>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Cantidad</h6>
-                    </Col>
-                    <Col>
-                      <h6>
-                        {" "}
-                        {el.products[window.index] && window.orderId === el.id
-                          ? el.products[window.index].lineOrder.cantidad
-                          : ""}{" "}
-                      </h6>{" "}
-                    </Col>
-                  </Row>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Precio</h6>
-                    </Col>
-                    <Col>
-                      <h6>
-                        {el.products[window.index] && window.orderId === el.id
-                          ? el.products[window.index].price
-                          : ""}
-                        ,00$
-                      </h6>
-                    </Col>
-                  </Row>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h6>Review</h6>
-                    </Col>
-                    <Col>
-                      <Button
-                        onClick={handleShow}
-                        className={styles.titleReviewFormUser}
-                        variant="success"
-                      >
-                        Si te gustó podés dejarnos una reseña!
-                      </Button>
-                      <Modal
-                        show={show}
-                        onHide={handleClose}
-                        backdrop="static"
-                        keyboard={false}
-                        className={styles.modalContainer}
-                      >
-                        <Modal.Header closeButton className={styles.modalStyle}>
-                          <Modal.Title className={styles.modalStyle}>
-                            En{" "}
-                            <img
-                              src="https://bit.ly/37jca0M"
-                              style={{ height: "30px" }}
-                            />{" "}
-                            nos importa lo que tenés para decir!
-                          </Modal.Title>
-                        </Modal.Header>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            dispatch(
-                              addReview(data, el.products[window.index].id)
+                <tr style={{lineHeight: "1.5"}}>
+                  <div>
+                    <div className={styles.divRow}>
+                      <div>
+                      <Row className="align-items-center" id = {styles.rowOrder} style={{borderTop: "1px groove #9098a0"}}>
+                        <Col>
+                          <h6><strong>Fecha Creada/Actualizada</strong></h6>
+                        </Col>
+                        <Col>
+                          <h6>{el.updatedAt}</h6>
+                        </Col>
+                      </Row>
+                    </div>
+                    </div>
+                    <Row className="align-items-center" id = {styles.rowOrder2}>
+                      <Col>
+                        <h6><strong>Número de orden</strong></h6>
+                      </Col>
+                      <Col>
+                        <h6><strong>{el.id}</strong></h6>
+                      </Col>
+                    </Row>
+                    <Row className="align-items-center" id = {styles.rowOrder}>
+                      <Col>
+                        <h6><strong>Productos</strong></h6>
+                      </Col>
+                      <Col>
+                      <Dropdown> 
+                      <Dropdown.Toggle variant="" className={styles.navDropdownList}>
+                      Selecciona un producto
+                      </Dropdown.Toggle >
+                        <Dropdown.Menu  style= {{marginTop: "0px"}}>
+                          {el.products.map((product) => {
+                            return (
+                              <Dropdown.Item
+                                onClick={() =>
+                                  handleProduct(
+                                    el.products.indexOf(product),
+                                    el.id
+                                  )
+                                }
+                              >
+                                {product.name}
+                              </Dropdown.Item>
                             );
-                            history.push("/");
-                          }}
+                          })}
+                        </Dropdown.Menu>
+                        </Dropdown>
+                      </Col>
+                    </Row>
+                    <Row className="align-items-center" id = {styles.rowOrder2}>
+                      <Col>
+                        <h6><strong>Descripción</strong></h6>
+                      </Col>
+                      <Col>
+                        <h6>
+                          {el.products[window.index] && window.orderId === el.id
+                            ? el.products[window.index].description
+                            : ""}
+                        </h6>
+                      </Col>
+                    </Row>
+                    <Row className="align-items-center" id = {styles.rowOrder}>
+                      <Col>
+                        <h6><strong>Cantidad</strong></h6>
+                      </Col>
+                      <Col>
+                        <h6>
+                          {" "}
+                          {el.products[window.index] && window.orderId === el.id
+                            ? el.products[window.index].lineOrder.cantidad
+                            : ""}{" "}
+                        </h6>{" "}
+                      </Col>
+                    </Row>
+                    <Row className="align-items-center" id = {styles.rowOrder2}>
+                      <Col>
+                        <h6><strong>Precio</strong></h6>
+                      </Col>
+                      <Col>
+                        <h6>
+                          {el.products[window.index] && window.orderId === el.id
+                            ? el.products[window.index].price
+                            : ""}
+                          ,00$
+                        </h6>
+                      </Col>
+                    </Row>
+                    <Row className="align-items-center" id = {styles.rowOrder}>
+                      <Col>
+                        <h6><strong>Review</strong></h6>
+                      </Col>
+                      <Col>
+                        <p
+                          onClick={handleShow}
+                          className={styles.titleReviewFormUser}
+                          variant="dark"
+                          style = {{pointer:"cursor"}}
                         >
-                          <Modal.Body className={styles.modalStyle}>
-                            <Form.Group controlId="formBasicEmail">
-                              <Form.Label className={styles.labelDescription}>
-                                Cuéntanos que te pareció{" "}
-                                {el.products[window.index] &&
-                                window.orderId === el.id
-                                  ? el.products[window.index].name
-                                  : ""}
-                              </Form.Label>
-                            </Form.Group>
-
-                            <textarea
-                              className={styles.inputDescription}
-                              onChange={(e) => handleChange(e)}
-                              maxlength={1000}
-                              value={data.description}
-                            />
-                            <p className={styles.countCharacters}>
-                              {data.count}/1000
-                            </p>
-                            <Form.Group controlId="formBasicPassword">
-                              <Form.Label className={styles.labelDescription}>
-                                ¿Cómo calificarías tu experiencia?
-                              </Form.Label>
-                            </Form.Group>
-
-                            <div
-                              class="starrating risingstar d-flex justify-content-center flex-row-reverse"
-                              id="divStars"
-                            >
-                              <input
-                                type="radio"
-                                id="star5"
-                                name="rating"
-                                value={data.rating}
-                                onClick={() => setData({ ...data, rating: 5 })}
-                              />
-                              <label for="star5" title="5 star"></label>
-                              <input
-                                type="radio"
-                                id="star4"
-                                name="rating"
-                                value={data.rating}
-                                onClick={() => setData({ ...data, rating: 4 })}
-                              />
-                              <label for="star4" title="4 star"></label>
-                              <input
-                                type="radio"
-                                id="star3"
-                                name="rating"
-                                value={data.rating}
-                                onClick={() => setData({ ...data, rating: 3 })}
-                              />
-                              <label for="star3" title="3 star"></label>
-                              <input
-                                type="radio"
-                                id="star2"
-                                name="rating"
-                                value={data.rating}
-                                onClick={() => setData({ ...data, rating: 2 })}
-                              />
-                              <label for="star2" title="2 star"></label>
-                              <input
-                                type="radio"
-                                id="star1"
-                                name="rating"
-                                value={data.rating}
-                                onClick={() => setData({ ...data, rating: 1 })}
-                              />
-                              <label for="star1" title="1 star"></label>
-                            </div>
-                          </Modal.Body>
-                          <Modal.Footer className={styles.modalStyle}>
-                            <Button variant="danger" onClick={handleClose}>
-                              Close
-                            </Button>
-                            <Button variant="success" type="submit">
-                              Enviar
-                            </Button>
-                          </Modal.Footer>
-                        </Form>
-                      </Modal>
-                    </Col>
-                  </Row>
-                  {/* <tr style={{ width: "1000px" }}>
-                    <th>Número de orden:</th>
-                    <td>{el.id}</td>
-                  </tr>
-                  <tr>
-                    <th>Productos:</th>
-                    <td> <DropdownButton>
-                      {el.products.map((product) => {
-                        return (
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleProduct(el.products.indexOf(product), el.id)
-                            }
+                          Si te gustó podés dejarnos una reseña!
+                        </p>
+                        <Modal
+                          show={show}
+                          onHide={handleClose}
+                          backdrop="static"
+                          keyboard={false}
+                          className={styles.modalContainer}
+                        >
+                          <Modal.Header
+                            closeButton
+                            className={styles.modalStyle}
                           >
-                            {product.name}
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </DropdownButton></td>
-                  </tr>
-                  <tr>
-                  <th>Producto:</th>
-                    <td> {el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].name
-                      : ""}</td>
-                  </tr>
-                  <tr>
-                    <th>Descripcion:</th>
-                    <td>{el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].description
-                      : ""}</td>
-                  </tr>
-                  <tr>
-                    <th>Cantidad:</th>
-                    <td>{el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].lineOrder.cantidad
-                      : ""}</td>
-                  </tr>
-                  <tr>
-                    <th>Precio:</th>
-                    <td>{el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].price
-                      : ""}</td>
-                  </tr>
-                  <tr>
-                    <th>Review:</th>
-                  <td>
-                    <Button
-                      onClick={handleShow}
-                      className={styles.titleReviewFormUser}
-                      variant="success"
-                    >
-                      Si te gustó podés dejarnos una reseña!
-                    </Button>
-                    <Modal
-                      show={show}
-                      onHide={handleClose}
-                      backdrop="static"
-                      keyboard={false}
-                      className={styles.modalContainer}
-                    >
-                      <Modal.Header closeButton className={styles.modalStyle}>
-                        <Modal.Title className={styles.modalStyle}>
-                          En{" "}
-                          <img
-                            src="https://bit.ly/37jca0M"
-                            style={{ height: "30px" }}
-                          />{" "}
-                          nos importa lo que tenés para decir!
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          dispatch(
-                            addReview(data, el.products[window.index].id)
-                          );
-                          history.push("/");
-                        }}
-                      >
-                        <Modal.Body className={styles.modalStyle}>
-                          <Form.Group controlId="formBasicEmail">
-                            <Form.Label className={styles.labelDescription}>
-                              Cuéntanos que te pareció{" "}
-                              {el.products[window.index] &&
-                              window.orderId === el.id
-                                ? el.products[window.index].name
-                                : ""}
-                            </Form.Label>
-                          </Form.Group>
-
-                          <textarea
-                            className={styles.inputDescription}
-                            onChange={(e) => handleChange(e)}
-                            maxlength={1000}
-                            value={data.description}
-                          />
-                          <p className={styles.countCharacters}>
-                            {data.count}/1000
-                          </p>
-                          <Form.Group controlId="formBasicPassword">
-                            <Form.Label className={styles.labelDescription}>
-                              ¿Cómo calificarías tu experiencia?
-                            </Form.Label>
-                          </Form.Group>
-
-                          <div class="starrating risingstar d-flex justify-content-center flex-row-reverse" id = "divStars">
-                            <input
-                              type="radio"
-                              id="star5"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 5 })
-                              }
-                            />
-                            <label for="star5" title="5 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star4"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 4 })
-                              }
-                            />
-                            <label for="star4" title="4 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star3"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 3 })
-                              }
-                            />
-                            <label for="star3" title="3 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star2"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 2 })
-                              }
-                            />
-                            <label for="star2" title="2 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star1"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 1 })
-                              
-                              }
-                            />
-                            <label for="star1" title="1 star">
-                              
-                            </label>
-                          </div>
-                        </Modal.Body>
-                        <Modal.Footer className={styles.modalStyle}>
-                          <Button variant="danger" onClick={handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="success" type="submit">
-                            Enviar
-                          </Button>
-                        </Modal.Footer>
-                      </Form>
-                    </Modal>
-                  </td>  */}
-                  {/*  <tr scope="col" >
-                      <td>Número de orden</td>
-                      </tr>
-                  <tr scope="row">{el.id}</tr>
- */}
-                  {/* <td>
-                    <DropdownButton>
-                      {el.products.map((product) => {
-                        return (
-                          <Dropdown.Item
-                            onClick={() =>
-                              handleProduct(el.products.indexOf(product), el.id)
-                            }
+                            <Modal.Title className={styles.modalStyle}>
+                              En{" "}
+                              <img
+                                src="https://bit.ly/37jca0M"
+                                style={{ height: "30px" }}
+                              />{" "}
+                              nos importa lo que tenés para decir!
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Form
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              dispatch(
+                                addReview(data, el.products[window.index].id)
+                              );
+                              history.push("/");
+                            }}
                           >
-                            {product.name}
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </DropdownButton>
-                  </td> */}
+                            <Modal.Body className={styles.modalStyle}>
+                              <Form.Group controlId="formBasicEmail">
+                                <Form.Label className={styles.labelDescription}>
+                                  Cuéntanos que te pareció{" "}
+                                  {el.products[window.index] &&
+                                  window.orderId === el.id
+                                    ? el.products[window.index].name
+                                    : ""}
+                                </Form.Label>
+                              </Form.Group>
 
-                  {/* <td>
-                    {el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].name
-                      : ""}
-                  </td>
-                  <td>
-                    {el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].description
-                      : ""}
-                  </td>
-                  <td>
-                    {el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].lineOrder.cantidad
-                      : ""}
-                  </td>
-                  <td>
-                    {el.products[window.index] && window.orderId === el.id
-                      ? el.products[window.index].price
-                      : ""}
-                  </td>
-                  <td>{el.updatedAt}</td> */}
-                  {/* <td>
-                    <Button
-                      onClick={handleShow}
-                      className={styles.titleReviewFormUser}
-                      variant="success"
-                    >
-                      Si te gustó podés dejarnos una reseña!
-                    </Button>
-                    <Modal
-                      show={show}
-                      onHide={handleClose}
-                      backdrop="static"
-                      keyboard={false}
-                      className={styles.modalContainer}
-                    >
-                      <Modal.Header closeButton className={styles.modalStyle}>
-                        <Modal.Title className={styles.modalStyle}>
-                          En{" "}
-                          <img
-                            src="https://bit.ly/37jca0M"
-                            style={{ height: "30px" }}
-                          />{" "}
-                          nos importa lo que tenés para decir!
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          dispatch(
-                            addReview(data, el.products[window.index].id)
-                          );
-                          history.push("/");
-                        }}
-                      >
-                        <Modal.Body className={styles.modalStyle}>
-                          <Form.Group controlId="formBasicEmail">
-                            <Form.Label className={styles.labelDescription}>
-                              Cuéntanos que te pareció{" "}
-                              {el.products[window.index] &&
-                              window.orderId === el.id
-                                ? el.products[window.index].name
-                                : ""}
-                            </Form.Label>
-                          </Form.Group>
+                              <textarea
+                                className={styles.inputDescription}
+                                onChange={(e) => handleChange(e)}
+                                maxlength={1000}
+                                value={data.description}
+                              />
+                              <p className={styles.countCharacters}>
+                                {data.count}/1000
+                              </p>
+                              <Form.Group controlId="formBasicPassword">
+                                <Form.Label className={styles.labelDescription}>
+                                  ¿Cómo calificarías tu experiencia?
+                                </Form.Label>
+                              </Form.Group>
 
-                          <textarea
-                            className={styles.inputDescription}
-                            onChange={(e) => handleChange(e)}
-                            maxlength={1000}
-                            value={data.description}
-                          />
-                          <p className={styles.countCharacters}>
-                            {data.count}/1000
-                          </p>
-                          <Form.Group controlId="formBasicPassword">
-                            <Form.Label className={styles.labelDescription}>
-                              ¿Cómo calificarías tu experiencia?
-                            </Form.Label>
-                          </Form.Group>
-
-                          <div class="starrating risingstar d-flex justify-content-center flex-row-reverse" id = "divStars">
-                            <input
-                              type="radio"
-                              id="star5"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 5 })
-                              }
-                            />
-                            <label for="star5" title="5 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star4"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 4 })
-                              }
-                            />
-                            <label for="star4" title="4 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star3"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 3 })
-                              }
-                            />
-                            <label for="star3" title="3 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star2"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 2 })
-                              }
-                            />
-                            <label for="star2" title="2 star">
-                              
-                            </label>
-                            <input
-                              type="radio"
-                              id="star1"
-                              name="rating"
-                              value={data.rating}
-                              onClick={() =>
-                                setData({ ...data, rating: 1 })
-                              
-                              }
-                            />
-                            <label for="star1" title="1 star">
-                              
-                            </label>
-                          </div>
-                        </Modal.Body>
-                        <Modal.Footer className={styles.modalStyle}>
-                          <Button variant="danger" onClick={handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="success" type="submit">
-                            Enviar
-                          </Button>
-                        </Modal.Footer>
-                      </Form>
-                    </Modal>
-                  </td> */}
+                              <div
+                                class="starrating risingstar d-flex justify-content-center flex-row-reverse"
+                                id="divStars"
+                              >
+                                <input
+                                  type="radio"
+                                  id="star5"
+                                  name="rating"
+                                  value={data.rating}
+                                  onClick={() =>
+                                    setData({ ...data, rating: 5 })
+                                  }
+                                />
+                                <label for="star5" title="5 star"></label>
+                                <input
+                                  type="radio"
+                                  id="star4"
+                                  name="rating"
+                                  value={data.rating}
+                                  onClick={() =>
+                                    setData({ ...data, rating: 4 })
+                                  }
+                                />
+                                <label for="star4" title="4 star"></label>
+                                <input
+                                  type="radio"
+                                  id="star3"
+                                  name="rating"
+                                  value={data.rating}
+                                  onClick={() =>
+                                    setData({ ...data, rating: 3 })
+                                  }
+                                />
+                                <label for="star3" title="3 star"></label>
+                                <input
+                                  type="radio"
+                                  id="star2"
+                                  name="rating"
+                                  value={data.rating}
+                                  onClick={() =>
+                                    setData({ ...data, rating: 2 })
+                                  }
+                                />
+                                <label for="star2" title="2 star"></label>
+                                <input
+                                  type="radio"
+                                  id="star1"
+                                  name="rating"
+                                  value={data.rating}
+                                  onClick={() =>
+                                    setData({ ...data, rating: 1 })
+                                  }
+                                />
+                                <label for="star1" title="1 star"></label>
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer className={styles.modalStyle}>
+                              <Button variant="danger" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button variant="success" type="submit">
+                                Enviar
+                              </Button>
+                            </Modal.Footer>
+                          </Form>
+                        </Modal>
+                      </Col>
+                    </Row>
+                  </div>
                 </tr>
               );
             })}

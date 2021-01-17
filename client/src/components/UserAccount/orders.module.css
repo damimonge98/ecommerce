@@ -1,7 +1,8 @@
 .table {
   margin-left: 250px;
   margin-right: 100px;
-  margin-top: 30px;
+  padding-top: 120px;
+  
 }
 
 .titleDiv {
@@ -11,6 +12,10 @@
 
 .titleReviewFormUser {
   cursor: pointer;
+  height: 20px;
+  color: #ec625f;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .modalContainer {
@@ -56,3 +61,33 @@
   text-align: center
 }
 
+#rowOrder{
+  background-color: #212529;
+  color: #ffffff;
+  height: 40px;
+  padding-top: 10px;
+  border-bottom: 1px groove #9098a0;
+  border-right: 1px groove #9098a0;
+  border-left: 1px groove #9098a0;
+}
+
+#rowOrder2{
+  background-color: #2c3034;
+  color: #ffffff;
+  height: 40px;
+  padding-top: 10px;
+  border-bottom: 1px groove #9098a0;
+  border-right: 1px groove #9098a0;
+  border-left: 1px groove #9098a0;
+}
+
+.navDropdownList{
+  opacity: 0.9;
+  color: white;
+  margin-left: -12px;
+  margin-top: -8px;
+}
+
+.navDropdownList:hover{
+  color: white;
+}

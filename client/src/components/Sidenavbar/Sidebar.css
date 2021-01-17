@@ -100,7 +100,7 @@
 }
 
 .list-categories::before {
-  background-color: #151515 !important; /* para que no se pise con el rojo */
+  background-color: transparent !important;
   color: white;
   margin-right: 20px;
 }
@@ -137,4 +137,15 @@
   display: none;
 }
 
+/* .listDropdownSideAdmin{
+  background-color: #151515;
+  color: white;
+  line-height:40px;
+  margin-left: -10px;
+}
 
+.listDropdownSideAdmin:hover{
+  background-color: white;
+  color: #151515;
+  opacity: 0.9;
+} */

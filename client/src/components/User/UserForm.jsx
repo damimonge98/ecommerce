@@ -212,23 +212,12 @@ const UserForm = (props) => {
           </Button>
         </Form>
 
-        <div class="google-btn">
-          <div class="google-icon-wrapper">
-            <img
-              class="google-icon"
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            />
-          </div>
-
-          <p class="btn-text">
-            <b>
-              <a href="http://localhost:3001/login/auth/google">
-                {" "}
-                Sign in with google
-              </a>
-            </b>
-          </p>
-        </div>
+        <Button variant="danger" type="submit" className="button" style={{marginBottom:"20px"}}>
+          <a href="http://localhost:3001/login/auth/google" style={{color:"white"}}>
+            {" "}
+            Registrate con <img src="https://img.icons8.com/color/50/000000/google-logo.png" className="googleIcon"/>
+          </a>
+        </Button>
       </div>
     </div>
   );

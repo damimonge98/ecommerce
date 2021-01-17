@@ -85,13 +85,12 @@ const ElementCheckout = () => {
         dispatch(editOrder({ state: "creada" }, orden[0].id));
         setState(state + 1);
 
-        const { data2 } = await clienteAxios.post('/email/send-emailCheckout', {
-          email: email.email ,
+        const { data2 } = await clienteAxios.post("/email/send-emailCheckout", {
+          email: email.email,
           username: username.nameUser,
           price: totalProductsPrice,
           products: productListNames,
-
-        })
+        });
         dispatch(editOrder({ state: "completada" }, orden[0].id));
         console.log(data2);
       } catch (err) {
@@ -185,9 +184,11 @@ const Checkout = () => {
   const userData = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (userData.isAuthenticated) {
-      const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
-      obtenerUserOrden();
+    if (orden.state === "carrito" && userData.isAuthenticated) {
+      
+        const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
+        obtenerUserOrden();
+      
     }
   }, []);
 

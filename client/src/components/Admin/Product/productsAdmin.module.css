@@ -1,12 +1,14 @@
 .productos{
   background-color: #313131;
+  padding-top: 80px;
+  margin-left: 120px;
 }
 
 .containerTable{
   display: flex;
   justify-content: center;
   background: #313131;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .table{
@@ -38,7 +40,7 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 15%;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 0px;
   
 }

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./accountSettings.module.css";
-import NavBar from "./NavBar.jsx";
 import "./AccountSettings.css";
-import UserPrivacity from "./Privacity";
-import { Link } from "react-router-dom";
-import Table from "react-bootstrap/Table";
+import { logoutAction } from "../../redux/actions/userActions";
+import { clearCarrito } from "../../redux/reducers/carritoReducer";
 
 export default function AccountSettings() {
   const [tab, setTab] = useState(false);
@@ -25,9 +23,20 @@ export default function AccountSettings() {
     setTab(false);
   }, []);
 
+  const handleLogout = async () => {
+    //mandar llamar las action de user action
+    dispatch(clearCarrito());
+    const logoutUser = async () => dispatch(logoutAction());
+    await logoutUser();
+
+    //vaciar local storage
+    await window.localStorage.clear();
+
+    return;
+  };
+
   return (
     <div className="profileAccountSettings">
-      <NavBar />
       <div className="container bootdey">
         <div className="content-page">
           <div className="profile-banner">
@@ -131,7 +140,7 @@ export default function AccountSettings() {
                           </div>
                         </div>
                       )}
-                      <button className="buttonLogout" type="submit">
+                      <button className="buttonLogout" type="submit" onClick = {handleLogout}>
                         {" "}
                         Salir
                       </button>

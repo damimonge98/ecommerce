@@ -57,8 +57,6 @@ export default function UserOrders() {
 
   return (
     <div>
-      <NavBar />
-
       <div className={styles.table}>
         <h1>Detalle de tus compras</h1>
         <hr />

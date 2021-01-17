@@ -1,5 +1,6 @@
 .profileAccountSettings {
   padding-left: 220px;
+  padding-top: 100px;
 }
 
 .profile-banner {
@@ -79,26 +80,6 @@
 
 #social a:hover {
   text-decoration: none;
-}
-
-.fa-circle.facebook {
-  color: #5471ae;
-}
-
-.fa-circle.twitter {
-  color: #4ec6f6;
-}
-
-.fa-circle.gplus {
-  color: #e24e3e;
-}
-
-.fa-circle.tumblr {
-  color: #4d77a3;
-}
-
-.fa-circle.linkedin {
-  color: #3097ce;
 }
 
 .user-profile-content {
