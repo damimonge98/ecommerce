@@ -41,20 +41,22 @@ import {
                     userAUTH: action.payload,
                     isAuthenticated:false
                 }    
-            case EDITAR_FOTO:
+            case OBTENER_TODOS_LOS_USUARIOS:
                 return {
                     ...state,
-                    newImage : action.payload
+                    recuperacion: action.payload
                 }
-            case EDITAR_FOTO_EXITO:
-                return {
-                    ...state,
-                }
-                case OBTENER_TODOS_LOS_USUARIOS:
+                case EDITAR_FOTO:
                     return {
                         ...state,
-                        recuperacion: action.payload
-                        }
+                        newImage : action.payload,
+                        
+                    }
+                case EDITAR_FOTO_EXITO:
+                    return {
+                        ...state,
+                        userAUTH : {...state.userAUTH, photoURL : state.newImage}
+                    }   
 
             default:
                 return state;

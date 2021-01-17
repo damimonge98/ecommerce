@@ -12,7 +12,7 @@ import {
 } from "../../redux/actions/userActions.js";
 import { clearCarrito } from "../../redux/reducers/carritoReducer";
 import Modal from "react-bootstrap/Modal";
-import { useHistory } from "react-router-dom";
+import { Switch, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import clienteAxios from "axios";
 import { Link } from "react-router-dom";
@@ -30,138 +30,168 @@ export default function UserPrivacity() {
   });
 
   const [password, setPassword] = useState("");
-  const [verifyPassword, setVerifyPassword] = useState(false);
-  const [show, setShow] = useState(false);
-  const [infoType, setInfoType] = useState([]);
-  const [verifyInfo, setVerifyInfo] = useState(false);
+  const [input, setInput] = useState(false);
+  const [infoType, setInfoType] = useState(null);
   const [photoURL, setphotoURL] = useState(authUser.photoURL);
+  const [file, setFile] = useState("");
+  const [ImgUrl, setImgUrl] = useState( "http://localhost:3001/img/producto-sin-foto.jpg");
 
   console.log(photoURL);
 
-  useEffect(() => {
-    authUser.photoURL = photoURL;
-  }, [photoURL]);
+  //Handle para poder habilitar el input de editar 
+  const handleInput = function (infoType) {
+    setInput(!input)
+    setInfoType(infoType)
+  }
 
+  //Handle para modificar el change del form
   const handleChange = function (e) {
-    console.log(e.target.value);
-    console.log(authUser[infoType[0]]);
-    setData({ ...data, [e.target.name]: e.target.value });
-
-    if (
-      e.target.value !== authUser[infoType[0]] &&
-      e.target.value.length !== 0
-    ) {
-      setVerifyInfo(false);
-      return;
-    } else {
-      setVerifyInfo(true);
+    e.preventDefault ()
+    setData({...data,
+      [e.target.name] : e.target.value})
     }
-  };
 
-  //handle que maneja validacion y update de la info
-  const handleSubmit = function (e) {
-    e.preventDefault();
+    console.log(data)
+    console.log(password)
+    console.log(infoType)
+    console.log(authUser.id)
 
-    if (verifyInfo === true) {
-      Swal.fire({
-        icon: "error",
-        text: "Debe ingresar un campo diferente al existente.",
-      });
-      return;
-    }
-    dispatch(updateUser(authUser.id, data));
+  const handleChangePassword = function (e) {
+    setPassword(e.target.value)
+  }
 
-    Swal.fire({
-      title: "Cambios guardados",
-      text: "Debe cerrar sesion para ver los cambios en su cuenta",
-      icon: "success",
-      showDenyButton: true,
-      showConfirmButton: true,
-      confirmButtonText: "Cerrar sesion",
-      denyButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isDenied) {
-        history.push("/account/me");
-        return;
-      } else {
-        handleLogout();
+ const handleSubmit = function (e) {
+    e.preventDefault()
+
+    if (data.username === authUser.username && data.givenName === authUser.givenName && data.familyName === authUser.familyName
+      && data.email === authUser.email) {
+
+        if (password) {
+          console.log(password, authUser.id)
+          dispatch(resetPassword({password: password, id: authUser.id}))
+          Swal.fire ({
+            title: "Cambios guardados correctamente",
+            text: "Inicie sesion nuevamente para ver los cambios",
+            icon: "success",
+            confirmButtonText: "Salir ahora",
+            showCancelButton: true,
+            cancelButtonText: "Cerrar",
+            background: "#19191a"
+          })
+          .then (res => {
+            if (res.isConfirmed) {
+              handleLogout()
+            }
+          }) 
+         }
+         return;
       }
-    });
-  };
+    dispatch (updateUser(authUser.id, data))
 
-  //este handle setea el modal para editar la info, y cambia el nombre
-  //de algunos tipos de datos para que resulten mas "amigables"
-  const handleShow = function (name) {
-    console.log(name);
-    setShow(true);
+   
+  
 
-    switch (name) {
-      case "givenName":
-        setInfoType([name, "nombre"]);
-        break;
-      case "familyName":
-        setInfoType([name, "apellido"]);
-        break;
-      case "username":
-        setInfoType([name, "nombre de usuario"]);
-        break;
-      case "email":
-        setInfoType([name, "email"]);
-        break;
-      case "password":
-        setInfoType(["password", "contraseña"]);
+  Swal.fire ({
+    title: "Cambios guardados correctamente",
+    text: "Inicie sesion nuevamente para ver los cambios",
+    icon: "success",
+    confirmButtonText: "Salir ahora",
+    showCancelButton: true,
+    cancelButtonText: "Cerrar",
+    background: "#19191a"
+  })
+  .then (res => {
+    if (res.isConfirmed) {
+      handleLogout()
     }
-  };
+  }) 
+ }
 
-  const handleClose = function () {
-    setShow(false);
-  };
+ const handleLogout=async ()=>{
+  //mandar llamar las action de user action
+  dispatch(clearCarrito());
+  const logoutUser = async () => dispatch(logoutAction());
+  await logoutUser();
 
-  const passwordHandleChange = function (e) {
-    setPassword(e.target.value);
-    setVerifyPassword(true);
-  };
 
-  //handle para cerrar sesion
-  const handleLogout = async () => {
-    //mandar llamar las action de user action
-    dispatch(clearCarrito());
-    const logoutUser = async () => dispatch(logoutAction());
-    await logoutUser();
+  //vaciar local storage
+  await window.localStorage.clear()
 
-    //vaciar local storage
-    await window.localStorage.clear();
-    return;
-  };
 
-  const passwordHandleSubmit = function () {
-    console.log(verifyPassword);
-    if (verifyPassword === true) {
-      dispatch(resetPassword(password, authUser.id));
-      Swal.fire({
-        title: "Nueva contraseña creada",
-        text: "Su contraseña ha sido actualizada. Se cerrará su sesion",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleLogout();
-        }
-      });
-    } else {
-      Swal.fire({
-        title: "Error",
-        text: "Ha habido un error. Ingrese los campos correctamente",
-      });
+  return 
+ }
+
+
+ const options = function (infoType) {
+   switch (infoType) {
+     case 1 :{
+       if (data.givenName === "") {
+         Swal.fire ({
+           title: "Error",
+           text: "El campo está vacio",
+           icon: "error",
+           width: 300,
+           showConfirmButton: false,
+           timer: 1000,
+           background: "#19191a"
+         })
+         data.givenName = authUser.givenName
+       } return;
+     }
+
+     case 2 :{
+      if (data.familyName === "") {
+        Swal.fire ({
+          title: "Error",
+          text: "El campo está vacio",
+          icon: "error",
+          width: 300,
+          showConfirmButton: false,
+          timer: 1000,
+          background: "#19191a"
+        })
+        data.familyName = authUser.familyName
+      } return;
     }
-  };
 
-  const [file, setFile] = useState("");
-  const [ImgUrl, setImgUrl] = useState(
-    "http://localhost:3001/img/producto-sin-foto.jpg"
-  );
+    case 3 :{
+      if (data.username === "") {
+        Swal.fire ({
+          title: "Error",
+          text: "El campo está vacio",
+          icon: "error",
+          width: 300,
+          showConfirmButton: false,
+          timer: 1000,
+          background: "#19191a"
+        })
+        data.username = authUser.username
+      } return;
+    }
+
+    case 4 :{
+      if (data.email === "")  {
+        Swal.fire ({
+          title: "Error",
+          text: "El campo está vacio",
+          icon: "error",
+          width: 300,
+          showConfirmButton: false,
+          timer: 1000,
+          background: "#19191a"
+        })
+        data.email = authUser.email
+      } return;
+    }
+   }
+ }
+
+ const handleAlert = function () {
+   options(infoType) 
+ }
 
   const imageHandler = async (e) => {
+    e.preventDefault()
     const file = await obtenerFileImg(e);
     await setFile(file);
     console.log(file);
@@ -179,13 +209,17 @@ export default function UserPrivacity() {
       reader.readAsDataURL(file);
     }
   };
+
+
+
   //Obtener imagen local ddada por el usuario
   const obtenerFileImg = async (e) => {
     console.log("e.target.files", e.target.files);
     return e.target.files[0];
   };
 
-  const imageSubmitHandle = function () {
+  const imageSubmitHandle = function (e) {
+    e.preventDefault()
     const data = new FormData();
     data.append("file", file);
     dispatch(editUserImage(data, authUser.id));
@@ -195,17 +229,18 @@ export default function UserPrivacity() {
   return (
     <div>
       <div className={styles.profileAccountSettings}>
-        <NavBar />
+      <NavBar />
         <div className="container bootdey">
           <div className="content-page">
             <div className="profile-banner">
               <div className="col-sm-3 avatar-container">
-                <img
-                  src={authUser.photoURL}
-                  className="img-circle profile-avatar"
+
+                <img src={authUser.photoURL} 
+                  className="img-circle profile-avatar" 
                   alt="User avatar"
                   style={{ borderRadius: "180px" }}
                 />
+
               </div>
             </div>
 
@@ -214,15 +249,14 @@ export default function UserPrivacity() {
                 <div className="col-sm-9" id="userPanelDiv">
                   <div className="widget widget-tabbed">
                     <div className="tab-content">
-                      <div
-                        className="tab-pane animated active fadeInRight"
-                        id="about"
-                      >
+                      <div className="tab-pane animated active fadeInRight" id="about">
+
                         <div className="d-flex justify-content-center">
                           <h5>
                             <strong>Editar Perfil</strong>
                           </h5>
                         </div>
+
                         <div class="container">
                           <div class="row flex-lg-nowrap">
                             <div class="col">
@@ -230,44 +264,150 @@ export default function UserPrivacity() {
                                 <div class="col mb-3">
                                   <div class="card1">
                                     <div class="card1-body">
+
                                       <div class="e-profile">
                                         <ul
                                           class="nav nav-tabs"
                                           id={styles.navTabs}
                                         >
+
                                           <li class="nav-item"></li>
                                         </ul>
                                         <div class="tab-content pt-3">
                                           <div class="tab-pane active">
-                                            <form
-                                              class={styles.form}
-                                              novalidate=""
-                                            >
+
+
+                                            <form class={styles.form} novalidate="">
                                               <div class="row">
                                                 <div class="col">
                                                   <div class="row">
                                                     {/*   <div class="col"> */}
+
+
                                                     <div class="form-group">
+                                                    {input===true && infoType === 1  ?
+                                                      <Fragment>
                                                       <label>
-                                                        Nombre Completo{" "}
-                                                        <i
-                                                          className="fa fa-pencil"
-                                                          style={{
-                                                            fontSize: "11px",
-                                                            marginLeft: "4px",
-                                                          }}
-                                                        ></i>
+                                                      Nombre {" "}
                                                       </label>
+                                                      <button className = {styles.button} onClick = {()=>{handleInput();
+                                                      handleAlert()}}>
+                                                      <i
+                                                        className="fa fa-check"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "20px",
+                                                          color: "#1CD51C"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+
                                                       <input
-                                                        id={styles.inputs}
-                                                        class="form-control"
-                                                        type="text"
-                                                        name="name"
-                                                        value={
-                                                          authUser.givenName +
-                                                          authUser.familyName
-                                                        }
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="givenName"
+                                                      placeholder = "nuevo nombre..."
+                                                      value={data.givenName}
+                                                      onChange = {handleChange}
                                                       />
+                                                      </Fragment> 
+                                                  
+                                                      :
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Nombre {" "}
+                                                      <button className = {styles.button} onClick = {()=> {handleInput(1)}}>
+                                                      <i
+                                                        className="fa fa-pencil"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "20px",
+                                                          color: "white"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+                                                      </label>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="name"
+                                                      value={
+                                                        data.givenName
+                                                      }
+                                                      readOnly/>
+
+                                                      </Fragment>
+                                                
+                                                
+                                                
+                                                }
+                                                    </div>
+
+
+
+
+                                                    <div class="form-group">
+                                                    {input===true && infoType === 2? 
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Apellido {" "}
+                                                      </label>
+                                                      <button className = {styles.button} onClick = {()=>{handleInput();
+                                                      handleAlert()}}>
+                                                      <i
+                                                        className="fa fa-check"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "15px",
+                                                          color: "#1CD51C"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="familyName"
+                                                      placeholder = "nuevo nombre..."
+                                                      value={data.familyName}
+                                                      onChange = {handleChange}
+                                                      />
+                                                      </Fragment> 
+
+                                                      :
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Apellido {" "}
+                                                      <button className = {styles.button} onClick = {()=> {handleInput(2)}}>
+                                                      <i
+                                                        className="fa fa-pencil"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "15px",
+                                                          color: "white"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+                                                      </label>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="name"
+                                                      value={
+                                                        data.familyName
+                                                      }
+                                                      readOnly/>
+                                                      </Fragment>
+                                                  }
                                                     </div>
 
                                                     {/* </div> */}
@@ -275,81 +415,199 @@ export default function UserPrivacity() {
 
                                                     <div class="col">
                                                       <div class="form-group">
-                                                        <label>
-                                                          Usuario{" "}
-                                                          <i
-                                                            className="fa fa-pencil"
-                                                            style={{
-                                                              fontSize: "11px",
-                                                              marginLeft: "4px",
-                                                            }}
-                                                          ></i>
-                                                        </label>
-                                                        <input
-                                                          id={styles.inputs}
-                                                          class="form-control"
-                                                          type="text"
-                                                          name="username"
-                                                          value={
-                                                            authUser.username
-                                                          }
-                                                        />
-                                                      </div>
+                                                      {input===true && infoType === 3? 
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Username {" "}
+                                                      </label>
+                                                      <button className = {styles.button} onClick = {()=>{handleInput();
+                                                      handleAlert()}}>
+                                                      <i
+                                                        className="fa fa-check"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "4px",
+                                                          color: "#1CD51C"
+                                                        }}
+                                                      ></i>
+
+
+                                                      </button>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="username"
+                                                      placeholder = "nuevo nombre..."
+                                                      value={data.username}
+                                                      onChange = {handleChange}
+                                                      />
+                                                      </Fragment> 
+
+                                                      :
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Username {" "}
+                                                      <button className = {styles.button} onClick = {()=> handleInput(3)}>
+                                                      <i
+                                                        className="fa fa-pencil"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "4px",
+                                                          color: "white"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+                                                      </label>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="name"
+                                                      value={
+                                                        data.username
+                                                      }
+                                                      readOnly/>
+                                                      </Fragment>
+                                              
+                                                  }
+                                                      </div>         
 
                                                       {/*   </div> */}
                                                     </div>
                                                   </div>
-                                                  <div class="row">
-                                                    <div class="col-12 mb-3 d-flex justify-content-center">
-                                                      <div class="col">
-                                                        <div
-                                                          class="form-group"
-                                                          id={styles.emailForm}
-                                                        >
-                                                          <label>
-                                                            Email{" "}
-                                                            <i
-                                                              className="fa fa-pencil"
-                                                              style={{
-                                                                fontSize:
-                                                                  "11px",
-                                                                marginLeft:
-                                                                  "4px",
-                                                              }}
-                                                            ></i>
-                                                          </label>
-                                                          <input
-                                                            id={styles.inputs}
-                                                            class="form-control"
-                                                            type="text"
-                                                            value={
-                                                              authUser.email
-                                                            }
-                                                          />
-                                                        </div>
-                                                      </div>
-                                                    </div>
+                                                    {/* </div> */}
+                                                    {/*  <div class="row"> */}
 
                                                     <div class="col">
                                                       <div class="form-group">
-                                                        <label>
-                                                          New Password{" "}
-                                                          <i
-                                                            className="fa fa-pencil"
-                                                            style={{
-                                                              fontSize: "11px",
-                                                              marginLeft: "4px",
-                                                            }}
-                                                          ></i>
-                                                        </label>
-                                                        <input
-                                                          id={styles.inputs}
-                                                          class="form-control"
-                                                          type="password"
-                                                          placeholder="••••••"
-                                                        />
+                                                      {input===true && infoType === 4? 
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Email {" "}
+                                                      </label>
+                                                      <button className = {styles.button} onClick = {()=>{handleInput();
+                                                      handleAlert()}}>
+                                                      <i
+                                                        className="fa fa-check"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "40px",
+                                                          color: "#1CD51C"
+                                                        }}
+                                                      ></i>
+
+
+                                                      </button>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="email"
+                                                      placeholder = "..."
+                                                      value={data.email}
+                                                      onChange = {handleChange}
+                                                      />
+                                                      </Fragment> 
+                                                      :
+                                                      <Fragment>
+                                                      <label>
+                                                      Email        
+                                                      <button className = {styles.button} onClick = {()=> handleInput(4)}>
+                                                      <i
+                                                        className="fa fa-pencil"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "40px",
+                                                          color: "white"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+                                                      </label>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="name"
+                                                      value={
+                                                        data.email
+                                                      }
+                                                      readOnly/>
+                                                      </Fragment>
+
+                                                    
+                                                    
+                                                  }
+                                                      </div>         
+
+                                                       {/* </div> */}
+                                                    {/*  <div class="row"> */}
+
+                                                    <div class="col">
+                                                      <div class="form-group">
+                                                      {input===true && infoType === 5? 
+
+                                                      <Fragment>
+                                                      <label>
+                                                      Password {" "}
+                                                      </label>
+                                                      <button className = {styles.button} onClick = {()=>{handleInput();
+                                                      handleAlert()}}>
+                                                      <i
+                                                        className="fa fa-check"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "4px",
+                                                          color: "#1CD51C"
+                                                          
+                                                        }}
+                                                      ></i>
+                                                      </button>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="password"
+                                                      placeholder = "new password here..."
+                                                      value= {password}
+                                                      onChange = {handleChangePassword}
+                                                      />
+                                                      </Fragment> 
+                                                      :
+                                                      <Fragment>
+                                                      <label>
+                                                       Password {" "}
+                                                      <button className = {styles.button} onClick = {()=> handleInput(5)}>
+                                                      <i
+                                                        className="fa fa-pencil"
+                                                        style={{
+                                                          fontSize: "11px",
+                                                          marginLeft: "4px",
+                                                          color: "white"
+                                                        }}
+                                                      ></i>
+                                                      </button>
+                                                      </label>
+
+                                                      <input
+                                                      id={styles.inputs}
+                                                      class="form-control"
+                                                      type="text"
+                                                      name="name"
+                                                      placeholder = "************"
+                                                      readOnly/>
+                                                      </Fragment>
+                                                  }
+                                                      </div>  
                                                       </div>
-                                                    </div>
+
                                                   </div>
                                                 </div>
                                               </div>
@@ -365,9 +623,6 @@ export default function UserPrivacity() {
                                                         }
                                                       >
                                                         <form
-                                                          onSubmit={
-                                                            imageSubmitHandle
-                                                          }
                                                         >
                                                           <label
                                                             class="custom-file-upload"
@@ -400,8 +655,8 @@ export default function UserPrivacity() {
                                                             Subir imagen
                                                           </label>
                                                           <button
-                                                            type="submit"
                                                             className={`${styles.btnChanges} btn btn-success`}
+                                                            onClick = {imageSubmitHandle}
                                                           >
                                                             Cargar
                                                           </button>
@@ -416,8 +671,8 @@ export default function UserPrivacity() {
                                                 <div class="col d-flex justify-content-center">
                                                   <button
                                                     class="btn btn-dark"
-                                                    type="submit"
                                                     id={styles.btnSaveLoad}
+                                                    onClick = {handleSubmit}
                                                   >
                                                     Guardar Cambios
                                                   </button>
