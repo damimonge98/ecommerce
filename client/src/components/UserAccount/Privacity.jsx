@@ -54,6 +54,7 @@ export default function UserPrivacity() {
     console.log(data)
     console.log(password)
     console.log(infoType)
+    console.log(authUser.id)
 
   const handleChangePassword = function (e) {
     setPassword(e.target.value)
@@ -66,7 +67,8 @@ export default function UserPrivacity() {
       && data.email === authUser.email) {
 
         if (password) {
-          dispatch(resetPassword(password, authUser.id))
+          console.log(password, authUser.id)
+          dispatch(resetPassword({password: password, id: authUser.id}))
           Swal.fire ({
             title: "Cambios guardados correctamente",
             text: "Inicie sesion nuevamente para ver los cambios",
