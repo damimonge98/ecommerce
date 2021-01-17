@@ -8,7 +8,9 @@ import {
   ELIMINAR_ORDEN_EXITO,
   EDITAR_ORDEN,
   EDITAR_ORDEN_EXITO,
-  EDITAR_ORDEN_ERROR
+  EDITAR_ORDEN_ERROR,
+  VER_ORDEN,
+  VER_ORDEN_EXITO
  } from "../types/orders.js";
 import clienteAxios from '../../config/axios.js';
 
@@ -144,4 +146,20 @@ const editarOrdenExito = (data) => ({
 const editarOrdenError = () => ({
   type: EDITAR_ORDEN_ERROR,
   payload: true
+})
+
+export function selectOrder (id) {
+  return async (dispatch) => {
+  dispatch (verOrden (id))
+  dispatch (verOrdenExito())
+}
+}
+
+const verOrden = (id) => ({
+  type: VER_ORDEN,
+  payload: id
+})
+
+const verOrdenExito = () => ({
+  type: VER_ORDEN_EXITO
 })

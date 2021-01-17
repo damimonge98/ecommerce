@@ -7,7 +7,9 @@ import {
     ELIMINAR_ORDEN,
     ELIMINAR_ORDEN_EXITO,
     EDITAR_ORDEN,
-    EDITAR_ORDEN_EXITO
+    EDITAR_ORDEN_EXITO,
+    VER_ORDEN,
+    VER_ORDEN_EXITO
 } from "../types/orders.js";
 
 const initialState = {
@@ -16,7 +18,9 @@ const initialState = {
     loading: false,
     ordenagregar: null,
     ordeneliminar: null,
-    ordeneditar: null
+    ordeneditar: null,
+    idordenseleccionada: null,
+    ordenseleccionada: null
 }
 
 export default function (state = initialState, action) {
@@ -69,6 +73,16 @@ export default function (state = initialState, action) {
                 orden: state.orden.map(orden =>
                     orden.id === action.payload.id ? orden = action.payload : orden
                 )
+            }
+        case VER_ORDEN:
+            return {
+                ...state,
+                idordenseleccionada: action.payload
+            }
+        case VER_ORDEN_EXITO:
+            return {
+                ...state,
+                ordenseleccionada: state.orden.filter((el) => el.id === state.idordenseleccionada)
             }
         default:
             return state;
