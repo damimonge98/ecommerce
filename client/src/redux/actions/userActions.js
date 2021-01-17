@@ -6,7 +6,10 @@ import {
   ACTUALIZAR_CONTRASEÑA,
   EDITAR_FOTO,
   EDITAR_FOTO_EXITO,
-  OBTENER_TODOS_LOS_USUARIOS
+  OBTENER_TODOS_LOS_USUARIOS,
+  DESCARGA_USER,
+  DESCARGA_USER_EXITO,
+  DESCARGA_USER_ERROR
 } from '../types/Users';
 import clienteAxios from '../../config/axios.js';
 import jsonWebToken from 'jsonwebtoken';
@@ -145,3 +148,30 @@ const editarFoto = function (url) {
 const editarFotoExito = function () {
   return { type: EDITAR_FOTO_EXITO }
 }
+
+export function getUsers() {
+  return async function (dispatch) {
+    dispatch(descargarUsers())
+    try {
+      const respuesta = await clienteAxios.get(`/user`);
+      dispatch(descargaUsersExitosa(respuesta.data))
+    } catch (err) {
+      console.log(err)
+      dispatch(descargaUsersError())
+    }
+  }
+}
+
+const descargarUsers = () => ({
+  type: DESCARGA_USER,
+  payload: true
+});
+
+const descargaUsersExitosa = review => ({
+  type: DESCARGA_USER_EXITO,
+  payload: review
+})
+const descargaUsersError = () => ({
+  type: DESCARGA_USER_ERROR,
+  payload: true
+});

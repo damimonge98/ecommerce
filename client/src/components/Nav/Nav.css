@@ -24,9 +24,44 @@
 }
 
 #input-search {
-  background-color:#333232;
+  background-color: #333232;
   border: transparent;
   color: white;
   width: 250px;
   border-radius: 20px;
 }
+
+.dropdownButtonNav {
+  background-color: #151515;
+}
+
+.dropdownButtonNav:hover {
+  background-color: #151515;
+}
+
+.dropdownButtonNav[type = "button"] {
+  color: white;
+}
+
+.imgProfileNav {
+  width: 50px;
+  height: 50px;
+  border-radius: 200%;
+  border-left: 10px;
+}
+
+.dropDownProfileUser{
+  margin-left: -20px;
+}
+
+.listDropdownNav{
+  background-color: #151515;
+  color: white
+}
+
+.listDropdownNav:hover{
+  background-color: #151515;
+  color: white;
+  opacity: 0.6;
+}
+

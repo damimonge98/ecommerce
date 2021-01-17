@@ -41,9 +41,9 @@ server.post("/",upload.single('file'),async(req, res) => {
             res.send(e)
 		})
 })
-server.get('/', passport.authenticate("jwt",{session:false}),(req, res,) => {
+server.get('/', /* passport.authenticate("jwt",{session:false}), */(req, res,) => {
 	
-	if(req.user.isAdmin && req.user.isAdmin === true){
+	/* if(req.user.isAdmin && req.user.isAdmin === true){ */
 		return	User.findAll({
 				include: 
 				{all:true}
@@ -51,9 +51,9 @@ server.get('/', passport.authenticate("jwt",{session:false}),(req, res,) => {
 			.then(users => {
 				res.send(users);
 			})
-	}	
+	/* }	
 
-	res.status(401).json({msg:"Unauthorized"});
+	res.status(401).json({msg:"Unauthorized"}); */
 });
 server.get('/:email', /* passport.authenticate("jwt",{session:false}), */(req, res,) => {
 	const {email}= req.params
@@ -66,8 +66,8 @@ server.get('/:email', /* passport.authenticate("jwt",{session:false}), */(req, r
 			res.send(users);
 		})
 })
-server.delete("/:id", passport.authenticate("jwt",{session:false}), (req, res) => {
-	if(req.user.isAdmin && req.user.isAdmin === true){
+server.delete("/:id", /* passport.authenticate("jwt",{session:false}), */ (req, res) => {
+	/* if(req.user.isAdmin && req.user.isAdmin === true){ */
 		const {id}= req.params
 		User.findOne({
 			where:{
@@ -83,9 +83,9 @@ server.delete("/:id", passport.authenticate("jwt",{session:false}), (req, res) =
 			}
 
 		});
-	}else{
+	/* }else{
 		res.status(401).json({msg:"Unauthorized"});
-	}	
+	}	 */
 
 });
 

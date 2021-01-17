@@ -165,34 +165,6 @@ const Orders = () => {
         </div>
       </div>
       <div className="row">
-        {/*  <div className="button-groups">
-          <ButtonGroup aria-label="Basic example" id="button-group">
-            <Button variant="primary">Edit</Button>
-            <Button
-              variant="danger"  onClick={() => removeData(checkbox)}
-            >
-              Delete
-            </Button>
-            <Button variant="success">Download</Button>
-            <div className="navSearch">
-              <div class="form-group has-search">
-                <span
-                  class="fa fa-search form-control-feedback"
-                  id="icon-search"
-                ></span>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search"
-                  id="input-search"
-                />
-              </div>
-            </div>
-          </ButtonGroup>
-        </div> */}
-
-
-
         <Table responsive="lg" striped bordered hover variant="dark">
           <thead>
             <tr>

@@ -172,10 +172,10 @@ const [newPassword, setNewPassword] = useState({
                   <p className="link">¿Olvidaste tu contraseña?</p>
                 </a>
                 <Modal className="modal" show={show} onHide={handleClose}>
-        <Modal.Header closeButton className="header">
+        <Modal.Header closeButton className="modalBody">
           <Modal.Title className="title">No te preocupes, te ayudaremos a restablecer tu contraseña</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="title">
+        <Modal.Body className="modalBody">
         <form  >
                 <label>Introduce tu Email</label>
                 <br></br>
@@ -210,12 +210,12 @@ const [newPassword, setNewPassword] = useState({
     
           }
         </Modal.Body>
-        <Modal.Footer>
-          <button variant="secondary" onClick={handleClose}>
+        <Modal.Footer className="modalBody">
+          <button className="btn btn-danger"variant="secondary" onClick={handleClose}>
             Cerrar
           </button>
-          <button variant="primary"  onClick={handleSubmit2}>
-            verificar
+          <button className = "btn btn-primary" variant="primary" onClick={handleSubmit2}>
+            Verificar
           </button>
           
         </Modal.Footer>
@@ -227,6 +227,24 @@ const [newPassword, setNewPassword] = useState({
               {" "}
               Iniciar sesión
             </button>
+            </form>
+            <GoogleLogin
+            clientId="62493798452-akjoostfaul0rmoqbfjfvbusiqnbj9u3.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                className="buttonGoogleLogin"
+              >
+                Iniciar sesión con{" "}
+                <img src="https://img.icons8.com/officel/16/000000/google-logo.png" />
+              </button>
+            )}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+            isSignedIn={true}
+          />
             <div>
               <Link to={"/user"}>
                 <button className="registro">
@@ -234,17 +252,6 @@ const [newPassword, setNewPassword] = useState({
                 </button>
               </Link>
             </div>
-
-          </form>
-
-          <GoogleLogin
-            clientId="62493798452-akjoostfaul0rmoqbfjfvbusiqnbj9u3.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-            isSignedIn={true}
-          />
         </div>
       </div>
     </div>
