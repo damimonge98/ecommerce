@@ -46,6 +46,7 @@ const UserForm = (props) => {
     email: "",
     password: "",
     photoURL: "",
+    securityQuestion:""
   });
 
   const handleChange = (event) => {
@@ -195,6 +196,17 @@ const UserForm = (props) => {
             {errors.username && <p className="danger">{errors.password}</p>}
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox"></Form.Group>
+          <Form.Group >
+          <Form.Label>Pregunta de seguridad *</Form.Label>
+            <Form.Control
+              required
+              name="securityQuestion"
+              value={data.securityQuestion}
+              onChange={handleChange}
+              type="text"
+              placeholder="ingresa el nombre de tu primer mascota"
+            />
+            </Form.Group>
           <Button variant="success" type="submit" className="button">
             Enviar
           </Button>

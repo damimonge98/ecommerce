@@ -126,4 +126,15 @@
     color: #ffffff;
     margin-top: 6px;
   }
-  
+  .title{
+    color:black;
+    padding: 40px;
+  }
+  .modal{
+    display: flex;
+    
+    justify-content: center;
+  }
+  .header{
+    padding: 40px;
+  }

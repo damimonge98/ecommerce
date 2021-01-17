@@ -1,31 +1,69 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link, Redirect } from "react-router-dom";
-import { GetUsers, GetUsersGoogle } from "../../redux/actions/userActions";
+import { GetUsers,getAllUsers,resetPassword } from "../../redux/actions/userActions";
 import { getProducts } from "../../redux/actions/productActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import GoogleLogin from "react-google-login";
 import bcrypt from "bcryptjs";
+import Modal from 'react-bootstrap/Modal'
 function Login(props) {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [userName, setUsername] = useState([]);
+  const [userEmail, setUserEmail] = useState({
+    email:"",
+    securityQuestion:""
+});
+const [userValido, setUserValido] = useState({
+  valido:false
+});
+
+const [newPassword, setNewPassword] = useState({
+  password:"",
+  id:""
+})
+
+
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userAUTH);
+  const recuperado = useSelector((state) => state.user.recuperacion);
   const loginUser = async (data) => dispatch(GetUsers(data));
-  console.log(data);
+  const emailUser = async (data) => dispatch(getAllUsers(data));
+  const passwordActualizada = async (data) =>dispatch(resetPassword(data))
+  const validacion =()=>{    
+    if(recuperado.email === userEmail.email && recuperado.securityQuestion === userEmail.securityQuestion){
+    setUserValido.valido = true
+    }
+    else{
+      console.log("incorrecto")
+    }
+  }
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
+  const handleChange2 = (event) => {
+    setUserEmail({ ...userEmail, [event.target.name]: event.target.value });
+  };
+  const handleChange3 =(event)=>{
+    setNewPassword({...newPassword, password: event.target.value, id: recuperado.id})
+  }
 
+  
   useEffect(() => {
     setUsername(user);
+    
   });
   /* console.log(userName.username) */
 
@@ -40,9 +78,40 @@ function Login(props) {
     });
     history.push("./account/me");
   };
-  /* const loguearGoogle=async()=>{
-  await loginGoogle()
-} */
+  const  handleSubmit2 = async (event)=>{
+    event.preventDefault()
+    emailUser(userEmail.email)
+    validacion()
+    if(setUserValido.valido === true){
+    await Swal.fire({
+      icon: "success",
+      title: "Validación exitosa",
+      showConfirmButton: true,
+      background: "#19191a",
+    
+    })
+  }else{
+    await Swal.fire({
+      icon: "error",
+      title: `Datos invalidos`,
+      showConfirmButton: true,
+      background: "#19191a",
+  }
+    )
+}}
+  const handleSubmit3 = async (event)=>{
+      event.preventDefault()
+       await passwordActualizada(newPassword)
+       await Swal.fire({
+        icon: "success",
+        title: `Contraseña actualizada`,
+        showConfirmButton: true,
+        background: "#19191a",
+      
+      })
+  }
+
+
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   if (isAuthenticated) {
@@ -63,12 +132,11 @@ function Login(props) {
       showConfirmButton: true,
       background: "#19191a",
     });
-  /* } catch(error) {
-    console.log("error", error)
-  } */
+
   };
 
   return (
+    
     <div className="main-div">
       <div className="login">
         <div className="img"></div>
@@ -100,9 +168,59 @@ function Login(props) {
             </div>
             <div>
               <Link to={"#"}>
-                <a>
+                <a onClick={handleShow}>
                   <p className="link">¿Olvidaste tu contraseña?</p>
                 </a>
+                <Modal className="modal" show={show} onHide={handleClose}>
+        <Modal.Header closeButton className="header">
+          <Modal.Title className="title">No te preocupes, te ayudaremos a restablecer tu contraseña</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="title">
+        <form  >
+                <label>Introduce tu Email</label>
+                <br></br>
+            <input type="text"
+            name="email"
+            value={userEmail.email} 
+            onChange={handleChange2} /> 
+            <br></br>
+                <label>¿Como se llamaba tu mascota de la infancia?</label>
+                <br></br>
+            <input type="text"
+             name="securityQuestion"
+              value={userEmail.securityQuestion}
+              onChange={handleChange2}
+               /> 
+            </form>
+            <br></br>
+            {(setUserValido.valido)? 
+            <form>
+              <label>Actualiza tu contraseña</label>
+              <br></br>
+              <input type="password" 
+              name="newPassword"
+              value={newPassword.password}
+              onChange={handleChange3}
+              >
+              </input>
+              <br></br>
+              <button onClick={handleSubmit3}>Actualizar contraseña</button>
+            </form>:
+            console.log("email o respuesta invalida")
+    
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </button>
+          <button variant="primary"  onClick={handleSubmit2}>
+            verificar
+          </button>
+          
+        </Modal.Footer>
+      </Modal>
+      
               </Link>
             </div>
             <button className="buttonLogin" type="submit">
@@ -116,7 +234,9 @@ function Login(props) {
                 </button>
               </Link>
             </div>
+
           </form>
+
           <GoogleLogin
             clientId="62493798452-akjoostfaul0rmoqbfjfvbusiqnbj9u3.apps.googleusercontent.com"
             buttonText="Login"

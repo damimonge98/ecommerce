@@ -49,6 +49,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(1000),
             allowNull: true
         },
+        securityQuestion:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
         isAdmin: {
             type: DataTypes.STRING,
             defaultValue: false

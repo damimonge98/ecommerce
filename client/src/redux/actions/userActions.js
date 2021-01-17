@@ -5,7 +5,8 @@ import {
   ACTUALIZAR_USUARIO,
   ACTUALIZAR_CONTRASEÑA,
   EDITAR_FOTO,
-  EDITAR_FOTO_EXITO
+  EDITAR_FOTO_EXITO,
+  OBTENER_TODOS_LOS_USUARIOS
 } from '../types/Users';
 import clienteAxios from '../../config/axios.js';
 import jsonWebToken from 'jsonwebtoken';
@@ -89,7 +90,8 @@ const editarUsuario = function (data) {
   });
 }
 
-export function resetPassword(password, id) {
+export function resetPassword({password,id}) {
+  console.log(password, id)
   return async function (dispatch) {
     dispatch(actualizarContraseña(password))
     return clienteAxios.post("/user/" + id + "/passwordReset", { password: password })
@@ -100,6 +102,21 @@ const actualizarContraseña = function (password) {
   return ({
     type: ACTUALIZAR_CONTRASEÑA,
     payload: password
+  })
+}
+
+export  function  getAllUsers(email) {
+  
+  return async function(dispatch) {
+   const res = await clienteAxios.get('/user/' + email)
+   dispatch(dataUser(res.data))
+   
+  }
+} 
+const dataUser = function (data) {
+  return ({
+    type: OBTENER_TODOS_LOS_USUARIOS,
+    payload: data
   })
 }
 

@@ -55,7 +55,17 @@ server.get('/', passport.authenticate("jwt",{session:false}),(req, res,) => {
 
 	res.status(401).json({msg:"Unauthorized"});
 });
-
+server.get('/:email', /* passport.authenticate("jwt",{session:false}), */(req, res,) => {
+	const {email}= req.params
+	return	User.findOne({
+			where:{
+				email
+			}
+		})
+		.then(users => {
+			res.send(users);
+		})
+})
 server.delete("/:id", passport.authenticate("jwt",{session:false}), (req, res) => {
 	if(req.user.isAdmin && req.user.isAdmin === true){
 		const {id}= req.params
@@ -102,7 +112,7 @@ server.put('/:id' /*,passport.authenticate("jwt",{session:false})*/, (req, res) 
 
 // Ruta para resetear la password
 
-server.post('/:id/passwordReset', passport.authenticate("jwt",{session:false}), async(req, res) => {
+server.post('/:id/passwordReset', /* passport.authenticate("jwt",{session:false}), */ async(req, res) => {
 	const { id } = req.params;
 	const { password } = req.body;
 	const hash = await bcript.hash(password, 10);

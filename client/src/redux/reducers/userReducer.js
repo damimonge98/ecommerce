@@ -3,13 +3,15 @@ import {
     EDITAR_FOTO,
     EDITAR_FOTO_EXITO,
     LOGIN_USER,
-    LOGOUT_USER
+    LOGOUT_USER,
+    OBTENER_TODOS_LOS_USUARIOS
     } from "../types/Users.js";
     
     //cada reducer tiene su propio state
     const initialState = {
         users: [],
         userAUTH:[],
+        recuperacion:[],
         newImage: null,
         isAuthenticated:false,
         token:"",
@@ -48,6 +50,12 @@ import {
                 return {
                     ...state,
                 }
+                case OBTENER_TODOS_LOS_USUARIOS:
+                    return {
+                        ...state,
+                        recuperacion: action.payload
+                        }
+
             default:
                 return state;
         }
