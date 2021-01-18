@@ -80,7 +80,9 @@ const ProductosForm = () => {
                 description:productoEditar.description,
                 price:productoEditar.price,
                 stock:productoEditar.stock,
-                genre,                video:productoEditar.video
+                video:productoEditar.video,
+                genre,
+                
             })
             setImgUrl(productoEditar.img);
         }
@@ -174,13 +176,16 @@ const ProductosForm = () => {
 
         //crear nuevoproducto
         const data = new FormData();
-        if(productoEditar) data.append('id',productoEditar.id);
+        if(productoEditar)
+        data.append('id',productoEditar.id);
         data.append('name',inputs.name);
         data.append('stock',inputs.stock);
         data.append('description',inputs.description);
         data.append('price',inputs.price);
         data.append('genre',inputs.genre);
+        data.append('video',inputs.video)
         data.append('file',file);
+        console.log(inputs.video)
        
         if(modoEdit){
             await editProduct(data);
