@@ -87,7 +87,7 @@ const ElementCheckout = () => {
         // Cambia el estado de la orden a creada
         dispatch(editOrder({ state: "creada" }, orden[0].id));
         setState(state + 1);
-        /* dispatch(clearCar()); */
+        
 
         const { data2 } = await clienteAxios.post("/email/send-emailCheckout", {
           email: email.email,
@@ -109,6 +109,7 @@ const ElementCheckout = () => {
         confirmButtonText: "Aceptar",
       });
     }
+    dispatch(clearCar());
   };
 
   useEffect(() => {
