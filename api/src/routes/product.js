@@ -32,7 +32,7 @@ server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false
 	if(req.user.isAdmin && req.user.isAdmin === true || req.user.isAdmin==='true' ){
 		
 		//procesar los  datos recibidos del formulario que hacen parte del body
-		var { name, description, price,stock, genre } = req.body;
+		var { name, description, price,stock, genre,video } = req.body;
 		const genreArray=genre.split`,`.map(x=>+x) //convirtiendo el string de generos en un array
 		if(!Number.isInteger(genreArray[0])) next(new Error("Género invalido"));//validar que vengan enteros de id de generos
 
@@ -53,6 +53,7 @@ server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false
 			price,
 			stock,
 			img,
+			video
 		}).then(product=>{
 				product.addCategories(genreArray);
 				res.status(200).json(product)

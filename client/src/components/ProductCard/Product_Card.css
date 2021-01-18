@@ -162,3 +162,11 @@
   width: 80%;
   margin-left: 0px;
 }
+.video{
+  display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .music-buttom{
+    background-color: #2e2e2e;
+  }
