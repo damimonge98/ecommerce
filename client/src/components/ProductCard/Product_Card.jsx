@@ -246,11 +246,6 @@ const ProductCard = () => {
             <div className="py-2 my-lg-0 my-md-5" id="imgcontainer">
               <img src={products.img} className="img-fluid" id="imgm"></img>
               <div class="overlay">
-                <img
-                  src="https://connectingclues.es/wp-content/uploads/2019/09/white-play-icon-png-7.png"
-                  alt=""
-                  onClick={() => toMusicBar()}
-                />
               </div>
             </div>
           </div>
