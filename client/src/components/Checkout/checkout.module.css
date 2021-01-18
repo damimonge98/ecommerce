@@ -96,7 +96,6 @@
   margin-left: 33px;
   position: absolute;
   margin-top: 25px;
-  
 }
 
 .inputName {
@@ -124,15 +123,14 @@
   position: absolute;
 }
 
-.spanEmail{
-
+.spanEmail {
   position: absolute;
 }
-.spanCardName{
+.spanCardName {
   margin-top: 85px;
   position: absolute;
 }
-.spanCardNumber{
+.spanCardNumber {
   margin-top: 175px;
   position: absolute;
 }
@@ -145,25 +143,24 @@
   margin-top: 25px;
   height: 40px;
 }
-.iconInputEmail i{
-    margin-top: 10px;
-    margin-left: 11px;
-  }
+.iconInputEmail i {
+  margin-top: 10px;
+  margin-left: 11px;
+}
 .iconInputName {
-    background-color: white;
-    color: #cfd7df;
-    width: 34px;
-    position: absolute;
-    height: 40px;
-    margin-top: 108px;
-    
-    border-color: transparent
-  }
-  .iconInputName i{
-    margin-top: 10px;
-    margin-left: 10px;
-  }
+  background-color: white;
+  color: #cfd7df;
+  width: 34px;
+  position: absolute;
+  height: 40px;
+  margin-top: 108px;
 
+  border-color: transparent;
+}
+.iconInputName i {
+  margin-top: 10px;
+  margin-left: 10px;
+}
 
 .inputEmail::placeholder {
   color: #aab7c4;
@@ -226,7 +223,7 @@
   border-radius: 20px;
   border: none;
   margin-bottom: 10px;
-  background-color: rgb(114, 114, 114);
+  background-color: #243B53;
   color: rgb(255, 255, 255);
   width: 150px;
   font-weight: 600;
@@ -263,16 +260,19 @@
   margin-bottom: unset;
 }
 
-#cvv {
-  background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0.575),
-      rgba(255, 255, 255, 0.541)
-    ),
-    url("https://img.icons8.com/material-outlined/24/000000/help.png");
-  background-repeat: no-repeat;
-  background-position-x: 95%;
-  background-position-y: center;
-}
-
 /* #cvv:hover {} */
+
+@media only screen and (max-width: 800px) {
+  .inputName {
+    width: 280px;
+  }
+  .inputCardNumber {
+    width: 314px;
+  }
+  .inputEmail{
+    width: 280px;
+  }
+  .divTitle{
+    margin-left: 30px;
+  }
+}

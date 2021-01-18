@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -18,11 +18,14 @@ export default function SideBar() {
     setCurrentCategory,
     setRightBarOpen,
     isRightBarOpen,
+    dropdownSideBar,
+    setDropdownSideBar,
   } = useContext(Context);
   const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categorias);
   const productos = useSelector((state) => state.carrito.products);
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
   const shoppingCount = productos.reduce(
     (prev, curr) => (prev ?? 0) + curr.cantidad,
     0
@@ -43,23 +46,84 @@ export default function SideBar() {
     setCurrentCategory("Outside");
   };
 
+  const handleResize = () => {
+    setWindowSize(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize2", handleResize);
+  });
+
+  useEffect(() => {
+    if (windowSize > 810) {
+      setDropdownSideBar("x");
+    }
+  });
+
+  useEffect(() => {
+    if (windowSize < 810) {
+      setDropdownSideBar("z");
+    }
+  }, []);
+
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const userAuthenticated = useSelector((state) => state.user.userAUTH);
 
   return (
     <div className="parent-bar">
-      <div className="sidebar-container">
+      <div
+        className="sidebar-container"
+        style={{
+          visibility:
+            dropdownSideBar === "y"
+              ? "visible"
+              : dropdownSideBar === "z"
+              ? "hidden"
+              : null,
+          /* display: dropdownSideBar === 'z' ? 'none': 'inline-block', */
+          marginTop:
+            dropdownSideBar === "y"
+              ? "74px"
+              : dropdownSideBar === "z"
+              ? "72px"
+              : null,
+          transition:
+            dropdownSideBar === "y"
+              ? "all 0.5s"
+              : dropdownSideBar === "z"
+              ? "all 0.5s"
+              : null,
+          height:
+            dropdownSideBar === "y"
+              ? "400px"
+              : dropdownSideBar === "z"
+              ? "0px"
+              : null,
+          position: dropdownSideBar === "y" ? "absolute" : null,
+        }}
+      >
         <ul className="sidebar-navigation">
           <li className="header">
             <Link to={`/`} onClick={() => dispatch(getProducts())}>
-              <img
+                <img
                 src="https://bit.ly/37jca0M"
                 onClick={() => dispatch(getProducts())}
                 alt=""
-                style={{ backgroundColor: "transparent" }}
+                style={{
+                  display:
+                    dropdownSideBar === "y"
+                      ? "none"
+                      : dropdownSideBar === "z"
+                      ? "none"
+                      : "block",
+                }}
                 width="38"
                 height="38"
-                class="d-inline-block align-top"
+                /* className="d-inline-block align-top" */
               />
             </Link>
           </li>
@@ -67,7 +131,7 @@ export default function SideBar() {
           <li onClick={() => setCurrentCategory("All")}>
             {/* este dispatch de getProducts es porque cuando busco un nombre en la Searchbar y doy en Home se tiene que renderizar todo de nuevo */}
             <Link to={`/`} onClick={() => dispatch(getProducts())}>
-              <i className="fa fa-home" aria-hidden="true"></i> Home
+              <i className="fa fa-home" aria-hidden="true"></i> Inicio
             </Link>
           </li>
           <li>
@@ -78,7 +142,7 @@ export default function SideBar() {
             >
               <Dropdown.Toggle variant="" className="dropdown-basic">
                 <i className="fa fa-headphones-alt" aria-hidden="true" />{" "}
-                Categories
+                Categorías
               </Dropdown.Toggle>
               <Dropdown.Menu className="nav-dropdown-list">
                 {Array.isArray(categories) &&
@@ -115,10 +179,10 @@ export default function SideBar() {
                 {/* si no hay productos, no se va a mostrar el icono de la cuenta de productos */}
                 {productos.length > 0 ? shoppingCount : null}
               </span>
-              Shopping Cart
+              Carro de Compras
             </Link>
           </li>
-         
+
           {!userAuthenticated ? null : userAuthenticated.isAdmin === "true" ? (
             <li>
               <Dropdown className="nav-dropdown">
@@ -137,9 +201,7 @@ export default function SideBar() {
                     <ul onClick={handleCategory}>
                       <li
                         className="listCategories"
-                        onClick={() => 
-                          history.push("/admin")
-                        }
+                        onClick={() => history.push("/admin")}
                       >
                         {" "}
                         <i class="fa fa-business-time" aria-hidden="true"></i>
@@ -148,7 +210,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                  <ul onClick={handleCategory}>
+                    <ul onClick={handleCategory}>
                       <li
                         className="listCategories"
                         onClick={() => history.push("/admin/products")}
@@ -160,7 +222,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                  <ul onClick={handleCategory}>
+                    <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/admin/categories")}
                         className="listCategories"
@@ -178,7 +240,12 @@ export default function SideBar() {
             <Fragment>
               <li onClick={handleCategory}>
                 <Link to={`/user`}>
-                  <i className="fas fa-user-plus" style={{paddingRight: "3px"}}aria-hidden="true"></i> Create an Account
+                  <i
+                    className="fas fa-user-plus"
+                    style={{ paddingRight: "3px" }}
+                    aria-hidden="true"
+                  ></i>{" "}
+                  Regístrate
                 </Link>
               </li>
               <li onClick={handleCategory}>
@@ -191,12 +258,12 @@ export default function SideBar() {
             <li>
               <Dropdown className="nav-dropdown">
                 <Dropdown.Toggle variant="" className="dropdown-basic">
-                  <i class="fa fa-user-circle-o" aria-hidden="true"></i> My
-                  Account
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi Cuenta
+                  
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="nav-dropdown-list">
                   <Dropdown.Item>
-                  <ul onClick={handleCategory}>
+                    <ul onClick={handleCategory}>
                       <li
                         className="list-categories"
                         onClick={() => history.push("/account/me")}
@@ -212,7 +279,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                  <ul onClick={handleCategory}>
+                    <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/account/me/privacity")}
                         className="list-categories"
@@ -227,7 +294,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                  <ul onClick={handleCategory}>
+                    <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/account/me/orders")}
                         className="list-categories"

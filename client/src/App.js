@@ -15,18 +15,21 @@ export const Context = React.createContext({
   currentCategory: null,
   setCurrentCategory: () => { },
   isRightBarOpen: null,
-  setRightBarOpen: () => { }
+  setRightBarOpen: () => { },
+  dropdownSideBar: null,
+  setDropdownSideBar: () => { }
 });
 
 function App() {
   const [currentCategory, setCurrentCategory] = useState('All');
   const [isRightBarOpen, setRightBarOpen] = useState(false);
+  const [dropdownSideBar, setDropdownSideBar] = useState('x');
 
   return (
     <Provider store={store}>
       <BrowserRouter>
         {/* esto es parte de context, le paso las acciones que quiero conectar y en qué componentes */}
-        <Context.Provider value={{ currentCategory, setCurrentCategory, isRightBarOpen, setRightBarOpen }}>
+        <Context.Provider value={{ currentCategory, setCurrentCategory, isRightBarOpen, setRightBarOpen, dropdownSideBar, setDropdownSideBar }}>
           <Sidebar />
           <Route exact path="/" component={Catalogue} />
           <Route path="/" component={SideBarRight}/>

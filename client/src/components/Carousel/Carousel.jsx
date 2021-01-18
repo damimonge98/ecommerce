@@ -7,10 +7,10 @@ const HandleCarousel = () => {
   const handleSelect = (selectedIndex, e) => setIndex(selectedIndex);
   return (
     <div>
-    {/*   <h1 className="catalogueParent-h1" >
+      <h1 className="catalogueParent-h1" >
         News
       </h1>
-      <hr className="lineParent-h1"/> */}
+      <hr className="lineParent-h1"/>
       <div className="carouselDiv">
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>

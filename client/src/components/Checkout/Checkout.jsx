@@ -17,6 +17,9 @@ import {
 import clienteAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import spinner from "../Spinner";
+import {
+  clearCar
+}from "../../redux/reducers/carritoReducer";
 
 // Esto es la key para poder conectar la app a Stripe y poder registrar los pagos
 const stripePromise = loadStripe(
@@ -84,6 +87,7 @@ const ElementCheckout = () => {
         // Cambia el estado de la orden a creada
         dispatch(editOrder({ state: "creada" }, orden[0].id));
         setState(state + 1);
+        /* dispatch(clearCar()); */
 
         const { data2 } = await clienteAxios.post("/email/send-emailCheckout", {
           email: email.email,
@@ -183,10 +187,8 @@ const Checkout = () => {
 
   useEffect(() => {
     if (orden.state === "carrito" && userData.isAuthenticated) {
-      
         const obtenerUserOrden = () => dispatch(getUserOrderDetail(idUser.id));
         obtenerUserOrden();
-      
     }
   }, []);
 

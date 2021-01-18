@@ -306,7 +306,7 @@ export const Admin = () => {
                 />
               </div>
               <hr
-                style={{ borderBottom: "1px solid #7b7c7c", width: "895px" }}
+                className="lineTableOrders"
               />
               <div class="col-md-2 col-sm-4 col-xs-12 pull-right">
                 <select
@@ -430,7 +430,6 @@ export const Admin = () => {
                 </Modal.Header>
 
                 <Modal.Body id="modal">
-                  <h6>Orden # ,ordenSeleccionada.id</h6>
                   <DropdownButton
                     size="sm"
                     id="dropdownButton"
@@ -469,7 +468,6 @@ export const Admin = () => {
                 </Modal.Header>
 
                 <Modal.Body id="modal" style={{ width: "500px" }}>
-                  <h6>Orden # {orderId}</h6>
                   <div class="table-responsive">
                     <table class="table ">
                       <thead>

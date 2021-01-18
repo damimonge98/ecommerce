@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Nav.css";
 import SearchArtist from "../../redux/actions/searchActions.js";
 import { connect } from "react-redux";
@@ -7,9 +7,11 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { logoutAction } from "../../redux/actions/userActions";
 import { clearCarrito } from "../../redux/reducers/carritoReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { Context } from "../../App";
 
 function SearchBar(props) {
   const { history } = props;
+  const { dropdownSideBar, setDropdownSideBar } = useContext(Context);
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user.userAUTH);
   const user = useSelector((state) => state.user);
@@ -47,16 +49,34 @@ function SearchBar(props) {
     return;
   };
 
+  const handleDropDown = () => {
+    if (dropdownSideBar === 'x') {
+      setDropdownSideBar('y');
+    } else if (dropdownSideBar === 'y') {
+      setDropdownSideBar('z');
+    }
+    else if (dropdownSideBar === 'z') {
+      setDropdownSideBar('y');
+    }
+  };
+
+
   return (
     <nav className="navbar navbar-custom">
       <div className="container-fluid">
         <form
           className="d-flex" /* onSubmit={(event) => handleSubmit(event)} */
         >
+          <i
+            style={{ cursor: "pointer" }}
+            onClick={handleDropDown}
+            className="fas fa-list-ul"
+            id="icon-responsive"
+          ></i>
           <input
             className="form-control me-2"
             type="search"
-            placeholder="Search"
+            placeholder="Buscar"
             aria-label="Search"
             onChange={(event) => handleChange(event)}
             value={data.name}
