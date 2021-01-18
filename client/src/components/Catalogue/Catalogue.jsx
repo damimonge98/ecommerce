@@ -8,6 +8,8 @@ import { Context } from "../../App";
 import spinner from "../Spinner";
 import { getAllReviews } from "../../redux/actions/reviewActions";
 import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 // aca se van a renderizar todas las card de product
 
 const Cataloge = () => {

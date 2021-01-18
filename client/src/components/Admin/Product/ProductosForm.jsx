@@ -63,7 +63,7 @@ const ProductosForm = () => {
     const [file, setFile] = useState("");
     //estado de values de inputs
     const [inputs, setInputs] = useState({});
-    const {name,stock, price, description,}=inputs;//para llenars los values de los input cuando estemos en modo deedicion
+    const {name,stock, price, description,video}=inputs;//para llenars los values de los input cuando estemos en modo deedicion
     const [ImgUrl, setImgUrl] = useState('http://localhost:3001/img/producto-sin-foto.jpg')
 
     //efecto para llenar el state  de inputs con los datos del producto a editar en caso de que estemos en modo edicion
@@ -80,7 +80,7 @@ const ProductosForm = () => {
                 description:productoEditar.description,
                 price:productoEditar.price,
                 stock:productoEditar.stock,
-                genre
+                genre,                video:productoEditar.video
             })
             setImgUrl(productoEditar.img);
         }
@@ -246,7 +246,10 @@ const ProductosForm = () => {
                                     }
                                 </div>
                             </div>
-                            <br />
+                            <br />                            <div className="#">
+                                <label htmlFor="video" className="form-label">urlVideo: </label>
+                                <input type="text" className="form-control" id="video" value={ video || '' } placeholder="URL" name="video" onChange={handleInputChange}  />
+                            </div>
                             <div className={styles.btnForm} className="d-grid gap-2 col-6 mx-auto">
                                 <button variant="success" type="Guardar" style={{marginBottom:"20px"}} >
                                 {!modoEdit ? 'Guardar' : 'Actualizar' }

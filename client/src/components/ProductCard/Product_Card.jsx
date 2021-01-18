@@ -13,9 +13,11 @@ import Button from "react-bootstrap/Button";
 import { getReviews } from "../../redux/actions/reviewActions";
 import clienteAxios from "../../config/axios";
 import { getUserOrderDetail } from "../../redux/actions/orderActions.js";
-
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 const ProductCard = () => {
   const [reviewProductsId, setReviewProductsId] = useState([]);
+  const [key, setKey] = useState('profile');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -194,6 +196,20 @@ const ProductCard = () => {
               <p className="description">{products.description}</p>
             </div>
             <hr className="line" />
+            <Tabs
+      id="ControlledTabs"
+      activeKey={key}
+      onSelect={(k) => setKey(k)}
+    >
+      <Tab eventKey="home" title="music">
+      <div className="video">
+      <iframe width="560" height="315" src={products.video} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div> 
+      </Tab>
+      <Tab eventKey="profile" title="home">
+        <p>Disfruta de la musica de tus artistas favoritos mientras compras!</p>
+      </Tab>
+    </Tabs>
             <div>
               
               {products.stock > 0 ? <p className="stock"> ¡Entradas disponibles! </p> : <p>Entradas agotadas</p>}
