@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserOrderDetail, getOrderDetail } from "../../redux/actions/orderActions.js";
+import { getUserOrderDetail, getOrderDetail, selectOrder } from "../../redux/actions/orderActions.js";
 import { useHistory } from "react-router-dom";
 import { addReview } from "../../redux/actions/reviewActions";
 import NavBar from "./NavBar.jsx";
@@ -91,6 +91,7 @@ export default function UserOrders() {
                   <td>{el.state}</td>
                   <td onClick={() => {
                     dispatch(getOrderDetail(el.id))
+                    dispatch (selectOrder (el.id))
                     history.push(`/account/me/orders/${el.id}`)}} style={{cursor:"pointer"}}><h6><strong>Ver</strong></h6></td>
                 </tr>
               );

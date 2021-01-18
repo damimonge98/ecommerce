@@ -37,6 +37,8 @@ export default function UserPrivacity() {
   const [ImgUrl, setImgUrl] = useState(
     "http://localhost:3001/img/producto-sin-foto.jpg"
   );
+  const [imagenCargada, setimagenCargada] = useState ("")
+  const [buttonStyle, setbuttonStyle] = useState ("btn btn-outline-success")
 
   console.log(photoURL);
 
@@ -202,8 +204,8 @@ export default function UserPrivacity() {
       reader.onload = (e) => {
         if (reader.readyState === 2) {
           setImgUrl(reader.result);
-          console.log("reader dentro if", reader);
-          console.log("reader.result dentro del info", reader.result);
+          setbuttonStyle("btn btn-success")
+          setimagenCargada("Imagen subida")
         }
       };
       reader.readAsDataURL(file);
@@ -218,10 +220,25 @@ export default function UserPrivacity() {
 
   const imageSubmitHandle = function (e) {
     e.preventDefault();
+
+  
+
+
     const data = new FormData();
     data.append("file", file);
     dispatch(editUserImage(data, authUser.id));
     setphotoURL(verifyImg.newImage);
+
+    Swal.fire ({
+      text: "La imagen ha sido guardada correctamente",
+      icon: "success",
+      width: 500,
+      timer: 1000,
+      showConfirmButton: false,
+      background: "#19191a"
+    })
+    setbuttonStyle ("btn btn-outline-success")
+    setimagenCargada("")
   };
 
   return (
@@ -744,13 +761,14 @@ export default function UserPrivacity() {
                                                             Subir imagen
                                                           </label>
                                                           <button
-                                                            className={`${styles.btnChanges} btn btn-success`}
+                                                            className={`${styles.btnChanges} ${buttonStyle}`}
                                                             onClick={
                                                               imageSubmitHandle
                                                             }
                                                           >
                                                             Cargar
                                                           </button>
+                                                          <div>{imagenCargada}</div>
                                                         </form>
                                                       </div>
                                                     </div>

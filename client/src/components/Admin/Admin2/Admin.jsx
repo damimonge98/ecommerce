@@ -13,6 +13,7 @@ import {
   getOrder,
   editOrder,
   getOrderDetail,
+  selectOrder
 } from "../../../redux/actions/orderActions";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -37,6 +38,8 @@ export const Admin = () => {
   const order = useSelector((state) => state.order.orden);
   const ordersId = order.map((orders) => orders.id);
   const ordenEditar = useSelector((state) => state.order.ordenEditar);
+  const ordenSeleccionada = useSelector((state)=> state.order.ordenseleccionada)
+  console.log(ordenSeleccionada)
   const history = useHistory();
   const [reviewProducts, setReviewProducts] = useState([]);
   const reviews = useSelector((state) => state.review.review);
@@ -138,7 +141,7 @@ export const Admin = () => {
   };
 
   const handleOrderDetail = (orderId) => {
-    setOrderId(orderId);
+    dispatch(selectOrder(orderId))
     setShowDetail(true);
   };
 
@@ -427,7 +430,7 @@ export const Admin = () => {
                 </Modal.Header>
 
                 <Modal.Body id="modal">
-                  <h6>Orden # {orderId}</h6>
+                  <h6>Orden # ,ordenSeleccionada.id</h6>
                   <DropdownButton
                     size="sm"
                     id="dropdownButton"
@@ -479,8 +482,7 @@ export const Admin = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Array.isArray(orders) &&
-                          orders.map((allOrder) => {
+                        {ordenSeleccionada.map((allOrder) => {
                             return allOrder.products.map((productOrder) => {
                               return (
                                 <tr key={orders.id}>
@@ -516,7 +518,7 @@ export const Admin = () => {
                   </div>
                 </Modal.Body>
                 <Modal.Footer id="modal" style={{ width: "500px" }}>
-                  <Button variant="danger" onClick={handleChangeState}>
+                  <Button variant="danger" onClick={handleClose}>
                     Cerrar
                   </Button>
                 </Modal.Footer>
