@@ -5,7 +5,7 @@
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  background: #1a1a1a;
+  background: #181818;
   color: #fff;
   z-index: 11 !important;
 }
@@ -42,7 +42,7 @@
 }
 
 .sidebar-navigation li::before {
-  background-color: #ec625f;
+  background-color: #627D9B;
   position: absolute;
   content: "";
   height: 100%;
@@ -82,7 +82,7 @@
 
 .nav-dropdown-list {
   opacity: 0.9;
-  background-color: #151515;
+  background-color: #102A43;
 }
 
 .dropdown-basic {
@@ -135,6 +135,16 @@
 
 .lineParent-h1 {
   display: none;
+}
+
+.listCategories::before{
+  background-color: transparent !important;
+ 
+}
+
+.listCategories{
+  padding-right: 20px;
+  margin-left: -20px;
 }
 
 /* .listDropdownSideAdmin{

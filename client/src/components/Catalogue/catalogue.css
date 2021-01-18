@@ -10,6 +10,7 @@
   background-color: transparent;
   margin-top: 700px;
   margin-left: 180px;
+  
 }
 .logo {
   position: absolute;
@@ -65,9 +66,6 @@
   bottom: 0;
 }
 
-body {
-  background: #333;
-}
 .img__wrapper {
   width: 500px;
   height: 300px;

@@ -1,17 +1,11 @@
-html,
-body {
-  background-color: #313131;
-  font-family: "Poppins", sans-serif;
-  color: #eeeeee;
-}
+
 .bodyb {
-  background-color: #313131;
   margin-left: 200px;
   padding-top: 90px;
 }
 
 .content {
-  background-color: #525252;
+  background-color: #313131;
   text-align: center;
 }
 
@@ -65,7 +59,12 @@ body {
 }
 
 .btn-custom {
-  background-color: #ec625f;
+  background-color: #627D9B;
+}
+
+.btn-custom:hover {
+  background-color: #102A43;
+  opacity: 0.8;
 }
 
 .overlay {
@@ -153,4 +152,13 @@ body {
 .modalBody{
   color: #ffffff;
   background-color: #2e2e2e;
+}
+
+#modalContentProductCard{
+  margin-left: 0px;
+}
+
+.lineModalReviews{
+  width: 80%;
+  margin-left: 0px;
 }

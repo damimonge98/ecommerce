@@ -20,15 +20,17 @@ export const Product = ({
 
   if (sold_out === false) {
     return (
+      <div className="cardProduct">
       <div className="card">
         <Link to={`/products/${id}`}>
           <img src={image} className="card-img-top" alt={name} />
         </Link>
         <div className="div-h2">
           <h2 className="card-h2">
-            {name}
+            <strong className="productNameCardCatalogue">{name}</strong>
             <br />
-            {description}
+            <p
+            className="productDescriptionCardCatalogue">{description}</p>
           </h2>
         </div>
         <div className="div-button">
@@ -52,6 +54,7 @@ export const Product = ({
                     img: image,
                   },
                   cantidadActual: pc ? pc.cantidad : 0,
+                  cantidadAgregar: 1
                 })
               );
 
@@ -67,9 +70,11 @@ export const Product = ({
           </button>
         </div>
       </div>
+      </div>
     );
   } else {
     return (
+      <div className="cardProduct">
       <div className="card">
         <div class="ribbon">
           <span>AGOTADO</span>{" "}
@@ -84,6 +89,7 @@ export const Product = ({
             {description}
           </h2>
         </div>
+      </div>
       </div>
     );
   }

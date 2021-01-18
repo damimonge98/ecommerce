@@ -3,13 +3,18 @@ import './ProductItem.css'
 
 const ProducItem = ({product, onIncreaseCant, onDecreaseCant}) =>{
     return <div className = 'btn-groups'>
-        {product.name}
+        <strong className="productNameCart">{product.name}</strong>
+        { ' ' }
+        <br/>
+        <button id='decrease-btn' onClick={onDecreaseCant}>-</button>
         { ' ' }
         <button  id='increase-btn' onClick={onIncreaseCant}>+</button>
-        { ' ' }
-        <button id='decrease-btn' onClick={onDecreaseCant}>-</button>
         <br/>
-        Unidades: {product.cantidad} | Precio: {product.price * product.cantidad}$               
+        <strong>Unidades:</strong> {product.cantidad} 
+        <br/>
+        <strong>Precio:</strong> 
+        <br/>
+        {product.price * product.cantidad}$               
     </div>
 }
 export default ProducItem

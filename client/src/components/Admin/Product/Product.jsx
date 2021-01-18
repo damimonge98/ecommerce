@@ -64,18 +64,18 @@ const Product = ({producto}) => {
             <td className={styles.columnas}> $ {price}</td>
             <td className={styles.columnas}>{stock}</td>
           
-            <td className={styles.columnas}>{categories && categories.map(c=> ' | '+c.name +' | ' )}</td>
+            <td className={styles.columnas}>{categories && categories.map(c=> c.name )}</td>
             
             <td className={styles.columnas}>{description}</td>
             <td className={styles.columnas}>
                 <button 
                     type="button"
                     onClick={()=>redireccionarEdicion(producto)}
-                    className="btn btn-primary m-1"
+                    className="btn btn-primary m-1" id={styles.btnEditCustomized}
                 >Editar 
                 </button>
                 <button 
-                    className="btn btn-danger "
+                    className="btn btn-danger " id={styles.btnDeleteCustomized}
                     onClick={()=>confirmarEliminarProducto(id)}
                 >Eliminar 
                 </button>

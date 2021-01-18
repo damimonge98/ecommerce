@@ -12,8 +12,6 @@
 .form-div{
   height: 750px;
   width: 400px;
-
-  
 }
 
 .button{
@@ -57,6 +55,7 @@
 }
 .googleIcon{
   height:25px;
+  
 }
 .btn-text:hover {
   box-shadow: 0 0 6px ;
@@ -65,4 +64,11 @@
 .btn-text:active {
   background:#1669F2;
 }
+
+.buttonSignUpGoogle{
+  background-color: #C62828;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);

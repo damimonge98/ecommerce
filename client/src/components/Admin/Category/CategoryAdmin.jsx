@@ -115,7 +115,7 @@ const handleChange = (event) => {
             </div>
             <div className={styles.btnDiv}>
                 <Link to={"/admin/categories/new"}
-                    className="btn btn-info nuevo-post d-block d-md-inline-block"
+                    className="btn btn-info nuevo-post d-block d-md-inline-block" id={styles.btnCustomized}
                 >Agregar Categoria &#43;
                 </Link>
             </div>
@@ -142,11 +142,13 @@ const handleChange = (event) => {
                                         getCategoryId(item.id);
                                         handleEdit();
                                         }}
+                                        id={styles.btnEditCustomized}
                                         >Editar</button>
                                         <button
                                         type="button"
                                         className="btn btn-danger m-1"
                                         onClick = {()=> eliminarCategoria(item.id)}
+                                        id={styles.btnDeleteCustomized}
 
                                         >Eliminar</button>
                                     </td> 

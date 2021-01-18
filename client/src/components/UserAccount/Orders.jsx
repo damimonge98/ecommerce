@@ -60,8 +60,8 @@ export default function UserOrders() {
       <div className={styles.table}>
         <h1>Detalle de tus compras</h1>
         <hr />
-        <Table striped bordered variant="dark" id={styles.headerTable}>
-          <thead>
+        <Table  id={styles.headerTable}>
+        <thead style={{borderTop: "1px groove #9098a0"}}>
             <tr>
               <th scope="col">Creada/Actualizada</th>
               <th scope="col">Numero de orden</th>

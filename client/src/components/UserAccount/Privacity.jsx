@@ -244,7 +244,6 @@ export default function UserPrivacity() {
   return (
     <div>
       <div className={styles.profileAccountSettings}>
-        <NavBar />
         <div className="container bootdey">
           <div className="content-page">
             <div className="profile-banner">
@@ -267,7 +266,7 @@ export default function UserPrivacity() {
                         className="tab-pane animated active fadeInRight"
                         id="about"
                       >
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center" id={styles.editProfile}>
                           <h5>
                             <strong>Editar Perfil</strong>
                           </h5>
