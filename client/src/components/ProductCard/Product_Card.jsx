@@ -199,19 +199,18 @@ const ProductCard = () => {
       activeKey={key}
       onSelect={(k) => setKey(k)}
     >
-      <Tab eventKey="description" title="¡Escucha una canción de este artista!" id="tabMusicDiv">
-
-      </Tab>
-      <Tab eventKey="profile" title="descripción">
-        <p>Disfruta de la musica de tus artistas favoritos mientras compras!</p>
-      </Tab>
+      <Tab eventKey="home" title="¡Escucha una canción de este artista!">
       <div className="video">
       <iframe width="560" height="315" src={products.video} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div> 
+      </Tab>
+      <Tab eventKey="profile" title="Volver a tu compra">
+   
+      </Tab>
     </Tabs>
             </div>
             <hr className="line" />
-      
+   
             <div>
               
               {products.stock > 0 ? <p className="stock"> ¡Entradas disponibles! </p> : <p>Entradas agotadas</p>}
@@ -222,7 +221,7 @@ const ProductCard = () => {
             <div className="row my-4 ">
               <div className="cart-btn d-flex justify-content-center">
                 <div className="row-margin">
-                <img
+                   <img
                     src={products.img}
                     className="img-fluid"
                     id="imageCard"
