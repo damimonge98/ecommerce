@@ -52,6 +52,7 @@ export const Product = ({
                     img: image,
                   },
                   cantidadActual: pc ? pc.cantidad : 0,
+                  cantidadAgregar: 1
                 })
               );
 

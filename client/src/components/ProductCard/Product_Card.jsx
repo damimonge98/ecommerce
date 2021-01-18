@@ -74,6 +74,7 @@ const ProductCard = () => {
           userId: user,
           product: products,
           cantidadActual: pc ? pc.cantidad : 0,
+          cantidadAgregar: 1,
         })
       );
       dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
@@ -105,19 +106,19 @@ const ProductCard = () => {
                   {reviewProductsId.length === 0
                     ? null
                     : Array.apply(null, { length: ratingAv.toFixed(1) }).map(
-                        (e, i) => {
-                          return (
-                            <li key={i}>
-                              {
-                                <i
-                                  className="fas fa-star"
-                                  id="starsProductCard"
-                                ></i>
-                              }
-                            </li>
-                          );
-                        }
-                      )}
+                      (e, i) => {
+                        return (
+                          <li key={i}>
+                            {
+                              <i
+                                className="fas fa-star"
+                                id="starsProductCard"
+                              ></i>
+                            }
+                          </li>
+                        );
+                      }
+                    )}
                 </ul>
               </div>
               <p className="totalRating">
@@ -136,8 +137,8 @@ const ProductCard = () => {
                     Todavía nadie ha opinado sobre este producto
                   </p>
                 ) : (
-                  <p> {ratingAverage.length} opiniones</p>
-                )}
+                    <p> {ratingAverage.length} opiniones</p>
+                  )}
               </p>
               <Modal
                 show={ratingAverage.length === 0 ? false : show}
@@ -155,37 +156,37 @@ const ProductCard = () => {
                   {!reviewProductsId
                     ? spinner()
                     : reviewProductsId.map((productReviews) => {
-                        return (
-                          <ul style={{ listStyle: "none" }}>
-                            <li>
-                              {Array.apply(null, {
-                                length: productReviews.rating,
-                              }).map((e, i) => {
-                                return (
-                                  <ul className="usersCalifications">
-                                    <li
-                                      key={i}
-                                      className="usersCalificationsLine"
-                                    >
-                                      {
-                                        <i
-                                          className="fas fa-star"
-                                          id="starsProductCard"
-                                        ></i>
-                                      }
-                                    </li>
-                                  </ul>
-                                );
-                              })}
+                      return (
+                        <ul style={{ listStyle: "none" }}>
+                          <li>
+                            {Array.apply(null, {
+                              length: productReviews.rating,
+                            }).map((e, i) => {
+                              return (
+                                <ul className="usersCalifications">
+                                  <li
+                                    key={i}
+                                    className="usersCalificationsLine"
+                                  >
+                                    {
+                                      <i
+                                        className="fas fa-star"
+                                        id="starsProductCard"
+                                      ></i>
+                                    }
+                                  </li>
+                                </ul>
+                              );
+                            })}
+                            <br />
+                            {productReviews.user.username} opinó:
                               <br />
-                              {productReviews.user.username} opinó:
-                              <br />
-                              {productReviews.description}
-                              <hr />
-                            </li>
-                          </ul>
-                        );
-                      })}
+                            {productReviews.description}
+                            <hr />
+                          </li>
+                        </ul>
+                      );
+                    })}
                 </Modal.Body>
                 <Modal.Footer className="modalBody">
                   <Button variant="danger" onClick={handleClose}>
@@ -262,6 +263,6 @@ const ProductCard = () => {
 
 export default ProductCard;
 
-/* esto es para luego imprimir el music bar al tocar la foto del artista o banda  
+/* esto es para luego imprimir el music bar al tocar la foto del artista o banda
   const [music, setMusic] = useState(false)
   const onButtonClick = () => setMusic(true) */

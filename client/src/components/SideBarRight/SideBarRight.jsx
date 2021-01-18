@@ -8,7 +8,7 @@ import {
   addProduct,
   removeAllProduct,
   loadGuestCart,
-}  from "../../redux/reducers/carritoReducer";
+} from "../../redux/reducers/carritoReducer";
 import ProductItem from "../ProductItem/ProductItem";
 import { Context } from "../../App";
 import { Link } from "react-router-dom";
@@ -38,26 +38,26 @@ export default function SideBarRight() {
 
   useEffect(() => {
     if (productos.length > 0 && location.pathname === "/") {
-       setRightBarOpen(true);
+      setRightBarOpen(true);
     }
   }, [productos]);
 
   useEffect(() => {
     const moverLocalABack = async (state, userId) => {
-    
+
       const result = await clienteAxios.get(`orders/users/${userAUTH.id}/cart`);
-     
+
       var data;
-      if(Array.isArray(result.data)){
-          data= result.data[0].products;
-      }else{
-          data = result.data.products;
+      if (Array.isArray(result.data)) {
+        data = result.data[0].products;
+      } else {
+        data = result.data.products;
       }
-    
+
       //pasar productos de state.carrito.products al back
       for (const localProduct of state) {
-        
-        if(typeof data !== 'undefined'){
+
+        if (typeof data !== 'undefined') {
           var lineOrderBack = data.map(firstLoop => firstLoop.lineOrder)
           var productBack = lineOrderBack.find((x) => x.productId == localProduct.id);
         }
@@ -67,13 +67,13 @@ export default function SideBarRight() {
             productId: localProduct.id,
             cantidad: productBack.cantidad + localProduct.cantidad,
           });
-         
+
         } else {
           const result = await clienteAxios.post(`orders/users/${userAUTH.id}/cart`, {
             productId: localProduct.id,
             cantidad: localProduct.cantidad,
           });
-          
+
         }
       }
       dispatch(fetchCart(userData.userAUTH.id));
@@ -82,18 +82,18 @@ export default function SideBarRight() {
       const state = JSON.parse(localStorage.getItem("carritoGuest"), "[]");
       if (state && state.length > 0) {
         moverLocalABack(state, userData.userAUTH.id);
-        
-      }else if(productos.length > 0){
+
+      } else if (productos.length > 0) {
         dispatch(fetchCart(userData.userAUTH.id));
       }
-      
+
     } else {
       dispatch(loadGuestCart(0));
     }
   }, [userData]);
 
   const handleLogin = () => {
-    if(!isAuthenticated){
+    if (!isAuthenticated) {
       Swal.fire({
         icon: "info",
         title: `Tienes que identificarte para concluir tu compra`,
@@ -116,8 +116,8 @@ export default function SideBarRight() {
           url === productsUrl
             ? "visible"
             : url === catalogueUrl
-            ? "visible"
-            : "hidden",
+              ? "visible"
+              : "hidden",
       }}
       id="cd-shadow-layer"
     >
@@ -160,10 +160,22 @@ export default function SideBarRight() {
                 key={producto.id}
                 product={producto}
                 onIncreaseCant={() => {
-                  dispatch(addProduct({ id: producto.id }));
+                  const pc = productos.find((x) => x.id == producto.id);
+                  dispatch(addProduct({
+                    userId: isAuthenticated ? userAUTH.id : 0,
+                    product: producto,
+                    cantidadActual: pc ? pc.cantidad : 0,
+                    cantidadAgregar: 1,
+                  }));
                 }}
                 onDecreaseCant={() => {
-                  dispatch(removeProduct({ id: producto.id }));
+                  const pc = productos.find((x) => x.id == producto.id);
+                  dispatch(addProduct({
+                    userId: isAuthenticated ? userAUTH.id : 0,
+                    product: producto,
+                    cantidadActual: pc ? pc.cantidad : 0,
+                    cantidadAgregar: -1,
+                  }));
                 }}
               />
             </li>
@@ -178,16 +190,16 @@ export default function SideBarRight() {
               )}$`}
             </p>
           </div>
-          
+
           <Link
             to="/order/checkout"
             style={{ textDecoration: "none" }}
             className="cd-checkout-btn"
           >
-           <p onClick = {handleLogin}>Go to checkout</p>
-           
+            <p onClick={handleLogin}>Go to checkout</p>
+
           </Link>
-          
+
           <Link
             to="/order"
             style={{ textDecoration: "none" }}
