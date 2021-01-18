@@ -152,7 +152,7 @@ export default function SideBarRight() {
                 <i
                   className="fa fa-times"
                   onClick={() => {
-                    dispatch(clearCar(userAUTH.id));
+                    dispatch(clearCar(userAUTH.id)); 
                   }}
                 ></i>
               </a>

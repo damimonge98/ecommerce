@@ -108,9 +108,12 @@ export const clearCar = createAsyncThunk(
   async (userId, thunkAPI) => {
     //const productos = JSON.parse(localStorage.getItem('carritoGuest') ?? '[]');
     //return productos;
-    const result = await clienteAxios.delete(`orders/users/${userId}/cart`);
-    //console.log(result);
-    return result.status == 200;
+    if(userId){    const result = await clienteAxios.delete(`orders/users/${userId}/cart`);
+      return result.status == 200;
+    }
+
+    localStorage.removeItem("carritoGuest")  
+
   }
 )
 
