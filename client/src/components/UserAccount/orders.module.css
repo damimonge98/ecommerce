@@ -4,8 +4,8 @@
   padding-top: 120px;
 }
 
-#headerTable{
-  background-color: #1a1a1a !important; 
+#headerTable {
+  background-color: #1a1a1a !important;
   color: white !important;
 }
 
@@ -28,7 +28,7 @@
 .titleReviewFormUser {
   cursor: pointer;
   height: 20px;
-  color: #334E68;
+  color: #334e68;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
@@ -72,11 +72,11 @@
   background-color: #2e2e2e;
 }
 
-#headerTable{
-  text-align: center
+#headerTable {
+  text-align: center;
 }
 
-#rowOrder{
+#rowOrder {
   background-color: #1a1a1a;
   color: #ffffff;
   height: 40px;
@@ -86,23 +86,43 @@
   border-left: 1px groove #9098a0; */
 }
 
-#rowOrder2{
+#rowOrder2 {
   background-color: #1f1e1e;
   color: #ffffff;
   height: 40px;
   padding-top: 10px;
   border-bottom: 1px groove #9098a0;
-/*   border-right: 1px groove #9098a0;
+  /*   border-right: 1px groove #9098a0;
   border-left: 1px groove #9098a0; */
 }
 
-.navDropdownList{
+.navDropdownList {
   opacity: 0.9;
   color: white;
   margin-left: -12px;
   margin-top: -8px;
 }
 
-.navDropdownList:hover{
+.navDropdownList:hover {
   color: white;
+}
+
+@media only screen and (max-width: 800px) {
+  .table {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 140px;
+    font-size: 12px;
+    
+  }
+  .titleOrderDetail{
+    margin-left: 50px;
+  }
+  #rowOrder {
+    padding-top: 0px;
+    
+  }
+  #rowOrder2 {
+    padding-top: 0px;
+  }
 }

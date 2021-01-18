@@ -193,7 +193,7 @@ export default function UserOrders() {
                             En{" "}
                             <img
                               src="https://bit.ly/37jca0M"
-                              style={{ height: "30px" }}
+                              style={{ height: "20px" }}
                             />{" "}
                             nos importa lo que tenés para decir!
                           </Modal.Title>

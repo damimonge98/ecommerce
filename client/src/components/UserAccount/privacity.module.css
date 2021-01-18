@@ -129,7 +129,6 @@
     background-color: white;
     color: black;
     cursor: pointer;
-   
 }
 #btnSaveLoad{
     border: none;
@@ -154,3 +153,28 @@
 #editProfile{
   margin-bottom:20px;
 }
+
+@media only screen and (max-width: 800px) {
+  .profileAccountSettings{
+    width: 150% !important;
+    margin-left: -215px;
+  }
+  
+  #contentUserProfile{
+    margin-bottom: 40px;
+  }
+  
+  .profile-avatar {
+    width: 140px;
+  }
+  .photoInput{
+    margin-top: 40px;
+    margin-left: 80px;
+    padding-right: 100px;
+}
+#inputs{
+  margin-left: 60px;
+  width: 200px;
+}
+  }
+  

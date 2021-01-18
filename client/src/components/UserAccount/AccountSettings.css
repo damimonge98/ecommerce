@@ -9,7 +9,7 @@
   background-position: center center;
   background-size: cover;
   position: relative;
-  background-color: #334E68;
+  background-color: #334e68;
   border-bottom: 4px solid #fff;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.1);
   margin-top: 30px;
@@ -97,10 +97,26 @@
   border-radius: 20px;
   border: none;
   margin-bottom: 10px;
-  background-color:#102A43;
+  background-color: #102a43;
   border: 1px solid #151515;
   color: rgb(255, 255, 255);
   width: 150px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
+}
+
+@media only screen and (max-width: 800px) {
+.profileAccountSettings{
+  width: 150% !important;
+  margin-left: -215px;
+}
+
+#contentUserProfile{
+  height: 480px;
+  margin-bottom: 40px;
+}
+
+.profile-avatar {
+  width: 140px;
+}
 }

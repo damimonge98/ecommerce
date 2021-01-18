@@ -32,10 +32,8 @@
 
 .containerTitle{
   text-align: center;
-  
   margin-top: 50px;
   color: white;
-  
 }
 
 .title{
@@ -91,8 +89,16 @@
 }
 
 @media screen and (max-width: 800px) {
-  table {
-    display: block;
-    overflow-x: auto;
-  }
+ .table{
+   width: 150%!important;
+   margin-left: -100px;
+ }
+
+ .title{
+   margin-left: -100px;
+ }
+ #btnCustomized{
+   margin-right: 60px;
+   width: 180px;
+ }
 }

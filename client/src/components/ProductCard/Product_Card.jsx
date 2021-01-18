@@ -194,22 +194,24 @@ const ProductCard = () => {
                 </Modal.Footer>
               </Modal>
               <p className="description">{products.description}</p>
-            </div>
-            <hr className="line" />
-            <Tabs
+              <Tabs
       id="ControlledTabs"
       activeKey={key}
       onSelect={(k) => setKey(k)}
     >
-      <Tab eventKey="home" title="music">
+      <Tab eventKey="description" title="¡Escucha una canción de este artista!" id="tabMusicDiv">
+
+      </Tab>
+      <Tab eventKey="profile" title="descripción">
+        <p>Disfruta de la musica de tus artistas favoritos mientras compras!</p>
+      </Tab>
       <div className="video">
       <iframe width="560" height="315" src={products.video} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div> 
-      </Tab>
-      <Tab eventKey="profile" title="home">
-        <p>Disfruta de la musica de tus artistas favoritos mientras compras!</p>
-      </Tab>
     </Tabs>
+            </div>
+            <hr className="line" />
+      
             <div>
               
               {products.stock > 0 ? <p className="stock"> ¡Entradas disponibles! </p> : <p>Entradas agotadas</p>}
@@ -220,6 +222,11 @@ const ProductCard = () => {
             <div className="row my-4 ">
               <div className="cart-btn d-flex justify-content-center">
                 <div className="row-margin">
+                <img
+                    src={products.img}
+                    className="img-fluid"
+                    id="imageCard"
+                  ></img>
                   <button
                     type="button"
                     className="btn btn-custom text-white"
