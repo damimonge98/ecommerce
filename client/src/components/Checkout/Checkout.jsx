@@ -107,12 +107,10 @@ const ElementCheckout = () => {
     }
   };
 
-  console.log(orden[0].state);
-
   useEffect(() => {
     // Cuando se submitea la orden, el valor del estado pasa de 0 a 1, es para redireccionar a Home,
     // Igualmente si está la orden creada o en un estado distinto a carrito, ya no se puede entrar a hacer el checkout
-    if (state > 0 || orden[0].state !== "carrito") {
+    if (state > 0 ) {
       history.push("/");
     }
   }, [state]);

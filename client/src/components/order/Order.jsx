@@ -31,17 +31,21 @@ const Order = () => {
 
 
   return (
-    <div className="orderContainer">
+    <div className="orderContainer" >
       <div className="container2">
         <div className="row">
           <div className="col-sm-12 col-md-10 col-md-offset-1">
-            <table className="table table-hover" id ='table-order'>
+            <div className="alignedTitle">
+            <strong><h1>Tus Productos</h1></strong>
+            <p><strong>Abajo encontrarás tus productos y el importe total por tu compra</strong></p>
+            </div>
+            <table className="table table" id ='table-order'>
               <thead>
-                <tr>
+                <tr style={{backgroundColor:"#243B53"}}>
                   <th>Product</th>
                   <th>Quantity</th>
                   <th className="text-center">Price</th>
-                  <th className="text-center">Total</th>
+                  <th className="text-center">Subtotal</th>
                   <th> </th>
                 </tr>
               </thead>
@@ -92,7 +96,8 @@ const Order = () => {
                       <td className="col-sm-1 col-md-1">
                         <button
                           type="button"
-                          className="btn btn-danger"
+                          className="btn btn"
+                          style={{backgroundColor:"#C62828", color:"white"}}
                           onClick={() =>
                             dispatch(removeAllProduct({ id: product.id }))
                           }
@@ -110,10 +115,10 @@ const Order = () => {
                   <td>   </td>
 
                   <td>
-                    <h3>Total</h3>
+                    <h3>Total:</h3>
                   </td>
                   <td className="text-right">
-                    <h3>
+                    <h3 style={{color:"#006644"}}>
                       <strong>
                         $
                         {productos.reduce(
@@ -132,12 +137,11 @@ const Order = () => {
                   <td>
                     <button type="button" className="btn btn-customized" onClick={(() => history.push("/"))}>
                       Continue Shopping
-                      <img src="https://img.icons8.com/emoji/48/000000/shopping-cart-emoji.png" style={{width: "32px", height: '32px'}}/>
                     </button>
                   </td>
                   <td>
-                    <button type="button" className="btn btn-success" onClick = {() => history.push('/order/checkout')}>
-                      Checkout{" "}
+                    <button type="button" className="btn btn-checkoutOrder" onClick = {() => history.push('/order/checkout')}>
+                      Go to Checkout{" "}
                       <span className="glyphicon glyphicon-play"></span>
                     </button>
                   </td>

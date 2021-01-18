@@ -207,12 +207,12 @@ const UserForm = (props) => {
               placeholder="ingresa el nombre de tu primer mascota"
             />
             </Form.Group>
-          <Button variant="success" type="submit" className="button">
+          <Button variant="success" type="submit" className="button" style={{backgroundColor:"#334E68", border:"1px solid #313131", fontWeight: "600"}}>
             Enviar
           </Button>
         </Form>
 
-        <Button variant="danger" type="submit" className="button" style={{marginBottom:"20px"}}>
+        <Button variant="danger" type="submit" className="button" style={{marginBottom:"20px", backgroundColor: "#C62828", fontWeight: "600"}}>
           <a href="http://localhost:3001/login/auth/google" style={{color:"white"}}>
             {" "}
             Registrate con <img src="https://img.icons8.com/color/50/000000/google-logo.png" className="googleIcon"/>

@@ -16,12 +16,14 @@ import jsonWebToken from 'jsonwebtoken';
 import Swal from "sweetalert2";
 
 export default function CreateUser(file, data) {
+  console.log("data del user",data)
   const usuarioData = new FormData();
   usuarioData.append('username', data.username)
   usuarioData.append('givenName', data.givenName)
   usuarioData.append('familyName', data.familyName)
   usuarioData.append('email', data.email)
   usuarioData.append('password', data.password)
+  usuarioData.append('securityQuestion', data.securityQuestion)
   usuarioData.append('file', file)
   return function (dispatch) {
     return clienteAxios.post("/user", usuarioData)

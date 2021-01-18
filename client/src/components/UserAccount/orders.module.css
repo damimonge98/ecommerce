@@ -2,7 +2,22 @@
   margin-left: 250px;
   margin-right: 100px;
   padding-top: 120px;
-  
+}
+
+#headerTable{
+  background-color: #1a1a1a !important; 
+  color: white !important;
+}
+
+#headerTable > tbody > tr > td,
+#headerTable > tbody > tr > th,
+#headerTable > tfoot > tr > td,
+#headerTable > tfoot > tr > th,
+#headerTable > thead > tr > td,
+#headerTable > thead > tr > th {
+  padding: 15px 8px;
+  color: white;
+  border-bottom: 1px groove #9098a0;
 }
 
 .titleDiv {
@@ -13,7 +28,7 @@
 .titleReviewFormUser {
   cursor: pointer;
   height: 20px;
-  color: #ec625f;
+  color: #334E68;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
@@ -62,23 +77,23 @@
 }
 
 #rowOrder{
-  background-color: #212529;
+  background-color: #1a1a1a;
   color: #ffffff;
   height: 40px;
   padding-top: 10px;
   border-bottom: 1px groove #9098a0;
-  border-right: 1px groove #9098a0;
-  border-left: 1px groove #9098a0;
+  /* border-right: 1px groove #9098a0;
+  border-left: 1px groove #9098a0; */
 }
 
 #rowOrder2{
-  background-color: #2c3034;
+  background-color: #1f1e1e;
   color: #ffffff;
   height: 40px;
   padding-top: 10px;
   border-bottom: 1px groove #9098a0;
-  border-right: 1px groove #9098a0;
-  border-left: 1px groove #9098a0;
+/*   border-right: 1px groove #9098a0;
+  border-left: 1px groove #9098a0; */
 }
 
 .navDropdownList{

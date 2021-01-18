@@ -194,8 +194,8 @@ export const Admin = () => {
                 <h5 class="text-muted vb">USUARIOS</h5>
               </div>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <h3
-                  class="counter text-right m-t-15 text-danger"
+              <h3
+                  class="counter text-right m-t-15" style={{color: "#627D9B"}}
                   id="textCounter"
                 >
                   {users.length}
@@ -226,9 +226,9 @@ export const Admin = () => {
                 <h5 class="text-muted vb">ORDENES</h5>
               </div>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <h3
+              <h3
                   class="counter text-right m-t-15 text-megna"
-                  id="textCounter"
+                  id="textCounter" style={{color:"#BCCCDC"}}
                 >
                   {orders.length}
                 </h3>
@@ -258,9 +258,9 @@ export const Admin = () => {
                 <h5 class="text-muted vb">PRODUCTOS</h5>
               </div>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <h3
-                  class="counter text-right m-t-15 text-primary"
-                  id="textCounter"
+              <h3
+                  class="counter text-right m-t-15"
+                  id="textCounter" style={{color:"#9FB3C8"}}
                 >
                   {" "}
                   {totalProducts}

@@ -49,19 +49,20 @@ const ProductsAdmin = () => {
     return (
         <div className={styles.productos}>
             <div className={styles.title}>
-                <h2 >Lista de Productos</h2>
+                <strong><h2 >Lista de Productos</h2></strong>
             </div>
             {error ? <p className="font-weight-bold alert alert-danger text-center mt-4">Hubo un error</p>: null}
             {cargando ? <p className="text-center">Cargando...</p>:null}
             <div className={styles.btnDiv}>
                 <button 
                     onClick={()=>redireccionarEdicion("")}
-                    className="btn btn-info nuevo-post d-block d-md-inline-block"
+                    className="btn btn-info nuevo-post d-block d-md-inline-block" id={styles.btnCustomized}
                 >Agregar Producto &#43;
                 </button>
             </div>
             <div className={styles.containerTable}> 
                 <div className={styles.table}>
+                    <div className={styles.tableBody}>
                     <table className="table table-dark">
                         <thead  className={styles.tableahead}>
                             <tr>
@@ -74,7 +75,7 @@ const ProductsAdmin = () => {
                                 <th scope="col"  className={styles.columnas}>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className={styles.tableBodyProducts}>
                             {currentProducts.length === 0 ? <tr><td colSpan="7"> No hay productos</td></tr>: (
                                 Array.isArray(currentProducts) && currentProducts.map(producto => (
                                     <Producto
@@ -85,6 +86,7 @@ const ProductsAdmin = () => {
                             )}
                         </tbody>
                     </table>
+                    </div>
                     <Pagination
                         productPerPage={productPerPage}
                         totalproduct={data.length}

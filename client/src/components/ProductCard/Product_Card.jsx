@@ -74,6 +74,7 @@ const ProductCard = () => {
           userId: user,
           product: products,
           cantidadActual: pc ? pc.cantidad : 0,
+          cantidadAgregar: 1,
         })
       );
       dispatch(addToast({ type: "success", content: "Producto agregado!!!" }));
@@ -88,10 +89,6 @@ const ProductCard = () => {
           <div className="col-lg-6 col-md-6 shadow content p-5">
             <div className="row my-3">
               <div className="d-flex justify-content-end">
-                <div className="arrows">
-                  <i className="fas fa-arrow-circle-left" id="arrow1"></i>
-                  <i className="fas fa-arrow-circle-right" id="arrow2"></i>
-                </div>
               </div>
             </div>
             <div className="row my-lg-5 my-md-4">
@@ -139,6 +136,7 @@ const ProductCard = () => {
                   <p> {ratingAverage.length} opiniones</p>
                 )}
               </p>
+              <hr className="line" />
               <Modal
                 show={ratingAverage.length === 0 ? false : show}
                 onHide={handleClose}
@@ -151,12 +149,12 @@ const ProductCard = () => {
                     Los usuarios que compraron con nosotros opinaron esto:
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="modalBody">
+                <Modal.Body className="modalBody" id="modalContentProductCard">
                   {!reviewProductsId
                     ? spinner()
                     : reviewProductsId.map((productReviews) => {
                         return (
-                          <ul style={{ listStyle: "none" }}>
+                          <ul style={{ listStyle: "none" }} id="modalContentProductCard">
                             <li>
                               {Array.apply(null, {
                                 length: productReviews.rating,
@@ -181,7 +179,7 @@ const ProductCard = () => {
                               {productReviews.user.username} opinó:
                               <br />
                               {productReviews.description}
-                              <hr />
+                              <hr className="lineModalReviews"/>
                             </li>
                           </ul>
                         );
@@ -195,29 +193,13 @@ const ProductCard = () => {
               </Modal>
               <p className="description">{products.description}</p>
             </div>
+            <hr className="line" />
             <div>
-              <hr className="line" />
-              <p className="stock">Stock disponible: {products.stock}</p>
+              
+              {products.stock > 0 ? <p className="stock"> ¡Entradas disponibles! </p> : <p>Entradas agotadas</p>}
             </div>
 
             <div className="row my-3">
-              {/*  <ul className="list-style">
-                <li>
-                  <i className="fas fa-long-arrow-alt-right"></i>&nbsp; High
-                  Quality Audio
-                </li>
-                <li>
-                  <i className="fas fa-long-arrow-alt-right"></i>&nbsp; You can
-                  download it again anytime!
-                </li>
-                <li>
-                  <i className="fas fa-long-arrow-alt-right"></i>&nbsp; All your
-                  favorite artists are here!
-                </li>
-              </ul> */}
-              {/*    <div className = 'renderBar'>
-              {music ? <MusicBar /> : null}  
-                </div> */}
             </div>
             <div className="row my-4 ">
               <div className="cart-btn d-flex justify-content-center">
@@ -235,8 +217,10 @@ const ProductCard = () => {
                       );
                     }}
                   >
-                    <i className="fas fa-shopping-basket"></i>
+                    
                     Add to Cart
+                    {" "}
+                    <i className="fas fa-shopping-basket"></i>
                   </button>
                 </div>
               </div>

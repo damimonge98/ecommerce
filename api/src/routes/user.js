@@ -11,7 +11,7 @@ server.use(cors());
 
 const upload= multer()
 server.post("/",upload.single('file'),async(req, res) => {
-	const {username, givenName, familyName, email, password, isAdmin,googleId } = req.body
+	const {username, givenName, familyName, email, password,securityQuestion, isAdmin,googleId } = req.body
 	console.log(req.body)
 	const hashPassword  =await bcript.hash(password,10)
 	//Procesar archivo de imagen recibido
@@ -28,7 +28,8 @@ server.post("/",upload.single('file'),async(req, res) => {
         familyName,
         email,
         password:hashPassword,
-        photoURL:img,
+		photoURL:img,
+		securityQuestion,
 		isAdmin,
 		googleId
 		
@@ -41,6 +42,7 @@ server.post("/",upload.single('file'),async(req, res) => {
             res.send(e)
 		})
 })
+
 server.get('/', /* passport.authenticate("jwt",{session:false}), */(req, res,) => {
 	
 	/* if(req.user.isAdmin && req.user.isAdmin === true){ */

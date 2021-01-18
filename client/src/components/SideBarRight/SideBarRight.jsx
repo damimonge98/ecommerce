@@ -133,14 +133,14 @@ export default function SideBarRight() {
         </div>
         <div className="cd-titles">
           <h2 className="cd-title">
-            Cart ({shoppingCount})
+            <strong>Cart ({shoppingCount})</strong>
             <p
               className="cd-empty"
               onClick={() => {
                 dispatch(clearCar(userAUTH.id));
               }}
             >
-              <a href="#0"> Empty </a>
+              <strong><a href="#0"> Empty </a></strong>
               <i className="fas fa-trash-alt"></i>
             </p>
           </h2>
@@ -152,7 +152,7 @@ export default function SideBarRight() {
                 <i
                   className="fa fa-times"
                   onClick={() => {
-                    dispatch(removeAllProduct({ id: producto.id }));
+                    dispatch(clearCar(userAUTH.id));
                   }}
                 ></i>
               </a>
@@ -160,10 +160,22 @@ export default function SideBarRight() {
                 key={producto.id}
                 product={producto}
                 onIncreaseCant={() => {
-                  dispatch(addProduct({ id: producto.id }));
+                  const pc = productos.find((x) => x.id == producto.id);
+                  dispatch(addProduct({
+                    userId: isAuthenticated ? userAUTH.id : 0,
+                    product: producto,
+                    cantidadActual: pc ? pc.cantidad : 0,
+                    cantidadAgregar: 1,
+                  }));
                 }}
                 onDecreaseCant={() => {
-                  dispatch(removeProduct({ id: producto.id }));
+                  const pc = productos.find((x) => x.id == producto.id);
+                  dispatch(addProduct({
+                    userId: isAuthenticated ? userAUTH.id : 0,
+                    product: producto,
+                    cantidadActual: pc ? pc.cantidad : 0,
+                    cantidadAgregar: -1,
+                  }));
                 }}
               />
             </li>
@@ -172,10 +184,10 @@ export default function SideBarRight() {
         <div className="cd-bottom-div">
           <div className="cd-cart-total">
             <p>
-              {`Total: ${productos.reduce(
+              <strong>Total:</strong> {productos.reduce(
                 (acc, item) => acc + item.price * item.cantidad,
                 0
-              )}$`}
+              )}$
             </p>
           </div>
           

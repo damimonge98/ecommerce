@@ -2,10 +2,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background: #1a1a1a; */
+  height: 890px;
 }
+
+.alignedTitle{
+  text-align: center;
+  margin-bottom: 60px;
+  margin-top: 140px;
+}
+
 .container2{
   margin-left: 200px;
-  margin-top: 20px;
+  margin-top: -100px;
 }
 #input-plus{
   position: absolute;
@@ -24,14 +33,30 @@
 }
 
 #table-order{
-  color: #00303f;
+  color: whitesmoke;
   height: 100%;  
   width: 100%;
-  background-color: #f5f4f4;
+  background-color: #1a1a1a;
+  border: 1px groove #ddd;
 }
 
 .btn.btn-customized{
-  background-color: purple;
+  background-color: #102A43;
+  color: #f5f4f4;
+}
+
+.btn-checkoutOrder{
+  background-color: #243B53;
+  color: white;
+}
+
+.btn-checkoutOrder:hover{
+  opacity: 0.8;
+  color: white;
+}
+
+.btn.btn-customized:hover{
+  opacity: 0.8;
   color: #f5f4f4;
 }
 

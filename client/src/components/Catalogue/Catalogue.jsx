@@ -52,7 +52,11 @@ const Cataloge = () => {
     if (!products) return spinner();
     //cuando entra en / la categoría es 'All', está seteada así en Sidebar, y renderiza todos los productos
     (async () => {
-      if (currentCategory === "All") await setProductos(products);
+      try {
+        if (currentCategory === "All") await setProductos(products);
+      } catch (error) {
+        console.log(error);
+      }
     })();
   });
 

@@ -120,7 +120,7 @@ export default function SideBar() {
           </li>
          
           {!userAuthenticated ? null : userAuthenticated.isAdmin === "true" ? (
-            <li onClick={handleCategory}>
+            <li>
               <Dropdown className="nav-dropdown">
                 <Dropdown.Toggle variant="" className="dropdown-basic">
                   <span>
@@ -134,10 +134,12 @@ export default function SideBar() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="nav-dropdown-list">
                   <Dropdown.Item>
-                    <ul>
+                    <ul onClick={handleCategory}>
                       <li
-                        className="list-categories"
-                        onClick={() => history.push("/admin")}
+                        className="listCategories"
+                        onClick={() => 
+                          history.push("/admin")
+                        }
                       >
                         {" "}
                         <i class="fa fa-business-time" aria-hidden="true"></i>
@@ -146,9 +148,9 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <ul>
+                  <ul onClick={handleCategory}>
                       <li
-                        className="list-categories"
+                        className="listCategories"
                         onClick={() => history.push("/admin/products")}
                       >
                         {" "}
@@ -158,10 +160,10 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <ul>
+                  <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/admin/categories")}
-                        className="list-categories"
+                        className="listCategories"
                       >
                         <i class="fa fa-columns" aria-hidden="true"></i>
                         Categorías
@@ -176,7 +178,7 @@ export default function SideBar() {
             <Fragment>
               <li onClick={handleCategory}>
                 <Link to={`/user`}>
-                  <i className="fa fa-user" aria-hidden="true"></i> Sign In
+                  <i className="fas fa-user-plus" style={{paddingRight: "3px"}}aria-hidden="true"></i> Create an Account
                 </Link>
               </li>
               <li onClick={handleCategory}>
@@ -186,7 +188,7 @@ export default function SideBar() {
               </li>
             </Fragment>
           ) : (
-            <li onClick={handleCategory}>
+            <li>
               <Dropdown className="nav-dropdown">
                 <Dropdown.Toggle variant="" className="dropdown-basic">
                   <i class="fa fa-user-circle-o" aria-hidden="true"></i> My
@@ -194,7 +196,7 @@ export default function SideBar() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="nav-dropdown-list">
                   <Dropdown.Item>
-                    <ul>
+                  <ul onClick={handleCategory}>
                       <li
                         className="list-categories"
                         onClick={() => history.push("/account/me")}
@@ -210,7 +212,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <ul>
+                  <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/account/me/privacity")}
                         className="list-categories"
@@ -225,7 +227,7 @@ export default function SideBar() {
                     </ul>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <ul>
+                  <ul onClick={handleCategory}>
                       <li
                         onClick={() => history.push("/account/me/orders")}
                         className="list-categories"
@@ -243,12 +245,6 @@ export default function SideBar() {
               </Dropdown>
             </li>
           )}
-          <li onClick={handleCategory}>
-            <Link to={`/`}>
-              <i className="fa fa-info-circle" aria-hidden="true"></i>{" "}
-              Information
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

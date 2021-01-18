@@ -1,5 +1,4 @@
 .productos{
-  background-color: #313131;
   padding-top: 80px;
   margin-left: 120px;
 }
@@ -7,7 +6,6 @@
 .containerTable{
   display: flex;
   justify-content: center;
-  background: #313131;
   margin-top: 10px;
 }
 
@@ -18,17 +16,28 @@
 } 
 
 .table thead th{
-  background-color: #0B5ED7 !important;
+  background-color: #1a1a1a;
+}
+
+.table tbody {
+  background-color: #1a1a1a !important;
+}
+
+
+#btnCustomized{
+  background-color: #243B53;
+  color: #ffffff;
+  border: transparent;
 }
 
 .containerTitle{
   text-align: center;
-  background-color: #313131;
+  
   margin-top: 50px;
   color: white;
   
 }
- 
+
 .title{
   display: flex;
   justify-content: center;
@@ -42,7 +51,6 @@
   margin-right: 15%;
   margin-top: 30px;
   margin-bottom: 0px;
-  
 }
 
 .columnas{
@@ -50,6 +58,7 @@
   padding: 7px 16px !important;
   vertical-align: middle;
   text-align: center;
+  
 }
 
 .columnImg{

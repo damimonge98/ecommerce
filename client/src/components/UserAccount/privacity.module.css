@@ -6,12 +6,12 @@
 
 .profileAccountSettings {
   padding-left: 220px;
-  
+  padding-top: 100px;
 }
 
 #contentUserProfile{
-    background-color: #525252;
-    height: 100%;
+    background-color: #151515;
+    margin-bottom: 40px;
 }
 
 .titleDiv {
@@ -96,6 +96,9 @@
     width: 150px;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
+    background-color: #102A43 !important;
+    border: 1px solid #313131;
+    color: white;
 }
 
 #inputs{
@@ -135,8 +138,9 @@
     width: 170px;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
-    margin-top: 40px;
+    margin-top: 30px;
     margin-left: -20px;
+    background-color: #334E68 !important;
 }
 
 .button {
@@ -145,4 +149,8 @@
   border: none;
   cursor:pointer;
   overflow: hidden;    
+}
+
+#editProfile{
+  margin-bottom:20px;
 }
