@@ -36,7 +36,7 @@ const UserForm = (props) => {
   const [file, setFile] = useState("");
   const [modoEdit, setModoEdit] = useState(false);
   const [ImgUrl, setImgUrl] = useState(
-    "http://localhost:3001/img/producto-sin-foto.jpg"
+    "https://www.newcasmont.com/img/p/es-default-large_default.jpg"
   );
   const history = useHistory();
   const [data, setData] = useState({
@@ -213,7 +213,7 @@ const UserForm = (props) => {
         </Form>
 
         <Button variant="danger" type="submit" className="button" style={{marginBottom:"20px", backgroundColor: "#C62828", fontWeight: "600"}}>
-          <a href="http://localhost:3001/login/auth/google" style={{color:"white"}}>
+          <a href= {process.env.REACT_APP_API ? `http://${process.env.REACT_APP_API}/login/auth/google/login` : "http://localhost:3001/login/auth/google/login"}style={{color:"white"}}>
             {" "}
             Registrate con <img src="https://img.icons8.com/color/50/000000/google-logo.png" className="googleIcon"/>
           </a>

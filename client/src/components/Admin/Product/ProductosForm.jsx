@@ -64,7 +64,7 @@ const ProductosForm = () => {
     //estado de values de inputs
     const [inputs, setInputs] = useState({});
     const {name,stock, price, description,video}=inputs;//para llenars los values de los input cuando estemos en modo deedicion
-    const [ImgUrl, setImgUrl] = useState('http://localhost:3001/img/producto-sin-foto.jpg')
+    const [ImgUrl, setImgUrl] = useState('https://www.newcasmont.com/img/p/es-default-large_default.jpg')
 
     //efecto para llenar el state  de inputs con los datos del producto a editar en caso de que estemos en modo edicion
     useEffect(()=>{

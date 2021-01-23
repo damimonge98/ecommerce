@@ -35,7 +35,7 @@ export default function UserPrivacity() {
   const [photoURL, setphotoURL] = useState(authUser.photoURL);
   const [file, setFile] = useState("");
   const [ImgUrl, setImgUrl] = useState(
-    "http://localhost:3001/img/producto-sin-foto.jpg"
+    "https://www.newcasmont.com/img/p/es-default-large_default.jpg"
   );
   const [imagenCargada, setimagenCargada] = useState ("")
   const [buttonStyle, setbuttonStyle] = useState ("btn btn-outline-success")

@@ -51,7 +51,7 @@ module.exports = function (passport){
     passport.use(new FacebookStrategy({
         clientID: process.env.CLIENT_ID_FB,
         clientSecret: process.env.CLIENT_SECRET_FB,
-        callbackURL: "http://localhost:3001/user/login_fb"
+        callbackURL: process.env.REACT_APP_API ? `http://${process.env.REACT_APP_API}/user/login_fb` :"http://localhost:3001/user/login_fb"
       },
       function(accessToken, refreshToken, profile, done) {
         User.findOrCreate({id:profile.id}, function(err, user) {
@@ -64,7 +64,7 @@ module.exports = function (passport){
     passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID_GO,
         clientSecret: process.env.CLIENT_SECRET_GO,
-        callbackURL: "http://localhost:3001/login/auth/google/login"
+        callbackURL: process.env.REACT_APP_API ? `http://${process.env.REACT_APP_API}/login/auth/google/login` : "http://localhost:3001/login/auth/google/login"
       },
       function (accessToken, refreshToken,profile, cb)  {
           (async()=>{

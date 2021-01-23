@@ -12,7 +12,7 @@ const Product = ({producto}) => {
     const{id,img,name,price,stock,categories,description}=producto;
    
     //por si el producto no tiene imagen se muestra esta
-    const defaultImg='http://localhost:3001/img/producto-sin-foto.jpg';
+    const defaultImg='https://www.newcasmont.com/img/p/es-default-large_default.jpg';
     
     const dispatch = useDispatch();
 
