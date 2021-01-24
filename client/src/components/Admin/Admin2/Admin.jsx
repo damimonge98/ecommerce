@@ -181,6 +181,10 @@ export const Admin = () => {
     });
   
     console.log(user);
+  
+  if (!ordenSeleccionada) {
+    ordenSeleccionada = 0
+  }
 
   return (
     <div class="mainAdmin">
