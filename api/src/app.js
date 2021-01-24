@@ -24,7 +24,7 @@ server.use((req, res, next) => {
   next();
 });
 //static files .  Esto es para que se accecible la ruta de las imagenes desde el navegador. Las imagenes subidas se guardaran deontro de la carpeta upload/img
-server.use(express.static(path.join(__dirname,'upload')))
+server.use('/', express.static(path.join(__dirname, '/client/build')));
 server.use('/', routes);
 
 // Error catching endware.
