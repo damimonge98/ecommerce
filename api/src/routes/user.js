@@ -20,7 +20,7 @@ server.post("/",upload.single('file'),async(req, res) => {
 	const {file} = req;	
 	if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
 	const fileName = 'userimg' + '_' + Date.now() + file.detectedFileExtension;
-	var img = `${process.env.REACT_APP_API}/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+	var img = `${REACT_APP_API}/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 	//guardar archivo de imagen en el servidor 
 	const pipeline = promisify(require("stream").pipeline);
 	await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img-user/${fileName}`)).catch(e=>{console.log(e)});
@@ -142,7 +142,7 @@ server.put('/:id/image', upload.single("file"),passport.authenticate("jwt",{sess
 	
 	if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
 		const fileName = 'userimg' + '_' + Date.now() + file.detectedFileExtension;
-		var img = `${process.env.REACT_APP_API}/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+		var img = `${REACT_APP_API}/img-user/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 		//guardar archivo de imagen en el servidor 
 		const pipeline = promisify(require("stream").pipeline);
 		await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img-user/${fileName}`)).catch(e=>{console.log(e)});
