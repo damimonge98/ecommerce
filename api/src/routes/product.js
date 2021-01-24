@@ -43,7 +43,7 @@ server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false
 		
 		if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
 		const fileName = 'productoimg' + '_' + Date.now() + file.detectedFileExtension;
-		var img = `https://henrify-ecommerce.vercel.app/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+		var img = `https://henrify-ecommerce.herokuapp.com/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 		//guardar archivo de imagen en el servidor 
 		await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img/${fileName}`)).catch(e=>{console.log(e)});
 
@@ -102,7 +102,7 @@ server.put('/:id', upload.single("file"),passport.authenticate("jwt",{session:fa
 			await pipeline(fs.unlink(`${__dirname}/../upload/img/${fileNameAntiguo}`,function(){console.log('')})).catch(e=>{console.log(e)});
 			
 			const fileName = 'productoimg' + '_' + Date.now() + file.detectedFileExtension;//definiendo el nombde del archivo a guardar en el servidor
-			var img = `https://henrify-ecommerce.vercel.app/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+			var img = `https://henrify-ecommerce.herokuapp.com/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 			//guardar el nuevo archivo de imagen en el servidor 
 			await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img/${fileName}`)).catch(e=>{console.log(e)});
 		}
