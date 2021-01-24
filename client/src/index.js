@@ -5,10 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
-
-axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <React.StrictMode>
