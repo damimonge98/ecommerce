@@ -7,6 +7,9 @@ const fs = require("fs");
 const {promisify} = require("util");
 const pipeline = promisify(require("stream").pipeline);
 const passport = require('passport');
+import dotenv from "dotenv";
+dotenv.config();
+
 
 server.use(cors());
  
@@ -41,7 +44,7 @@ server.post("/",upload.single("file"),passport.authenticate("jwt",{session:false
 		
 		if (file.detectedFileExtension != ".jpg" && file.detectedFileExtension != ".png") next(new Error("Invalid file type"));
 		const fileName = 'productoimg' + '_' + Date.now() + file.detectedFileExtension;
-		var img = `http://localhost:3001/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+		var img = `${process.env.REACT_APP_API}/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 		//guardar archivo de imagen en el servidor 
 		await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img/${fileName}`)).catch(e=>{console.log(e)});
 
@@ -100,7 +103,7 @@ server.put('/:id', upload.single("file"),passport.authenticate("jwt",{session:fa
 			await pipeline(fs.unlink(`${__dirname}/../upload/img/${fileNameAntiguo}`,function(){console.log('')})).catch(e=>{console.log(e)});
 			
 			const fileName = 'productoimg' + '_' + Date.now() + file.detectedFileExtension;//definiendo el nombde del archivo a guardar en el servidor
-			var img = `http://localhost:3001/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
+			var img = `${process.env.REACT_APP_API}/img/${fileName}`;//definiendo la url de la imagen que se va a guardar en la base de datos
 			//guardar el nuevo archivo de imagen en el servidor 
 			await pipeline(file.stream,fs.createWriteStream(`${__dirname}/../upload/img/${fileName}`)).catch(e=>{console.log(e)});
 		}
