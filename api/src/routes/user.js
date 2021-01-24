@@ -6,8 +6,7 @@ const {promisify} = require("util");
 const fs = require("fs");
 const bcript =require("bcrypt")
 const passport = require('passport');
-import dotenv from "dotenv";
-dotenv.config();
+const {REACT_APP_API} = process.env;
 
 
 server.use(cors());
