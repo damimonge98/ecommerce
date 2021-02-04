@@ -125,16 +125,7 @@ const Cataloge = () => {
         "description":"More info soon!",
         "img":"https://indiehoy.com/wp-content/uploads/2020/09/nirvana-logo.jpg"
     },
-    {
-        
-        "id":4,
-        "name":"Marc Anthony",
-        "price": 250,
-        "stock": 20,
-        "category":"Salsa",
-        "description":"More info soon!",
-        "image":"https://ca-times.brightspotcdn.com/dims4/default/36fa42d/2147483647/strip/true/crop/1057x712+0+0/resize/840x566!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fea%2Faf%2Feafcf1ea474b96b3a0bb1a1ba56f%2Fcompra-marc-anthony-12-cuadros-1035435.JPG"
-    },
+  
     {
         
         "id":5,
@@ -160,7 +151,7 @@ const Cataloge = () => {
         "id":7,
         "name":"Shakira",
         "price": 250,
-        "stock": 20,
+        "stock": 0,
         "category":"Pop",
         "description":"More info soon!",
         "img":"https://los40es00.epimg.net/los40/imagenes/2017/04/06/album/1491501684_617106_1491503108_album_normal.jpg"
@@ -200,21 +191,12 @@ const Cataloge = () => {
         "id":11,
         "name":"Timbiriche",
         "price": 250,
-        "stock": 20,
+        "stock": 0,
         "category":"Rock",
         "description":"More info soon!",
         "img":"https://upload.wikimedia.org/wikipedia/en/7/7d/La_Banda_Timbiriche_en_Concierto_album_cover.jpg"
     },
-    {
-        
-        "id":12,
-        "name":"Beyonce",
-        "price": 250,
-        "stock": 20,
-        "category":"Pop",
-        "description":"More info soon!",
-        "img":"https://imagenes.elpais.com/resizer/abUZokPMJ39U2vh46p7ovTM20ds=/768x0/cloudfront-eu-central-1.imgs.arcpublishing.com/prisa/CS3M3K76INBZFBGQFQAYRIMLE4.jpg"
-    },
+
     {
         
         "id":13,
@@ -240,7 +222,7 @@ const Cataloge = () => {
         "id":15,
         "name":"Jay-Z",
         "price": 250,
-        "stock": 20,
+        "stock": 0,
         "category":"Rap",
         "description":"More info soon!",
         "img":"https://upload.wikimedia.org/wikipedia/en/7/74/Jay-z-vol-3-life-and-times-s-carter.jpg"
