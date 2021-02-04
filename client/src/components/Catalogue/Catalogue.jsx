@@ -113,9 +113,9 @@ const Cataloge = () => {
     <div>
       <div className="box">
         <div className="containerCatalogue">
-          {!currentProducts
+          {!harcodedProducts
             ? spinner()
-            : currentProducts.map((i) => {
+            : harcodedProducts.map((i) => {
                 //validamos el stock. En caso que este agotado, le agregamos una propiedad
                 //para utilizarlo despues
                 if (i.stock === 0) {
