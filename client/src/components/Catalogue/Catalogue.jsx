@@ -94,7 +94,7 @@ const Cataloge = () => {
   }, []);
 
 
-  harcodedProducts = [
+  const harcodedProducts = [
     {name: "Shakira", 
     description: "Ticket de Shakira", 
     price: "1500", 
