@@ -98,14 +98,14 @@ const Cataloge = () => {
     {name: "Shakira", 
     description: "Ticket de Shakira", 
     price: "1500", 
-    image: "https://heraldodemexico.com.mx/u/fotografias/m/2021/2/1/f925x521-313402_382266_5050.jpg", 
+    img: "https://heraldodemexico.com.mx/u/fotografias/m/2021/2/1/f925x521-313402_382266_5050.jpg", 
     id: 1, 
     stock: 0},
     
     {name: "Ricky Martin", 
     description: "Concierto de Ricky Martin", 
     price: "800", 
-    image: "https://media.canalnet.tv/2018/09/ricky2-974x550.jpg", 
+    img: "https://media.canalnet.tv/2018/09/ricky2-974x550.jpg", 
     id: 1, 
     stock: 34}
   ]
