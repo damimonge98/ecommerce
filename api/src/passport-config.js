@@ -64,7 +64,7 @@ module.exports = function (passport){
     passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID_GO,
         clientSecret: process.env.CLIENT_SECRET_GO,
-        callbackURL: process.env.REACT_APP_API ? `http://${process.env.REACT_APP_API}/login/auth/google/login` : "http://localhost:3001/login/auth/google/login"
+        callbackURL: `http://${process.env.REACT_APP_API}/login/auth/google/login`
       },
       function (accessToken, refreshToken,profile, cb)  {
           (async()=>{
