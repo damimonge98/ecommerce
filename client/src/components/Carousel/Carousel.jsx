@@ -29,7 +29,7 @@ const HandleCarousel = () => {
             <img
               className="d-block w-10"
               id="img-carousel"
-              src="https://scontent.faep9-2.fna.fbcdn.net/v/t1.0-9/90056090_2581351602140029_8162921753656426496_n.jpg?_nc_cat=106&ccb=2&_nc_sid=8bfeb9&_nc_ohc=ZoB-4ZdLXnEAX-z7WTh&_nc_ht=scontent.faep9-2.fna&oh=4fdbe980f66d3e4855e1017bec880d06&oe=60193918"
+              src="https://img.vixdata.io/pd/webp-large/es/sites/default/files/l/linkin-park.jpg"
               alt="Second slide"
             />
 
